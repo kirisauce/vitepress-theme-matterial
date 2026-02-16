@@ -1,0 +1,51 @@
+@use 'm3-anim';
+
+.card-content {
+  .header-anchor {
+    position: relative;
+    display: inline-flex;
+    font-size: 1.2rem;
+
+    cursor: pointer;
+
+    vertical-align: middle;
+
+    box-sizing: border-box;
+    background-color: var(--pal-primary);
+    color: var(--pal-onPrimary);
+    padding: 0.3lh;
+    border-radius: 100px;
+    overflow: hidden;
+    opacity: 0.01;
+
+    width: auto;
+
+    transition: background-color m3-anim.$expressiveSlowEffects, opacity m3-anim.$expressiveSlowEffects;
+
+    >svg {
+      display: inline;
+      bottom: unset;
+      margin: 0;
+      z-index: 10;
+    }
+
+    >.copy-text {
+      position: absolute;
+      display: block;
+      right: 0.3lh;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8em;
+      width: max-content;
+    }
+  }
+
+  .header-anchor.visible {
+    background-color: var(--pal-secondary);
+    opacity: 0.88;
+  }
+
+  .header-anchor:active {
+    outline: none;
+  }
+}

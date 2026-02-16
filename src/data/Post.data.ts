@@ -1,0 +1,167 @@
+import asyncFs from 'node:fs/promises'
+import fs from 'node:fs'
+import matter from 'gray-matter'
+import MarkdownIt from 'markdown-it'
+import { defineLoader } from 'vitepress'
+import { objectShrink } from '../utils'
+
+const md = new MarkdownIt({
+  html: false,
+})
+
+const BASE_DIRECTORY = fs.realpathSync('./posts')
+const LAYOUTS_NO_INDEX = [
+  'index',
+  'home',
+]
+
+interface PostData {
+  /**
+   * Title of the post.
+   */
+  title: string,
+
+  /**
+   * The instant when the post was created.
+   * 
+   * This time is usually got from the frontmatter field 'timeCreated'.
+   * If the field 'timeCreated' does not exists in the frontmatter, this time is known
+   * from the file system.
+   */
+  timeCreated: number,
+
+  /**
+   * The instant when the post was last modified.
+   * 
+   * This time is usually got from the frontmatter field 'timeModified'.
+   * If the field 'timeModified' does not exists in the frontmatter, this time is known
+   * from the file system.
+   */
+  timeModified: number,
+
+  /**
+   * Excerpt of this post.
+   */
+  excerpt: string,
+
+  /**
+   * User-defined tags of the post.
+   */
+  tags: string[],
+
+  /**
+   * Link to the post.
+   */
+  link: string,
+}
+
+interface MarkdownData {
+  title: string | undefined,
+  excerpt: string | undefined,
+}
+
+const extractMarkdownData = (mdContent: string): MarkdownData => {
+  const excerptLength = 150
+  let title: string | undefined = undefined
+  let excerpt: string | undefined = undefined
+  let headings = []
+  let tokens = md.parse(mdContent, {})
+
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i]
+
+    if (token.type === 'heading_open') {
+      const level = Number(token.tag.slice(1))
+
+      const contentToken = tokens[i + 1]
+      if (contentToken?.type === 'inline') {
+        const headingText = contentToken.content.trim()
+        headings.push({ level, text: headingText })
+
+        if (level === 1 && title === undefined) {
+          title = headingText
+        }
+      }
+    }
+
+    if (!excerpt && token.type === 'paragraph_open') {
+      const contentToken = tokens[i + 1]
+      if (contentToken?.type === 'inline') {
+        let pureText = md.render(contentToken.content)
+          .replace(/\<\/?[\w\-_\.]*\>/g, '') // Remove HTML tags
+          .trim()
+
+        excerpt = pureText.length > excerptLength
+          ? pureText.slice(0, excerptLength) + '...'
+          : pureText
+      }
+    }
+  }
+
+  if (title === undefined) {
+    title = headings.reduce(
+      (prev, next) => next.level < prev.level ? next : prev,
+      { level: 114514, text: undefined as (string | undefined) },
+    ).text
+  }
+
+  return objectShrink({
+    title,
+    excerpt,
+  })
+}
+
+const checkPostFrontMatterNoIndex = (frontMatter: any) => {
+  if (typeof frontMatter.noIndex == 'boolean') {
+    return frontMatter.noIndex
+  }
+  if (LAYOUTS_NO_INDEX.includes(frontMatter.layout)) {
+    return true
+  }
+  return false
+}
+
+const getPageLink = (prefix: string, path: string) => {
+  if (path.startsWith(prefix)) {
+    return path.substring(prefix.length).replace(/\.md$/, '.html')
+  } else {
+    throw Error(`Path ${path} does not have prefix ${prefix}`)
+  }
+}
+
+const load = async (files: string[]): Promise<PostData[]> => {
+  let result = new Array()
+
+  for (const file of files) {
+    const { data: frontMatter, content } = await asyncFs.readFile(file).then(buf => buf.toString()).then(str => matter(str))
+
+    if (checkPostFrontMatterNoIndex(frontMatter)) {
+      continue
+    }
+
+    const stat = await asyncFs.stat(file)
+    const mdData = extractMarkdownData(content) as any
+
+    let merged = {
+      link: getPageLink(BASE_DIRECTORY, file),
+      title: '',
+      excerpt: '',
+      tags: [],
+      timeCreated: stat.birthtime,
+      timeModified: stat.mtime,
+      ...mdData,
+      ...objectShrink(frontMatter),
+    } as PostData
+    merged.timeCreated = Number(merged.timeCreated)
+    merged.timeModified = Number(merged.timeModified)
+
+    result.push(merged)
+  }
+
+  return result
+}
+
+export default defineLoader({
+  watch: [BASE_DIRECTORY + "/**/*.md"],
+  load,
+})
