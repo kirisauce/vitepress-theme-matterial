@@ -43,7 +43,7 @@ const getListItemStyle = (item: TocItem) => {
   }
 }
 
-const getItemElement = (id?: string) => elList.value.querySelector(`ul>li[title-id='${id ?? activeId.value}']`) as HTMLElement
+const getItemElement = (id?: string) => elList.value?.querySelector(`ul>li[title-id='${id ?? activeId.value}']`) as HTMLElement
 
 const hideIndicator = () => {
   Object.entries({
@@ -53,7 +53,7 @@ const hideIndicator = () => {
     left: 0,
     opacity: 0,
   }).forEach(([k, v]) => {
-    indicatorStyle[k] = v
+    (indicatorStyle as any)[k] = v
   })
 }
 
@@ -63,7 +63,7 @@ const updateIndicator = (id?: string) => {
     hideIndicator()
     return
   }
-  const listRect = elList.value.getBoundingClientRect()
+  const listRect = elList.value!.getBoundingClientRect()
   const itemRect = el.getBoundingClientRect()
 
   const ygrow = 4
@@ -98,7 +98,7 @@ const renderList = () => {
   // <template v-for='item in items'>
   //   <li class='toc-item' :title-id='item.id' :style='getListItemStyle(item)'>{{ item.text }}</li><br/>
   // </template>
-  let counters = []
+  let counters: number[] = []
 
   return items.value.flatMap(item => {
     if (counters.length >= item.level) counters[item.level - 1]++;
@@ -130,7 +130,7 @@ onMounted(() => {
   }, {
     immediate: true,
   })
-  elList.value.addEventListener('scroll', () => updateIndicator())
+  elList.value!.addEventListener('scroll', () => updateIndicator())
 })
 
 defineExpose({

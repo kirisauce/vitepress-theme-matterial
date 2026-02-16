@@ -29,20 +29,20 @@ export const extractCatalogFromDom = (root: HTMLElement) => {
 
 export interface TocData {
   items: Ref<TocItem[]>,
-  activeId: Ref<string | null>,
+  activeId: Ref<string | undefined>,
 }
 
 const TOC_KEY = Symbol('TableOfContent') as InjectionKey<TocData>
 
-export const initToc = () => {
+export const initToc = (): TocData => {
   const state = {
     items: ref([]),
     activeId: ref(),
-  } satisfies TocData
+  }
 
   provide(TOC_KEY, state)
 
   return state
 }
 
-export const useToc = () => inject(TOC_KEY)
+export const useToc = () => inject(TOC_KEY)!

@@ -78,7 +78,7 @@ const catalogJumpTo = (id: string) => {
   const el = document.getElementById(id)
   if (el) {
     history.pushState(null, '', `#${id}`)
-    elPage.value.scrollTo({
+    elPage.value!.scrollTo({
       left: 0,
       top: el.offsetTop,
       behavior: "smooth",
@@ -100,8 +100,8 @@ const updateActiveTitle = () => {
 // ---------- First-Time Initializations ----------
 
 onMounted(() => {
-  const observer = new ResizeObserver(() => elToc.value.updateIndicator(activeTitleId.value))
-  observer.observe(elTocCard.value)
+  const observer = new ResizeObserver(() => elToc.value!.updateIndicator(activeTitleId.value))
+  observer.observe(elTocCard.value!)
 })
 
 onContentUpdated(() => {
@@ -109,8 +109,8 @@ onContentUpdated(() => {
     const content = elContent.value
     setTimeout(() => updateActiveTitle(), 500);
 
-    patches.patchAnchors(content)
-    tocItems.value = extractCatalogFromDom(content)
+    patches.patchAnchors(content!)
+    tocItems.value = extractCatalogFromDom(content!)
   }
 })
 
@@ -123,7 +123,7 @@ watch(showSideBar, () => elToc)
 const globalClassList = computed(() => {
   let output = {
     'page-container': true,
-  }
+  } as any
   output[`color-scheme-${colorScheme.value}`] = true
   return output
 })
@@ -210,7 +210,7 @@ body {
     <!--| Top-level Components |-->
 
     <SideBar :show='showSideBar' side='right' @exit='showSideBar = false'
-      style='backdrop-filter: blur(15px); gap: 0.75em;' @after-enter='elSideBarToc.updateIndicator(activeTitleId)'>
+      style='backdrop-filter: blur(15px); gap: 0.75em;' @after-enter='elSideBarToc!.updateIndicator(activeTitleId)'>
       <div class='side-bar-header'>
         <!-- Back Button -->
         <div style='display:flex; flex-direction: row; align-items: center; gap: 1em;'>
@@ -225,10 +225,9 @@ body {
           <MdiClose height='2em' width='2em' />
         </CircleButton>
       </div>
-      <Toc @click='(item) => catalogJumpTo(item.id)'
+      <Toc @click='(item) => catalogJumpTo(item.id!)'
         style='flex:1; border:1px solid var(--pal-outline); border-radius:1em; box-shadow:var(--global-box-shadow);'
         ref='elSideBarToc' />
-
       <div></div>
     </SideBar>
 
@@ -270,7 +269,7 @@ body {
             </SvgContainer>目录
           </div>
 
-          <Toc @click='(item) => catalogJumpTo(item.id)' ref='elToc' ulStyle='overflow:auto;' style='flex: 1 0 0;' />
+          <Toc @click='(item) => catalogJumpTo(item.id!)' ref='elToc' ulStyle='overflow:auto;' style='flex: 1 0 0;' />
         </div>
       </div>
     </div>
