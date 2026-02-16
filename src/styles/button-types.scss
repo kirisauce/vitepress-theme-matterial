@@ -1,0 +1,188 @@
+@use 'm3-anim';
+@use 'm3vars';
+
+.state-layer {
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  opacity: 0;
+  // z-index: -1;
+  transition:
+    background-color m3-anim.$standardDefaultEffects,
+    color m3-anim.$standardDefaultEffects,
+    opacity m3-anim.$standardDefaultEffects;
+}
+
+// ---------- Type Classes ----------
+
+.elevated:disabled,
+.filled:disabled,
+.tonal:disabled,
+.outlined:disabled {
+  background-color: var(--lpal-disabledContainer);
+  color: var(--lpal-disabledLabel);
+}
+
+// --- Elevated ---
+
+.elevated {
+  background-color: var(--pal-surfaceContainerLow);
+  color: var(--pal-primary);
+}
+
+.elevated.selected:enabled {
+  background-color: var(--pal-primary);
+  color: var(--pal-onPrimary);
+}
+
+.elevated:enabled:hover>.state-layer {
+  opacity: m3vars.$state-layer-opacity-hovered;
+  background-color: var(--pal-primary);
+}
+
+.elevated:enabled:focus>.state-layer {
+  opacity: m3vars.$state-layer-opacity-focused;
+  background-color: var(--pal-primary);
+}
+
+.elevated:enabled:active>.state-layer {
+  opacity: m3vars.$state-layer-opacity-pressed;
+  background-color: var(--pal-primary);
+}
+
+.elevated.selected:enabled:hover>.state-layer,
+.elevated.selected:enabled:focus>.state-layer,
+.elevated.selected:enabled:active>.state-layer {
+  background-color: var(--pal-onPrimary);
+}
+
+// --- Filled ---
+
+.filled {
+  background-color: var(--pal-primary);
+  color: var(--pal-onPrimary);
+}
+
+.filled.unselected:enabled {
+  background-color: var(--pal-surfaceContainer);
+  color: var(--pal-onSurfaceVariant);
+}
+
+.filled:enabled:hover>.state-layer {
+  opacity: m3vars.$state-layer-opacity-hovered;
+  background-color: var(--pal-onPrimary);
+}
+
+.filled:enabled:focus>.state-layer {
+  opacity: m3vars.$state-layer-opacity-focused;
+  background-color: var(--pal-onPrimary);
+}
+
+.filled:enabled:active>.state-layer {
+  opacity: m3vars.$state-layer-opacity-pressed;
+  background-color: var(--pal-onPrimary);
+}
+
+.filled.unselected:enabled:hover>.state-layer,
+.filled.unselected:enabled:focus>.state-layer,
+.filled.unselected:enabled:active>.state-layer {
+  background-color: var(--pal-surfaceVariant);
+}
+
+// --- Tonal ---
+
+.tonal {
+  background-color: var(--pal-secondaryContainer);
+  color: var(--pal-onSecondaryContainer);
+}
+
+.tonal.selected:enabled {
+  background-color: var(--pal-secondary);
+  color: var(--pal-onSecondary);
+}
+
+.tonal:enabled:hover>.state-layer {
+  opacity: m3vars.$state-layer-opacity-hovered;
+  background-color: var(--pal-onSecondaryContainer);
+}
+
+.tonal:enabled:focus>.state-layer {
+  opacity: m3vars.$state-layer-opacity-focused;
+  background-color: var(--pal-onSecondaryContainer);
+}
+
+.tonal:enabled:active>.state-layer {
+  opacity: m3vars.$state-layer-opacity-pressed;
+  background-color: var(--pal-onSecondaryContainer);
+}
+
+.tonal.selected:enabled:hover>.state-layer,
+.tonal.selected:enabled:focus>.state-layer,
+.tonal.selected:enabled:active>.state-layer {
+  background-color: var(--pal-onSecondary);
+}
+
+// --- Outlined ---
+
+.outlined {
+  background-color: var(--pal-surfaceVariant);
+  color: var(--pal-onSurfaceVariant);
+  border-color: var(--pal-outlineVariant);
+}
+
+.outlined.selected:enabled {
+  background-color: var(--pal-inverseSurface);
+  color: var(--pal-inverseOnSurface);
+}
+
+.outlined:enabled:hover>.state-layer {
+  opacity: m3vars.$state-layer-opacity-hovered;
+  background-color: var(--pal-onSurfaceVariant);
+}
+
+.outlined:enabled:focus>.state-layer {
+  opacity: m3vars.$state-layer-opacity-focused;
+  background-color: var(--pal-onSurfaceVariant);
+}
+
+.outlined:enabled:active>.state-layer {
+  opacity: m3vars.$state-layer-opacity-pressed;
+  background-color: var(--pal-onSurfaceVariant);
+}
+
+.outlined.selected:enabled:hover>.state-layer,
+.outlined.selected:enabled:focus>.state-layer,
+.outlined.selected:enabled:active>.state-layer {
+  background-color: var(--pal-inverseOnSurface);
+}
+
+// --- Text ---
+
+.text {
+  background-color: transparent;
+  color: var(--pal-primary);
+}
+
+.text:disabled {
+  background-color: var(--lpal-disabledContainer);
+  color: var(--lpal-disabledLabel);
+}
+
+.text:enabled:hover>.state-layer {
+  opacity: m3vars.$state-layer-opacity-hovered;
+  background-color: var(--pal-primary);
+}
+
+.text:enabled:focus>.state-layer {
+  opacity: m3vars.$state-layer-opacity-focused;
+  background-color: var(--pal-primary);
+}
+
+.text:enabled:active>.state-layer {
+  opacity: m3vars.$state-layer-opacity-pressed;
+  background-color: var(--pal-primary);
+}

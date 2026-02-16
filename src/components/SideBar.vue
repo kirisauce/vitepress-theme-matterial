@@ -78,10 +78,6 @@ const barStyle = computed(() => {
   return result
 })
 
-const backgroundStyleEx = computed(() => {
-  
-})
-
 const classes = computed(() => {
   return {
     transition: 'side-bar-transition',
@@ -104,6 +100,10 @@ const showWrapper = ref<boolean>(show)
   width: 100%;
   height: 100%;
   z-index: 1000;
+
+  opacity: var(--background-opacity);
+  background-color: #000000;
+  transition: opacity m3-anim.$expressiveDefaultEffects;
 }
 
 .side-bar {
@@ -144,12 +144,30 @@ $anim: m3-anim.$standardSlowSpital;
 .side-bar-state-hide-right {
   transform: translateX(100%);
 }
+
+.background-enter-active,
+.background-leave-active {
+  transition: opacity m3-anim.$expressiveSlowEffects;
+}
+
+.background-enter-from,
+.background-leave-to {
+  opacity: 0;
+}
+
+.background-enter-to,
+.background-leave-from {
+  opacity: var(--background-opacity);
+}
 </style>
 
 <template>
   <span style='position: absolute'>
-    <div class='side-bar-background' @click='$emit("exit")' v-show='showWrapper && captureClick' :style='backgroundStyle'>
-    </div>
+    <Transition name='background'>
+      <div class='side-bar-background' @click='$emit("exit")' v-show='show && captureClick'
+        :style='[backgroundStyle, `--background-opacity: ${captureClick ? 0.45 : 0.15}`]'>
+      </div>
+    </Transition>
     <Transition name='side-bar' :appear='appear' :css='anim' :enter-active-class='classes.transition'
       :leave-active-class='classes.transition' :leave-from-class='classes.showState' :enter-to-class='classes.showState'
       :leave-to-class='classes.hideState' :enter-from-class='classes.hideState' @before-enter='showWrapper = true'
