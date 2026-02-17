@@ -1,5 +1,6 @@
 import { iconNoThrow, MdPlugins as Plugins } from '.'
 import Icons from 'unplugin-icons/vite'
+import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
 import MarkdownIt from 'markdown-it'
 import type { UserConfig } from 'vitepress'
 import { ThemeConfig } from '../shared'
@@ -39,6 +40,8 @@ export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
           compiler: 'vue3',
           scale: 1.0,
         }),
+
+        ReactivityTransform(),
       ],
     },
 

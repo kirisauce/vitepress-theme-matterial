@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "types": [
+      "@vue-macros/reactivity-transform/macros-global",
       "unplugin-icons/types/vue"
     ]
   }
