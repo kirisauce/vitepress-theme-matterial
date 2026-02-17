@@ -8,25 +8,7 @@
   outline: solid 1.5px var(--pal-outlineVariant);
 }
 
-.post-content {
-  h1,h2,h3,h4,h5,h6 {
-    border-left-width: calc(0.1em + 3px);
-    border-left-color: var(--palext-primary);
-    border-left-style: solid;
-
-    // border-top-width: 1px;
-    // border-top-color: var(--palext-primaryTransparent);
-    // border-top-style: dashed;
-
-    border-bottom-width: 1px;
-    border-bottom-color: var(--palext-primaryTransparent);
-    border-bottom-style: dashed;
-
-    border-radius: 4px;
-    // border-bottom: 1px solid var(--palext-outlineTransparent);
-    padding-left: 0.25em;
-  }
-}
+// 自定义block和表格样式
 
 .card-content {
   .custom-block {

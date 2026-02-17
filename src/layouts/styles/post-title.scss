@@ -1,7 +1,9 @@
 @use 'm3-anim';
 
+// header anchor样式
+
 .card-content {
-  .header-anchor {
+  :deep(.header-anchor) {
     position: relative;
     display: inline-flex;
     font-size: 1.2rem;
@@ -40,12 +42,89 @@
     }
   }
 
-  .header-anchor.visible {
+  :deep(.header-anchor.visible) {
     background-color: var(--pal-secondary);
     opacity: 0.88;
   }
 
-  .header-anchor:active {
+  :deep(.header-anchor:active) {
     outline: none;
+  }
+}
+
+// 标题样式
+
+.post-content {
+  :deep(h1) {
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 24px 0 16px;
+    letter-spacing: -0.015em;
+  }
+
+  :deep(h2) {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.25;
+    margin: 24px 0 16px;
+    letter-spacing: -0.015em;
+  }
+
+  :deep(h3) {
+    font-size: 1.75rem;
+    font-weight: 400;
+    line-height: 1.3;
+    margin: 20px 0 16px;
+    letter-spacing: -0.005em;
+  }
+
+  :deep(h4) {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.35;
+    margin: 20px 0 16px;
+    letter-spacing: 0;
+  }
+
+  :deep(h5) {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 16px 0 12px;
+    letter-spacing: 0;
+  }
+
+  :deep(h6) {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 16px 0 12px;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+  }
+
+  // 添加标题装饰线
+  :deep(h1),
+  :deep(h2),
+  :deep(h3),
+  :deep(h4),
+  :deep(h5),
+  :deep(h6) {
+    position: relative;
+    padding-left: 12px;
+    color: var(--pal-onSurface);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 2px;
+      background-color: var(--palext-primary);
+      opacity: 0.6;
+    }
   }
 }

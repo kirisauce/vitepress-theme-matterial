@@ -1,0 +1,290 @@
+<script setup lang='ts'>
+import { useTemplateRef, computed, ref, onUnmounted } from 'vue'
+import { useData } from 'vitepress'
+import { useOrientation } from '../composables/preferences'
+import { useToc, extractCatalogFromDom } from '../composables/toc'
+import { useGlobalElements } from '../composables/global-elements'
+import { ThemeConfig } from '../shared'
+import * as patches from './content-patches'
+
+// Components
+import PostHeader from '../components/PostHeader.vue'
+import PostFooter from '../components/PostFooter.vue'
+import Toc from '../components/Toc.vue'
+import SvgContainer from '../components/SvgContainer.vue'
+import SideBar from '../components/SideBar.vue'
+import CircleButton from '../components/CircleButton.vue'
+import Navigator from '../components/Navigator.vue'
+import NavigatorHomeButton from '../components/NavigatorHomeButton.vue'
+import MdButton from '../components/MdButton.vue'
+
+// Icons
+import MdiTableOfContents from '~icons/mdi/table-of-contents'
+import MdiArrowBack from '~icons/mdi/arrow-back'
+import MdiClose from '~icons/mdi/close'
+import MdiMenu from '~icons/mdi/menu'
+
+// Vitepress Data
+const { frontmatter } = useData<ThemeConfig>()
+
+// 使用use函数获取状态
+const orientation = useOrientation()
+const { items: tocItems, activeId: activeTitleId } = useToc()
+
+// 定义模板引用
+const elContent = useTemplateRef('elContent')
+const elTocCard = useTemplateRef('elTocCard')
+const elToc = useTemplateRef('elToc')
+const elSideBarToc = useTemplateRef('elSideBarToc')
+
+const { page: elPage } = useGlobalElements()!
+
+// 观察器引用
+const scrollHandler = ref<(() => void) | null>(null)
+
+const showSideBar = ref<boolean>(false)
+
+// 更新TOC内容
+const updateTocContent = () => {
+  if (elContent.value) {
+    tocItems.value = extractCatalogFromDom(elContent.value)
+    patches.patchAnchors(elContent.value)
+  }
+}
+
+// 设置滚动监听
+const setupScrollListener = () => {
+  if (elPage.value && !scrollHandler.value) {
+    scrollHandler.value = () => {
+      updateActiveTitle()
+    }
+    elPage.value.addEventListener('scroll', scrollHandler.value)
+  }
+}
+
+// 移除滚动监听
+const removeScrollListener = () => {
+  if (elPage.value && scrollHandler.value) {
+    elPage.value.removeEventListener('scroll', scrollHandler.value)
+    scrollHandler.value = null
+  }
+}
+
+// 计算是否显示TOC
+const showToc = computed(() => orientation.value === 'landscape')
+
+// 更新活动标题
+const updateActiveTitle = () => {
+  if (tocItems.value.length === 0) return
+
+  for (const item of tocItems.value) {
+    const rect = item.targetElement.getBoundingClientRect()
+    if (rect.top > 100) {
+      activeTitleId.value = item.id
+      return
+    }
+  }
+  // 如果没有找到合适的标题，设置为最后一个
+  activeTitleId.value = tocItems.value[tocItems.value.length - 1]?.id
+}
+
+// 目录跳转
+const catalogJumpTo = (id: string) => {
+  const el = document.getElementById(id)
+  if (el) {
+    history.pushState(null, '', `#${id}`)
+    elPage.value?.scrollTo({
+      left: 0,
+      top: el.offsetTop,
+      behavior: "smooth",
+    })
+  }
+}
+
+const openSideBar = () => {
+  showSideBar.value = true
+}
+
+const closeSideBar = () => {
+  showSideBar.value = false
+}
+
+// 内容挂载后的回调
+const onContentMounted = () => {
+  if (elContent.value) {
+    // 初始化TOC
+    updateTocContent()
+    setTimeout(updateActiveTitle, 250)
+
+    // 设置滚动监听
+    setupScrollListener()
+  }
+}
+
+// 组件卸载时清理
+onUnmounted(() => {
+  removeScrollListener()
+})
+</script>
+
+<template>
+  <Navigator>
+    <NavigatorHomeButton />
+    <MdButton @click='openSideBar' type='tonal' shape='round'>
+      <MdiMenu />
+    </MdButton>
+  </Navigator>
+
+  <!-- 侧边栏 -->
+  <SideBar :show='showSideBar' side='right' @after-enter='elSideBarToc?.updateIndicator()' @exit='closeSideBar'
+    style='backdrop-filter: blur(15px); gap: 0.75em;'>
+    <div class='side-bar-header'>
+      <!-- Back Button -->
+      <div style='display:flex; flex-direction: row; align-items: center; gap: 1em;'>
+        <CircleButton @click='console.log("sb")'>
+          <MdiArrowBack height='2em' width='2em' />
+        </CircleButton>
+        <div class='toc-text' style='font-size:1.5em;'>目录</div>
+      </div>
+
+      <!-- Close Button -->
+      <CircleButton @click='closeSideBar'>
+        <MdiClose height='2em' width='2em' />
+      </CircleButton>
+    </div>
+    <Toc @click='(item) => catalogJumpTo(item.id!)'
+      style='flex:1; border:1px solid var(--pal-outline); border-radius:1em; box-shadow:var(--global-box-shadow);'
+      ref='elSideBarToc' />
+    <div></div>
+  </SideBar>
+
+  <div class='content-wrapper svg-patch'>
+    <!-- Left Cards -->
+    <div class='layout-cards-column left-cards' v-show='orientation === "landscape"'></div>
+
+    <!-- Center Cards -->
+    <div class='layout-cards-column center-cards'>
+      <main class='layout-card card-content'>
+        <span>
+          <!-- Header Information -->
+          <PostHeader />
+          <hr class='sep01' />
+
+          <!-- Real Post Content -->
+          <span class='post-content' ref='elContent' @vue:mounted='onContentMounted'>
+            <Content />
+          </span>
+
+          <!-- Footer -->
+          <hr class='sep01' />
+          <PostFooter />
+        </span>
+      </main>
+    </div>
+
+    <!-- Right Cards -->
+    <div class='layout-cards-column right-cards' v-show='orientation === "landscape"'>
+      <div class='layout-card card-toc' v-show='showToc' ref='elTocCard'>
+        <div class='toc-text'>
+          <SvgContainer>
+            <MdiTableOfContents />
+          </SvgContainer>目录
+        </div>
+
+        <Toc @click='(item) => catalogJumpTo(item.id!)' ref='elToc' ulStyle='overflow:auto;' style='flex: 1 0 0;' />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang='scss'>
+@forward './styles/page-markdown-ext.scss';
+@forward './styles/page-code-block.scss';
+</style>
+
+<style lang='scss' scoped>
+@forward './styles/page-layout.scss';
+@forward '../styles/cards.scss';
+@forward './styles/post-title.scss';
+
+.sep01 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  mix-blend-mode: soft-light;
+}
+
+.post-content {
+  :deep(h1) {
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--pal-onSurface);
+    margin: 24px 0 16px;
+    letter-spacing: -0.015em;
+  }
+
+  :deep(h2) {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--pal-onSurface);
+    margin: 24px 0 16px;
+    letter-spacing: -0.015em;
+  }
+
+  :deep(h3) {
+    font-size: 1.75rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--pal-onSurface);
+    margin: 20px 0 16px;
+    letter-spacing: -0.005em;
+  }
+
+  :deep(h4) {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--pal-onSurface);
+    margin: 20px 0 16px;
+    letter-spacing: 0;
+  }
+
+  :deep(h5) {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--pal-onSurface);
+    margin: 16px 0 12px;
+    letter-spacing: 0;
+  }
+
+  :deep(h6) {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--pal-onSurface);
+    margin: 16px 0 12px;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+  }
+
+  // 添加标题装饰线
+  :deep(h1, h2, h3, h4, h5, h6) {
+    position: relative;
+    padding-left: 8px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 2px;
+      background-color: var(--palext-primary);
+      opacity: 0.6;
+    }
+  }
+}
+</style>

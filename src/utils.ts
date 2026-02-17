@@ -1,7 +1,7 @@
 import { DeepReadonly, h, onMounted, onUnmounted, readonly, ref, Ref, watchEffect } from 'vue'
 import { argbFromHex, Hct } from '@material/material-color-utilities'
 
-export function objectShrink<Obj>(obj: Obj): Obj {
+export function objectShrink<Obj extends Record<string, any> | Array<any>>(obj: Obj): Obj {
   if (typeof obj != 'object') {
     return obj
   }
@@ -82,10 +82,6 @@ export const writeClipboardText = (textData: string) => {
 // }
 
 export const joinStringList = (stringList: string[], sep: string): string => {
-  if (stringList === undefined || stringList.length == 0) {
-    return undefined
-  }
-
   let output = ''
   let isFirst = true
 
@@ -152,7 +148,7 @@ export const createPersistentValue = <T>(
     deserialize(serialized: string) {
       return JSON.parse(serialized)
     },
-    ...objectShrink(options)
+    ...objectShrink(options ?? {})
   }
 
   let value
@@ -190,8 +186,12 @@ export const createPersistentValue = <T>(
  * @param mediaQueryString The string that would be passed to `window.matchMedia`
  * @param argTransform The function to transform boolean value to value of other types
  */
-export const createMediaQueryWrapper = <T>(mediaQueryString: string, transform: (matchResult: boolean) => T): DeepReadonly<Ref<T | undefined>> => {
-  const valueRef = ref<T>()
+export function createMediaQueryWrapper<T>(
+  mediaQueryString: string,
+  transform: (matchResult: boolean) => T,
+  defaultVal?: T,
+): DeepReadonly<Ref<typeof defaultVal extends undefined ? (T | undefined) : T>> {
+  const valueRef = ref(defaultVal)
 
   const handler = function (this: MediaQueryList) {
     valueRef.value = transform(this.matches)
@@ -209,7 +209,7 @@ export const createMediaQueryWrapper = <T>(mediaQueryString: string, transform: 
     list!.removeEventListener("change", handler)
   })
 
-  return readonly(valueRef)
+  return readonly(valueRef as Ref<any>)
 }
 
 // ---------- Media Query Wrapper End ----------

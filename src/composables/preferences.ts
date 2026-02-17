@@ -45,7 +45,7 @@ export const useColorScheme = (): ColorSchemeData => inject(COLOR_SCHEME_KEY)!
 
 const ORIENTATION_KEY = Symbol('Orientation') as InjectionKey<Readonly<Ref<Orientation>>>
 export type Orientation = "landscape" | "portrait"
-export const initOrientation = (): Readonly<Ref<Orientation | undefined>> => {
+export const initOrientation = (): Readonly<Ref<Orientation>> => {
   const orientation = createMediaQueryWrapper<Orientation>(
     "(orientation: landscape)",
     result => result ? "landscape" : "portrait",
@@ -53,7 +53,7 @@ export const initOrientation = (): Readonly<Ref<Orientation | undefined>> => {
   provide(ORIENTATION_KEY, orientation)
   return orientation
 }
-export const useOrientation = () => inject(ORIENTATION_KEY)
+export const useOrientation = (): Readonly<Ref<Orientation>> => inject(ORIENTATION_KEY)!
 
 
 // ---------- Orientation End ----------

@@ -1,30 +1,3 @@
-<script lang='ts' setup>
-import { useData } from 'vitepress';
-import { usePreferences } from '../composables/preferences'
-
-import MdiMenu from '~icons/mdi/menu'
-import CircleButton from './CircleButton.vue';
-import SvgContainer from './SvgContainer.vue';
-import MdButton from './MdButton.vue';
-import { h } from 'vue';
-
-const emit = defineEmits<{
-  (e: 'optionsClick'): void,
-}>()
-
-const { orientation } = usePreferences()
-const { theme } = useData()
-
-const componentSiteIcon = () => h("span", {
-  innerHTML: theme.value.navigator?.siteIcon,
-  style: {
-    'display': 'flex',
-    'flex-direction': 'column',
-    'justify-content': 'center',
-  },
-})
-</script>
-
 <style lang='scss' scoped>
 @use '../styles/m3-anim';
 
@@ -102,21 +75,7 @@ nav {
 <template>
   <nav>
     <div class='navigator-container'>
-      <a class='site-logo' href='/'>
-        <MdButton :icon='componentSiteIcon' type='text'>
-          <Transition name='site-text' :appear='false'>
-            <div style='display:inline-block;' v-show='orientation == "landscape"'>
-              {{ theme.navigator.siteText }}
-            </div>
-          </Transition>
-        </MdButton>
-      </a>
-
-      <div class='links-and-options'>
-        <MdButton class='menu' type='tonal' shape='round' @click='emit("optionsClick")'>
-          <MdiMenu />
-        </MdButton>
-      </div>
+      <slot></slot>
     </div>
   </nav>
 </template>
