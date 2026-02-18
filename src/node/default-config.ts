@@ -1,4 +1,4 @@
-import { iconFailible, MdPlugins as Plugins } from '.'
+import { icon, iconFailible, MdPlugins as Plugins } from '.'
 import Icons from 'unplugin-icons/vite'
 import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
 import MarkdownIt from 'markdown-it'
@@ -9,7 +9,7 @@ const BUILTIN_LICENSES = {
   'cc-by-nc-4.0': {
     family: 'creative-commons',
     name: 'CC-BY-NC-4.0',
-    footerDescription: `本作品使用CC-BY-NC-4.0协议授权。`,
+    footerDescription: `本文章除代码部分外使用CC-BY-NC-4.0协议授权。在非商业用途下可自由转载、引用，但请务必署名作者并注明出处。`,
     url: 'https://creativecommons.org/licenses/by-nc/4.0/',
   },
 
@@ -31,11 +31,91 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
     },
   },
 
+  externalSites: {
+    default: {
+      display: 'icon',
+      icon: await icon('mdi:link'),
+      displayName: 'Some Site',
+    },
+
+    github: {
+      display: 'icon',
+      icon: await icon('mingcute:github-line'),
+      displayName: 'GitHub',
+    },
+
+    bilibili: {
+      display: 'icon',
+      icon: await icon('mingcute:bilibili-line'),
+      displayName: 'BiliBili',
+    },
+
+    youtube: {
+      display: 'icon',
+      icon: await icon('mingcute:youtube-line'),
+      displayName: 'YouTube',
+    },
+
+    twitter: {
+      display: 'icon',
+      icon: await icon('mingcute:twitter-line'),
+      displayName: 'Twitter',
+    },
+
+    discord: {
+      display: 'icon',
+      icon: await icon('mingcute:discord-line'),
+      displayName: 'Discord',
+    },
+
+    qq: {
+      display: 'icon',
+      icon: await icon('mingcute:qq-line'),
+      displayName: 'QQ',
+    },
+
+    wechat: {
+      display: 'icon',
+      icon: await icon('mingcute:wechat-line'),
+      displayName: 'WeChat',
+    },
+
+    weibo: {
+      display: 'icon',
+      icon: await icon('mingcute:weibo-line'),
+      displayName: 'Weibo',
+    },
+
+    x: {
+      display: 'icon',
+      icon: await icon('mingcute:social-x-line'),
+      displayName: 'X',
+    },
+
+    tiktok: {
+      display: 'icon',
+      icon: await icon('mingcute:tiktok-line'),
+      displayName: 'TikTok',
+    },
+
+    douyin: {
+      display: 'icon',
+      icon: await icon('mingcute:tiktok-line'),
+      displayName: 'Douyin',
+    },
+
+    mail: {
+      display: 'icon',
+      icon: await icon('mingcute:mail-line'),
+      displayName: 'Mail',
+    },
+  },
+
   layout: {
     home: {
       secondaryTitle: 'description',
     },
-  }
+  },
 })
 
 export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {

@@ -2,6 +2,7 @@
 import { useData } from 'vitepress'
 import Navigator from '../components/Navigator.vue';
 import NavigatorHomeButton from '../components/NavigatorHomeButton.vue';
+import AuthorInfoCard from '../components/AuthorInfoCard.vue'; // 导入新组件
 import { useOrientation } from '../composables/preferences';
 import { ThemeConfig } from '../shared';
 
@@ -12,6 +13,21 @@ import { data } from '../data/Post.data'
 const { site, theme } = useData<ThemeConfig>()
 
 const config = $computed(() => theme.value.layout?.home!)
+
+// 获取作者信息
+const author = $computed(() => {
+  // 如果主题配置了默认作者，则获取该作者的详细信息
+  if (theme.value.author && theme.value.authorProfiles) {
+    const profile = theme.value.authorProfiles[theme.value.author];
+    if (profile) {
+      return {
+        ...profile,
+        name: theme.value.author
+      };
+    }
+  }
+  return null;
+});
 
 // 使用use函数获取状态
 const orientation = useOrientation()
@@ -60,6 +76,9 @@ const secondaryTitleText = (): string | undefined => {
 
     <!-- Right Cards -->
     <div class='layout-cards-column right-cards' v-show='orientation === "landscape"'>
+      <!-- 作者信息卡片 -->
+      <AuthorInfoCard :author="author" />
+      
       <div class='layout-card card-toc'>
         <div class='toc-text'>
           最近文章
@@ -171,4 +190,5 @@ const secondaryTitleText = (): string | undefined => {
     }
   }
 }
+
 </style>

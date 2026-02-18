@@ -75,6 +75,12 @@ const globalStyle = computed(() => {
 <style lang='scss'>
 @use 'styles/m3-anim';
 
+.sep01 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  mix-blend-mode: soft-light;
+}
+
 html {
   overflow: visible;
   width: 100%;
@@ -124,12 +130,6 @@ body {
 <style lang='scss' scoped>
 @forward './styles/page-layout.scss';
 @forward '../styles/cards.scss';
-
-.sep01 {
-  margin-top: 25px;
-  margin-bottom: 25px;
-  mix-blend-mode: soft-light;
-}
 </style>
 
 <template>

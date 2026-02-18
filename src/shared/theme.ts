@@ -1,10 +1,14 @@
-import { FunctionalComponent } from 'vue'
-
-export type ConfiguredIcon = string | FunctionalComponent
+export type Icon = string
 
 export interface AuthorInfo {
   /** URL that points to avatar for the author. */
   avatar?: string,
+  
+  /** Author's bio/description */
+  bio?: string,
+  
+  /** Author's external links */
+  externalLinks?: Record<string, string>,
 }
 
 export interface License {
@@ -31,7 +35,19 @@ export interface License {
 }
 
 export interface LicenseFamily {
-  logo?: string,
+  logo?: Icon,
+}
+
+/** 外部网站信息。 */
+export interface ExternalSite {
+  /** 显示图标或者网站名称。 */
+  display?: "icon" | "name",
+
+  /** 网站图标。 */
+  icon?: Icon,
+
+  /** 网站显示名称。 */
+  displayName?: string,
 }
 
 export interface ThemeConfig {
@@ -57,7 +73,7 @@ export interface ThemeConfig {
      *  - `icon("mdi:github") // 'icon' is from '/node'`
      *  - `"/site-icon.png"`
      */
-    siteIcon?: ConfiguredIcon,
+    siteIcon?: Icon,
   },
 
   /**
@@ -82,6 +98,26 @@ export interface ThemeConfig {
      */
     families?: Record<string, LicenseFamily>,
   },
+
+  /**
+   * 外部站点的配置。
+   * Key是外部站点的标识符。特殊站点`default`表示缺失配置时的默认配置。
+   * 
+   * ## Example
+   * ```ts
+   * {
+   *   default: {
+   *     display: "icon",
+   *     icon: "mdi:link",
+   *   },
+   * 
+   *   mySite: {
+   *     display: "name", // 显示站点名称，而不是图标。
+   *     name: "My example site",
+   *   },
+   * }
+   */
+  externalSites?: Record<string, ExternalSite>,
 
   /**
    * Layout相关配置。
