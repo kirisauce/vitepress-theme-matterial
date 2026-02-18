@@ -22,6 +22,12 @@ export default async () => defineConfig<ThemeConfig>({
     license: {
       default: 'cc-by-nc-4.0',
     },
+
+    layout: {
+      home: {
+        secondaryTitle: 'none',
+      },
+    },
   },
 
   extends: await getDefaultConfig(),

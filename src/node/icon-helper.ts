@@ -1,16 +1,16 @@
 import { loadNodeIcon } from "@iconify/utils/lib/loader/node-loader"
 
-export const iconNoThrow = async (path: string) => {
+export const iconFailible = async (path: string): Promise<string | undefined> => {
   const [collection, icon] = path.split(':', 2)
   if (icon === undefined || icon.length == 0) {
-    return undefined
+    throw SyntaxError(`Icon path could not be parsed '${path}'`)
   }
 
-  return (await loadNodeIcon(/* @vite-ignore */collection, icon)) || null
+  return (await loadNodeIcon(/* @vite-ignore */collection, icon))
 }
 
 export const icon = async (path: string) => {
-  const ic = await iconNoThrow(path)
+  const ic = await iconFailible(path)
   
   if (ic === undefined) {
     throw SyntaxError(`Icon path could not be resolved '${path}'`)

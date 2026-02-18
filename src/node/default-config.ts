@@ -1,4 +1,4 @@
-import { iconNoThrow, MdPlugins as Plugins } from '.'
+import { iconFailible, MdPlugins as Plugins } from '.'
 import Icons from 'unplugin-icons/vite'
 import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
 import MarkdownIt from 'markdown-it'
@@ -18,7 +18,7 @@ const BUILTIN_LICENSES = {
 
 const getThemeConfig = async (): Promise<ThemeConfig> => ({
   navigator: {
-    siteIcon: await iconNoThrow('mdi:home'),
+    siteIcon: await iconFailible('mdi:home'),
     siteText: 'A Vitepress Site',
   },
 
@@ -26,10 +26,16 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
     licenses: BUILTIN_LICENSES,
     families: {
       'creative-commons':  {
-        logo: await iconNoThrow('mdi:creative-commons'),
+        logo: await iconFailible('mdi:creative-commons'),
       },
     },
   },
+
+  layout: {
+    home: {
+      secondaryTitle: 'description',
+    },
+  }
 })
 
 export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {

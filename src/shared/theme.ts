@@ -82,4 +82,29 @@ export interface ThemeConfig {
      */
     families?: Record<string, LicenseFamily>,
   },
+
+  /**
+   * Layout相关配置。
+   */
+  layout?: {
+    /**
+     * 家是本配置（？
+     */
+    home?: {
+      /**
+       * 首页的副标题显示文本的来源。
+       * 
+       * ## Possible Values
+       *  - "none": 不显示副标题。
+       *  - "description": 显示站点描述。（默认）
+       *  - "custom": 显示自定义副标题。（需要设置`secondaryTitleText`）
+       */
+      secondaryTitle?: "none" | "description" | "custom",
+
+      /**
+       * 自定义的副标题。
+       */
+      secondaryTitleText?: string,
+    },
+  },
 }
