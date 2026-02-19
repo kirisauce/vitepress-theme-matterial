@@ -1,10 +1,10 @@
 <script lang='ts' setup>
 import { useData } from 'vitepress'
-import Navigator from '../components/Navigator.vue';
-import NavigatorHomeButton from '../components/NavigatorHomeButton.vue';
-import AuthorInfoCard from '../components/AuthorInfoCard.vue'; // 导入新组件
-import { useOrientation } from '../composables/preferences';
-import { ThemeConfig } from '../shared';
+import Navigator from '@vc/layouts/Navigator.vue'
+import NavigatorHomeButton from '@vc/layouts/Navigator/HomeButton.vue'
+import AuthorInfoCard from '@vc/layouts/AuthorInfoCard.vue'
+import { useOrientation } from '@vc/composables/preferences'
+import { ThemeConfig } from '@vc/shared'
 
 // @ts-ignore typescript language server无法识别vitepress编译时加载的数据
 import { data } from '../data/Post.data'

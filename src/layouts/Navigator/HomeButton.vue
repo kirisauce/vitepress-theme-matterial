@@ -1,9 +1,9 @@
 <script setup lang='ts'>
 import { useData } from 'vitepress'
-import MdButton from './MdButton.vue'
 import { h } from 'vue';
-import { usePreferences } from '../composables/preferences'
-import { componentFromSvgText as makeSvg } from '../shared/svg-helper';
+import MdButton from '@vc/components/MdButton.vue'
+import { usePreferences } from '@vc/composables/preferences'
+import { componentFromSvgText as makeSvg } from '@vc/shared/svg-helper';
 
 const { theme } = useData()
 const { orientation } = usePreferences()

@@ -4,7 +4,7 @@ import MdiDateRange from '~icons/mdi/date-range'
 import MdiTag from '~icons/mdi/tag'
 
 import { useData } from 'vitepress'
-import { usePageInfo } from '../composables/page-info'
+import { usePageInfo } from '@vc/composables/page-info'
 
 const { frontmatter, page } = useData()
 

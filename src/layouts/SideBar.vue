@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { computed, ref, StyleValue, Teleport, Transition } from 'vue';
-import { usePalette } from '../composables/colorpalette';
-import { cssHexColorWith, cssHexFromArgb } from '../utils';
+import { usePalette } from '@vc/composables/colorpalette';
+import { cssHexColorWith, cssHexFromArgb } from '@vc/utils';
 
 defineEmits<{
   (e: 'exit'): void,

@@ -1,7 +1,7 @@
 <script lang='ts' setup>
-import { usePageInfo } from '../composables/page-info'
-import { useThemeRouter } from '../composables/theme-router';
-import SvgContainer from './SvgContainer.vue';
+import { usePageInfo } from '@vc/composables/page-info'
+import { useThemeRouter } from '@vc/composables/theme-router';
+import SvgContainer from '@vc/components/SvgContainer.vue';
 
 const pg = usePageInfo()
 const themeRouter = useThemeRouter()
