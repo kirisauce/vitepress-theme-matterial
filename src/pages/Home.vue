@@ -3,11 +3,14 @@ import { useData } from 'vitepress'
 import Navigator from '@vc/layouts/Navigator.vue'
 import NavigatorHomeButton from '@vc/layouts/Navigator/HomeButton.vue'
 import AuthorInfoCard from '@vc/layouts/AuthorInfoCard.vue'
-import { useOrientation } from '@vc/composables/preferences'
 import { ThemeConfig } from '@vc/shared'
+import ReactiveThreeColumns from '@vc/layouts/ReactiveThreeColumns.vue'
 
 // @ts-ignore typescript language server无法识别vitepress编译时加载的数据
 import { data } from '../data/Post.data'
+
+// @ts-ignore
+import cardStyle from '@vc/styles/layout/card.module.scss'
 
 // Vitepress Data
 const { site, theme } = useData<ThemeConfig>()
@@ -29,9 +32,6 @@ const author = $computed(() => {
   return null;
 });
 
-// 使用use函数获取状态
-const orientation = useOrientation()
-
 // ----- 依赖主题配置的组件 -----
 const secondaryTitleText = (): string | undefined => {
   switch (config.secondaryTitle) {
@@ -50,13 +50,13 @@ const secondaryTitleText = (): string | undefined => {
     <NavigatorHomeButton />
   </Navigator>
 
-  <div class='pagecontent-wrapper' ref="elMainContent">
+  <ReactiveThreeColumns>
     <!-- Left Cards -->
-    <div class='layout-cards-column left-cards' v-show='orientation === "landscape"'></div>
+    <template #left></template>
 
     <!-- Center Cards -->
-    <div class='layout-cards-column center-cards'>
-      <main class='layout-card card-content'>
+    <template #center>
+      <main :class="['layout-card', cardStyle['card-content']]">
         <div class="home-header">
           <h1>{{ site.title }}</h1>
           <p>{{ secondaryTitleText() }}</p>
@@ -72,10 +72,10 @@ const secondaryTitleText = (): string | undefined => {
           </ul>
         </div>
       </main>
-    </div>
+    </template>
 
     <!-- Right Cards -->
-    <div class='layout-cards-column right-cards' v-show='orientation === "landscape"'>
+    <template #right>
       <!-- 作者信息卡片 -->
       <AuthorInfoCard :author="author" />
       
@@ -92,8 +92,8 @@ const secondaryTitleText = (): string | undefined => {
           </ul>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </ReactiveThreeColumns>
 </template>
 
 <style lang='scss' scoped>
@@ -181,5 +181,4 @@ const secondaryTitleText = (): string | undefined => {
     }
   }
 }
-
 </style>

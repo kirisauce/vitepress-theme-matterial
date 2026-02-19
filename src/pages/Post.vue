@@ -1,7 +1,6 @@
 <script setup lang='ts'>
-import { useTemplateRef, computed, ref, onUnmounted } from 'vue'
+import { useTemplateRef, ref, onUnmounted } from 'vue'
 import { useData } from 'vitepress'
-import { useOrientation } from '@vc/composables/preferences'
 import { useToc, extractCatalogFromDom } from '@vc/composables/toc'
 import { useGlobalElements } from '@vc/composables/global-elements'
 import { ThemeConfig } from '@vc/shared'
@@ -17,6 +16,7 @@ import Navigator from '@vc/layouts/Navigator.vue'
 import NavigatorHomeButton from '@vc/layouts/Navigator/HomeButton.vue'
 import Toc from '@vc/components/Toc.vue'
 import MdButton from '@vc/components/MdButton.vue'
+import ReactiveThreeColumns from '@vc/layouts/ReactiveThreeColumns.vue'
 
 // Icons
 import MdiTableOfContents from '~icons/mdi/table-of-contents'
@@ -24,11 +24,13 @@ import MdiArrowBack from '~icons/mdi/arrow-back'
 import MdiClose from '~icons/mdi/close'
 import MdiMenu from '~icons/mdi/menu'
 
+// @ts-ignore
+import cardStyle from '@vc/styles/layout/card.module.scss'
+
 // Vitepress Data
 const { frontmatter } = useData<ThemeConfig>()
 
 // 使用use函数获取状态
-const orientation = useOrientation()
 const { items: tocItems, activeId: activeTitleId } = useToc()
 
 // 定义模板引用
@@ -69,9 +71,6 @@ const removeScrollListener = () => {
     scrollHandler.value = null
   }
 }
-
-// 计算是否显示TOC
-const showToc = computed(() => orientation.value === 'landscape')
 
 // 更新活动标题
 const updateActiveTitle = () => {
@@ -158,13 +157,9 @@ onUnmounted(() => {
     <div></div>
   </SideBar>
 
-  <div class='page-content-wrapper svg-patch'>
-    <!-- Left Cards -->
-    <div class='layout-cards-column left-cards' v-show='orientation === "landscape"'></div>
-
-    <!-- Center Cards -->
-    <div class='layout-cards-column center-cards'>
-      <main class='layout-card card-content'>
+  <ReactiveThreeColumns>
+    <template #center>
+      <main :class="['layout-card', cardStyle['card-content']]">
         <span>
           <!-- Header Information -->
           <PostHeader />
@@ -180,11 +175,10 @@ onUnmounted(() => {
           <PostFooter />
         </span>
       </main>
-    </div>
+    </template>
 
-    <!-- Right Cards -->
-    <div class='layout-cards-column right-cards' v-show='orientation === "landscape"'>
-      <div class='layout-card card-toc' v-show='showToc' ref='elTocCard'>
+    <template #right>
+      <div :class="[cardStyle['card-toc']]" ref='elTocCard'>
         <div class='toc-text'>
           <SvgContainer>
             <MdiTableOfContents />
@@ -193,8 +187,8 @@ onUnmounted(() => {
 
         <Toc @click='(item) => catalogJumpTo(item.id!)' ref='elToc' ulStyle='overflow:auto;' style='flex: 1 0 0;' />
       </div>
-    </div>
-  </div>
+    </template>
+  </ReactiveThreeColumns>
 </template>
 
 <style lang='scss' scoped>

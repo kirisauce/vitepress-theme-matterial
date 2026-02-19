@@ -73,7 +73,6 @@ const globalStyle = computed(() => {
 </script>
 
 <style lang='scss'>
-@use '@vc/styles/layout/page-layout';
 @use '@vc/styles/abstract/m3-anim';
 
 .sep01 {
@@ -175,6 +174,12 @@ body {
   // 自定义块样式
   :deep(.custom-block) {
     @include vp-custom-block.apply;
+  }
+
+  :deep(.layout-card) {
+    box-shadow: 0 0 5px 0 var(--pal-shadow);
+    background-color: color(from var(--pal-surfaceContainer) srgb r g b / 0.7);
+    color: var(--pal-onSurface);
   }
 }
 </style>
