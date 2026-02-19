@@ -158,7 +158,7 @@ onUnmounted(() => {
     <div></div>
   </SideBar>
 
-  <div class='content-wrapper svg-patch'>
+  <div class='page-content-wrapper svg-patch'>
     <!-- Left Cards -->
     <div class='layout-cards-column left-cards' v-show='orientation === "landscape"'></div>
 
@@ -197,15 +197,9 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style lang='scss'>
-@forward './styles/page-markdown-ext.scss';
-@forward './styles/page-code-block.scss';
-</style>
-
 <style lang='scss' scoped>
-@forward './styles/page-layout.scss';
-@forward '../styles/cards.scss';
-@forward './styles/post-title.scss';
+@use '@vc/styles/layout/post/title';
+@use '@vc/styles/ext/vp-header-anchor';
 
 .sep01 {
   margin-top: 25px;
@@ -214,77 +208,18 @@ onUnmounted(() => {
 }
 
 .post-content {
-  :deep(h1) {
-    font-size: 2.5rem;
-    font-weight: 400;
-    line-height: 1.2;
-    color: var(--pal-onSurface);
-    margin: 24px 0 16px;
-    letter-spacing: -0.015em;
-  }
+  @include title.apply-style;
+  @include title.apply-decoration;
 
-  :deep(h2) {
-    font-size: 2rem;
-    font-weight: 400;
-    line-height: 1.25;
-    color: var(--pal-onSurface);
-    margin: 24px 0 16px;
-    letter-spacing: -0.015em;
+  :deep(.header-anchor) {
+    @include vp-header-anchor.apply;
   }
+}
 
-  :deep(h3) {
-    font-size: 1.75rem;
-    font-weight: 400;
-    line-height: 1.3;
-    color: var(--pal-onSurface);
-    margin: 20px 0 16px;
-    letter-spacing: -0.005em;
-  }
-
-  :deep(h4) {
-    font-size: 1.5rem;
-    font-weight: 500;
-    line-height: 1.35;
-    color: var(--pal-onSurface);
-    margin: 20px 0 16px;
-    letter-spacing: 0;
-  }
-
-  :deep(h5) {
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 1.4;
-    color: var(--pal-onSurface);
-    margin: 16px 0 12px;
-    letter-spacing: 0;
-  }
-
-  :deep(h6) {
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.5;
-    color: var(--pal-onSurface);
-    margin: 16px 0 12px;
-    letter-spacing: 0.005em;
-    text-transform: uppercase;
-  }
-
-  // 添加标题装饰线
-  :deep(h1, h2, h3, h4, h5, h6) {
-    position: relative;
-    padding-left: 8px;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      border-radius: 2px;
-      background-color: var(--palext-primary);
-      opacity: 0.6;
-    }
-  }
+.side-bar-header {
+  display: flex;
+  flex: 0 0 2em;
+  flex-direction: row;
+  justify-content: space-between;
 }
 </style>

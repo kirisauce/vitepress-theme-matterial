@@ -1,0 +1,106 @@
+/**
+ * 适用于 Vitepress 生成的自定义块（Custom Block）的样式。
+ * 目前支持以下类型的 Custom Block：
+ *  - info
+ *  - note
+ *  - tip
+ *  - important
+ *  - warning
+ *  - danger
+ *  - caution
+ *  - details
+ *
+ * ## Usage
+ * 在包含类`custom-block`元素的style上添加 `@include vp-custom-block.apply;`
+ */
+
+@use '@vc/styles/abstract/font';
+
+%outline {
+  outline: solid 1.5px var(--pal-outline);
+}
+
+%outline-variant {
+  outline: solid 1.5px var(--pal-outlineVariant);
+}
+
+@mixin apply {
+  box-sizing: border-box;
+  padding: 1.5em;
+  margin: 1em 0 1em 0;
+  border-radius: 2em;
+
+  >.custom-block-title,
+  >summary {
+    margin: 0 0 1em 0;
+    font-size: 1.25em;
+    font-family: font.$monospace;
+    display: flex;
+    flex-direction: row;
+
+    .svg-container {
+      font-size: 1.3em;
+      margin: 0 1ch 0 0;
+    }
+
+    +p {
+      margin: 0.5em 0 0 0;
+    }
+  }
+
+  &.info {
+    @extend %outline-variant;
+
+    background-color: var(--palext-infoTransparent);
+    color: var(--palext-onInfo);
+  }
+
+  &.note {
+    @extend %outline-variant;
+
+    background-color: var(--palext-infoTransparent);
+    color: var(--palext-onInfo);
+  }
+
+  &.tip {
+    @extend %outline-variant;
+
+    background-color: var(--palext-tipTransparent);
+    color: var(--palext-onTip);
+  }
+
+  &.important {
+    @extend %outline;
+
+    background-color: var(--palext-importantTransparent);
+    color: var(--palext-onImportant);
+  }
+
+  &.warning {
+    @extend %outline;
+
+    background-color: var(--palext-warningTransparent);
+    color: var(--palext-onWarning);
+  }
+
+  &.danger {
+    @extend %outline;
+
+    background-color: var(--palext-errorContainerTransparent);
+    color: var(--palext-onErrorContainer);
+  }
+
+  &.caution {
+    @extend %outline;
+
+    background-color: var(--palext-errorContainerTransparent);
+    color: var(--palext-onErrorContainer);
+  }
+
+  &.details {
+    @extend %outline-variant;
+
+    background-color: var(--palext-detailsTransparent);
+    color: var(--palext-onDetails);
+  }
+}

@@ -1,0 +1,27 @@
+@mixin stylize {
+  width: max-content;
+  outline: solid 1px var(--pal-outlineVariant);
+  box-shadow: 0 0 5px 0 var(--pal-shadow);
+  border-radius: 1em;
+  border-collapse: collapse;
+  overflow: hidden;
+  color: var(--pal-onSurfaceContainer);
+
+  thead th {
+    background-color: var(--pal-surfaceContainerHighest);
+  }
+
+  tbody>tr {
+    background-color: var(--pal-surfaceContainer);
+  }
+
+  tbody>tr:nth-child(2n) {
+    background-color: var(--pal-surfaceContainerHigh);
+  }
+
+  tr>td,
+  tr>th {
+    padding: 0.75em 1em 0.75em 1em;
+    border: 1px solid var(--pal-outlineVariant);
+  }
+}

@@ -1,5 +1,5 @@
 import { Theme } from 'vitepress'
-import Layout from './layouts/Layout.vue'
+import Layout from './pages/Layout.vue'
 
 export const getDefaultTheme = (): Theme => {
   return {

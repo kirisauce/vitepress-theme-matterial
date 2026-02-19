@@ -73,6 +73,7 @@ const globalStyle = computed(() => {
 </script>
 
 <style lang='scss'>
+@use '@vc/styles/layout/page-layout';
 @use '@vc/styles/abstract/m3-anim';
 
 .sep01 {
@@ -128,8 +129,54 @@ body {
 </style>
 
 <style lang='scss' scoped>
-@forward './styles/page-layout.scss';
-@forward '../styles/cards.scss';
+@use '@vc/styles/abstract/m3-anim';
+@use '@vc/styles/ext/vp-custom-block';
+@use '@vc/styles/ext/vp-code-block';
+
+.page-container {
+  position: absolute;
+
+  box-sizing: border-box;
+  padding: 0;
+  transition: padding m3-anim.$expressiveFastSpital;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 20px;
+
+  overflow: auto;
+
+  left: 0;
+  top: 0;
+
+  background: var(--pal-surface);
+  color: var(--pal-onSurface);
+
+  width: 100%;
+  height: 100%;
+
+  // @media (orientation: landscape) {
+  //   padding-top: 10px;
+  // }
+
+  // 代码块样式
+  @include vp-code-block.apply-all;
+
+  &.color-scheme-dark :deep(pre.shiki) {
+    @include vp-code-block.shiki-color-scheme(dark);
+  }
+
+  &.color-scheme-light :deep(pre.shiki) {
+    @include vp-code-block.shiki-color-scheme(light);
+  }
+
+  // 自定义块样式
+  :deep(.custom-block) {
+    @include vp-custom-block.apply;
+  }
+}
 </style>
 
 <template>

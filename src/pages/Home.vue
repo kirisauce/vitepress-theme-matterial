@@ -50,7 +50,7 @@ const secondaryTitleText = (): string | undefined => {
     <NavigatorHomeButton />
   </Navigator>
 
-  <div class='content-wrapper' ref="elMainContent">
+  <div class='pagecontent-wrapper' ref="elMainContent">
     <!-- Left Cards -->
     <div class='layout-cards-column left-cards' v-show='orientation === "landscape"'></div>
 
@@ -96,16 +96,7 @@ const secondaryTitleText = (): string | undefined => {
   </div>
 </template>
 
-<style lang='scss'>
-@forward './styles/page-markdown-ext.scss';
-@forward './styles/page-code-block.scss';
-</style>
-
 <style lang='scss' scoped>
-@forward './styles/page-layout.scss';
-@forward '../styles/cards.scss';
-@forward './styles/post-title.scss';
-
 .home-header {
   text-align: center;
   margin-bottom: 2rem;

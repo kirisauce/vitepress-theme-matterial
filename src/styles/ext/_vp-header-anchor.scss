@@ -1,0 +1,55 @@
+/**
+  * 锚点样式。
+  * 
+  * 使用时，在包含锚点的元素的样式上使用mixin `apply`即可。
+ */
+
+@use '@vc/styles/abstract/m3-anim';
+
+@mixin apply {
+  position: relative;
+  display: inline-flex;
+  font-size: 1.2rem;
+
+  cursor: pointer;
+
+  vertical-align: middle;
+
+  box-sizing: border-box;
+  background-color: var(--pal-primary);
+  color: var(--pal-onPrimary);
+  padding: 0.3lh;
+  border-radius: 100px;
+  overflow: hidden;
+  opacity: 0.01;
+
+  width: auto;
+
+  transition: background-color m3-anim.$expressiveSlowEffects, opacity m3-anim.$expressiveSlowEffects;
+
+  &>svg {
+    display: inline;
+    bottom: unset;
+    margin: 0;
+    z-index: 10;
+  }
+
+  &>.copy-text {
+    position: absolute;
+    display: block;
+    right: 0.3lh;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+    width: max-content;
+  }
+
+  &.visible {
+    background-color: var(--pal-secondary);
+    opacity: 0.88;
+  }
+
+  &:active {
+    outline: none;
+  }
+}

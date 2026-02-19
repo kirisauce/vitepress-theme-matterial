@@ -2,7 +2,10 @@ import { icon } from './icon-helper'
 import MarkdownIt from 'markdown-it'
 import { RenderRule } from 'markdown-it/lib/renderer.mjs'
 
-type PatchInfo = { [s: string]: { klass: string, icon: string } }
+type PatchInfo = Record<string, {
+  // klass: string,
+  icon: string,
+}>
 
 const patchRenderRule = (md: MarkdownIt, ruleName: string, makePatcher: (renderOriginal: RenderRule) => RenderRule) => {
   const renderOriginal = md.renderer.rules[ruleName] ?? (() => `[render error: rule '${ruleName}' not found]`)
@@ -12,23 +15,23 @@ const patchRenderRule = (md: MarkdownIt, ruleName: string, makePatcher: (renderO
 const getContainerPatchmap = async (): Promise<PatchInfo> => {
   return {
     info: {
-      klass: 'm3-outline-variant',
+      // klass: 'm3-outline-variant',
       icon: await icon('mdi:information-circle-outline'),
     },
     tip: {
-      klass: 'm3-outline-variant',
+      // klass: 'm3-outline-variant',
       icon: await icon('mdi:information-slab-circle-outline'),
     },
     warning: {
-      klass: 'm3-outline',
+      // klass: 'm3-outline',
       icon: await icon('mdi:alert-outline'),
     },
     danger: {
-      klass: 'm3-outline',
+      // klass: 'm3-outline',
       icon: await icon('mdi:warning-octagon-outline'),
     },
     details: {
-      klass: 'm3-outline-variant',
+      // klass: 'm3-outline-variant',
       icon: await icon('mdi:more-circle-outline'),
     },
   }
@@ -44,7 +47,7 @@ export const pluginPatchContainer = async (md: MarkdownIt) => {
 
       // Do modifications to the token
       const originalTitle = token.info.trim().substring(containerName.length).trim() || containerName.toUpperCase()
-      token.attrJoin('class', patchinfo.klass)
+      // token.attrJoin('class', patchinfo.klass)
       token.info = ` ${containerName} <span class="svg-container">${patchinfo.icon}</span> ${originalTitle}`
 
       // And get the render result
@@ -61,23 +64,23 @@ export const pluginPatchContainer = async (md: MarkdownIt) => {
 const getGithubAlertPatchmap = async (): Promise<PatchInfo> => {
   return {
     note: {
-      klass: 'm3-outline-variant',
+      // klass: 'm3-outline-variant',
       icon: await icon('mdi:information-circle-outline'),
     },
     tip: {
-      klass: 'm3-outline-variant',
+      // klass: 'm3-outline-variant',
       icon: await icon('mdi:information-slab-circle-outline'),
     },
     important: {
-      klass: 'm3-outline',
+      // klass: 'm3-outline',
       icon: await icon('mdi:warning-circle-outline'),
     },
     warning: {
-      klass: 'm3-outline',
+      // klass: 'm3-outline',
       icon: await icon('mdi:alert-outline'),
     },
     caution: {
-      klass: 'm3-outline',
+      // klass: 'm3-outline',
       icon: await icon('mdi:warning-octagon-outline'),
     },
   }
@@ -96,7 +99,7 @@ export const pluginPatchGithubAlerts = async (md: MarkdownIt) => {
 
     const tokenBackup = Object.assign({}, token)
 
-    token.meta.type = `${patchinfo.klass} ${token.meta.type}`
+    // token.meta.type = `${patchinfo.klass} ${token.meta.type}`
     token.meta.title = `<span class='svg-container'>${patchinfo.icon}</span>${token.meta.title}`
 
     const result = renderOriginal(...args)

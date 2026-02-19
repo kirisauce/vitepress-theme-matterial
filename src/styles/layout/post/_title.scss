@@ -4,61 +4,9 @@
 
 @use '@vc/styles/abstract/m3-anim';
 
-// header anchor样式
-
-.card-content {
-  :deep(.header-anchor) {
-    position: relative;
-    display: inline-flex;
-    font-size: 1.2rem;
-
-    cursor: pointer;
-
-    vertical-align: middle;
-
-    box-sizing: border-box;
-    background-color: var(--pal-primary);
-    color: var(--pal-onPrimary);
-    padding: 0.3lh;
-    border-radius: 100px;
-    overflow: hidden;
-    opacity: 0.01;
-
-    width: auto;
-
-    transition: background-color m3-anim.$expressiveSlowEffects, opacity m3-anim.$expressiveSlowEffects;
-
-    >svg {
-      display: inline;
-      bottom: unset;
-      margin: 0;
-      z-index: 10;
-    }
-
-    >.copy-text {
-      position: absolute;
-      display: block;
-      right: 0.3lh;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.8em;
-      width: max-content;
-    }
-  }
-
-  :deep(.header-anchor.visible) {
-    background-color: var(--pal-secondary);
-    opacity: 0.88;
-  }
-
-  :deep(.header-anchor:active) {
-    outline: none;
-  }
-}
-
 // 标题样式
 
-.post-content {
+@mixin apply-style {
   :deep(h1) {
     font-size: 2.5rem;
     font-weight: 400;
@@ -107,8 +55,11 @@
     letter-spacing: 0.005em;
     text-transform: uppercase;
   }
+}
 
-  // 添加标题装饰线
+/** 添加标题装饰线 */
+@mixin apply-decoration {
+
   :deep(h1),
   :deep(h2),
   :deep(h3),
