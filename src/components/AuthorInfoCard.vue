@@ -47,7 +47,7 @@ const makeSiteIterator = (externalLinks: Record<string, string>): [string, Exter
 </template>
 
 <style lang="scss" scoped>
-@use '../styles/m3-anim';
+@use '@vc/styles/abstract/m3-anim';
 
 .card-author {
   position: relative;

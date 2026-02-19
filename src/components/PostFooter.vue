@@ -8,7 +8,7 @@ const themeRouter = useThemeRouter()
 </script>
 
 <style lang='scss' scoped>
-@use '../styles/m3-anim';
+@use '@vc/styles/abstract/m3-anim';
 
 .line1 {
   display: flex block;

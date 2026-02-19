@@ -4,6 +4,7 @@ import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
 import MarkdownIt from 'markdown-it'
 import type { UserConfig } from 'vitepress'
 import { ThemeConfig } from '../shared'
+import path from 'path'
 
 const BUILTIN_LICENSES = {
   'cc-by-nc-4.0': {
@@ -129,6 +130,12 @@ export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
 
         ReactivityTransform(),
       ],
+
+      resolve: {
+        alias: {
+          '@vc': path.resolve(__dirname, '..'),
+        },
+      },
     },
 
     markdown: {

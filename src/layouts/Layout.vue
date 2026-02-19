@@ -73,7 +73,7 @@ const globalStyle = computed(() => {
 </script>
 
 <style lang='scss'>
-@use 'styles/m3-anim';
+@use '@vc/styles/abstract/m3-anim';
 
 .sep01 {
   margin-top: 25px;

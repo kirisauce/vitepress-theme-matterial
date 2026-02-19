@@ -57,9 +57,9 @@ const classes = computed(() => [
 </script>
 
 <style scoped lang='scss'>
-@use '../styles/m3-anim';
-@use '../styles/m3vars';
-@forward '../styles/button-types';
+@use '@vc/styles/abstract/m3-anim';
+@use '@vc/styles/abstract/m3-vars';
+@forward '@vc/styles/component/button-types';
 
 button {
   position: relative;
@@ -88,7 +88,7 @@ button {
   height: 32px;
   border-width: 1px;
   border-style: solid;
-  font-weight: m3vars.$weight-medium;
+  font-weight: m3-vars.$weight-medium;
   font-size: 14pt;
   line-height: 20pt;
   gap: 8px;
@@ -97,7 +97,7 @@ button {
 }
 
 .xsmall.square {
-  border-radius: m3vars.$corner-medium;
+  border-radius: m3-vars.$corner-medium;
 }
 
 .xsmall.round {
@@ -105,7 +105,7 @@ button {
 }
 
 .xsmall:enabled:active {
-  border-radius: m3vars.$corner-small;
+  border-radius: m3-vars.$corner-small;
 }
 
 // --- small ---
@@ -114,7 +114,7 @@ button {
   height: 40px;
   border-width: 1px;
   border-style: solid;
-  font-weight: m3vars.$weight-medium;
+  font-weight: m3-vars.$weight-medium;
   font-size: 14pt;
   line-height: 20pt;
   gap: 8px;
@@ -123,7 +123,7 @@ button {
 }
 
 .small.square {
-  border-radius: m3vars.$corner-medium;
+  border-radius: m3-vars.$corner-medium;
 }
 
 .small.round {
@@ -131,7 +131,7 @@ button {
 }
 
 .small:enabled:active {
-  border-radius: m3vars.$corner-small;
+  border-radius: m3-vars.$corner-small;
 }
 
 // --- medium ---
@@ -140,7 +140,7 @@ button {
   height: 56px;
   border-width: 1px;
   border-style: solid;
-  font-weight: m3vars.$weight-medium;
+  font-weight: m3-vars.$weight-medium;
   font-size: 16pt;
   line-height: 24pt;
   gap: 8px;
@@ -149,7 +149,7 @@ button {
 }
 
 .medium.square {
-  border-radius: m3vars.$corner-large;
+  border-radius: m3-vars.$corner-large;
 }
 
 .medium.round {
@@ -157,7 +157,7 @@ button {
 }
 
 .medium:enabled:active {
-  border-radius: m3vars.$corner-medium;
+  border-radius: m3-vars.$corner-medium;
 }
 
 // --- large ---
@@ -166,7 +166,7 @@ button {
   height: 96px;
   border-width: 2px;
   border-style: solid;
-  font-weight: m3vars.$weight-regular;
+  font-weight: m3-vars.$weight-regular;
   font-size: 24pt;
   line-height: 32pt;
   gap: 12px;
@@ -175,7 +175,7 @@ button {
 }
 
 .large.square {
-  border-radius: m3vars.$corner-xlarge;
+  border-radius: m3-vars.$corner-xlarge;
 }
 
 .large.round {
@@ -183,7 +183,7 @@ button {
 }
 
 .large:enabled:active {
-  border-radius: m3vars.$corner-large;
+  border-radius: m3-vars.$corner-large;
 }
 
 // --- extra large ---
@@ -192,7 +192,7 @@ button {
   height: 136px;
   border-width: 3px;
   border-style: solid;
-  font-weight: m3vars.$weight-regular;
+  font-weight: m3-vars.$weight-regular;
   font-size: 32pt;
   line-height: 40pt;
   gap: 16px;
@@ -201,7 +201,7 @@ button {
 }
 
 .xlarge.square {
-  border-radius: m3vars.$corner-xlarge;
+  border-radius: m3-vars.$corner-xlarge;
 }
 
 .xlarge.round {
@@ -209,7 +209,7 @@ button {
 }
 
 .xlarge:enabled:active {
-  border-radius: m3vars.$corner-large;
+  border-radius: m3-vars.$corner-large;
 }
 </style>
 

@@ -1,5 +1,5 @@
-@use 'm3-anim';
-@use 'm3vars';
+@use '@vc/styles/abstract/m3-anim';
+@use '@vc/styles/abstract/m3-vars';
 
 .state-layer {
   position: absolute;
@@ -40,17 +40,17 @@
 }
 
 .elevated:enabled:hover>.state-layer {
-  opacity: m3vars.$state-layer-opacity-hovered;
+  opacity: m3-vars.$state-layer-opacity-hovered;
   background-color: var(--pal-primary);
 }
 
 .elevated:enabled:focus>.state-layer {
-  opacity: m3vars.$state-layer-opacity-focused;
+  opacity: m3-vars.$state-layer-opacity-focused;
   background-color: var(--pal-primary);
 }
 
 .elevated:enabled:active>.state-layer {
-  opacity: m3vars.$state-layer-opacity-pressed;
+  opacity: m3-vars.$state-layer-opacity-pressed;
   background-color: var(--pal-primary);
 }
 
@@ -73,17 +73,17 @@
 }
 
 .filled:enabled:hover>.state-layer {
-  opacity: m3vars.$state-layer-opacity-hovered;
+  opacity: m3-vars.$state-layer-opacity-hovered;
   background-color: var(--pal-onPrimary);
 }
 
 .filled:enabled:focus>.state-layer {
-  opacity: m3vars.$state-layer-opacity-focused;
+  opacity: m3-vars.$state-layer-opacity-focused;
   background-color: var(--pal-onPrimary);
 }
 
 .filled:enabled:active>.state-layer {
-  opacity: m3vars.$state-layer-opacity-pressed;
+  opacity: m3-vars.$state-layer-opacity-pressed;
   background-color: var(--pal-onPrimary);
 }
 
@@ -106,17 +106,17 @@
 }
 
 .tonal:enabled:hover>.state-layer {
-  opacity: m3vars.$state-layer-opacity-hovered;
+  opacity: m3-vars.$state-layer-opacity-hovered;
   background-color: var(--pal-onSecondaryContainer);
 }
 
 .tonal:enabled:focus>.state-layer {
-  opacity: m3vars.$state-layer-opacity-focused;
+  opacity: m3-vars.$state-layer-opacity-focused;
   background-color: var(--pal-onSecondaryContainer);
 }
 
 .tonal:enabled:active>.state-layer {
-  opacity: m3vars.$state-layer-opacity-pressed;
+  opacity: m3-vars.$state-layer-opacity-pressed;
   background-color: var(--pal-onSecondaryContainer);
 }
 
@@ -140,17 +140,17 @@
 }
 
 .outlined:enabled:hover>.state-layer {
-  opacity: m3vars.$state-layer-opacity-hovered;
+  opacity: m3-vars.$state-layer-opacity-hovered;
   background-color: var(--pal-onSurfaceVariant);
 }
 
 .outlined:enabled:focus>.state-layer {
-  opacity: m3vars.$state-layer-opacity-focused;
+  opacity: m3-vars.$state-layer-opacity-focused;
   background-color: var(--pal-onSurfaceVariant);
 }
 
 .outlined:enabled:active>.state-layer {
-  opacity: m3vars.$state-layer-opacity-pressed;
+  opacity: m3-vars.$state-layer-opacity-pressed;
   background-color: var(--pal-onSurfaceVariant);
 }
 
@@ -173,16 +173,16 @@
 }
 
 .text:enabled:hover>.state-layer {
-  opacity: m3vars.$state-layer-opacity-hovered;
+  opacity: m3-vars.$state-layer-opacity-hovered;
   background-color: var(--pal-primary);
 }
 
 .text:enabled:focus>.state-layer {
-  opacity: m3vars.$state-layer-opacity-focused;
+  opacity: m3-vars.$state-layer-opacity-focused;
   background-color: var(--pal-primary);
 }
 
 .text:enabled:active>.state-layer {
-  opacity: m3vars.$state-layer-opacity-pressed;
+  opacity: m3-vars.$state-layer-opacity-pressed;
   background-color: var(--pal-primary);
 }

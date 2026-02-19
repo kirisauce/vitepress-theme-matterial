@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-@use '../styles/m3-anim';
+@use '@vc/styles/abstract/m3-anim';
 
 nav {
   position: sticky;

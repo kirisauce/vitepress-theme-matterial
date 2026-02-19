@@ -90,7 +90,7 @@ const showWrapper = ref<boolean>(show)
 </script>
 
 <style lang='scss' scoped>
-@use '../layouts/styles/m3-anim';
+@use '@vc/styles/abstract/m3-anim';
 
 .side-bar-background {
   display: block;

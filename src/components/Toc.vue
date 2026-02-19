@@ -141,7 +141,7 @@ defineExpose({
 </script>
 
 <style scoped lang='scss'>
-@use '../styles/m3-anim.scss';
+@use '@vc/styles/abstract/m3-anim';
 
 .toc {
   position: relative;
