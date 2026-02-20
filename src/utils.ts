@@ -1,4 +1,4 @@
-import { DeepReadonly, h, onMounted, onUnmounted, readonly, ref, Ref, watchEffect } from 'vue'
+import { DeepReadonly, onMounted, onUnmounted, readonly, ref, Ref, watchEffect } from 'vue'
 import { argbFromHex, Hct } from '@material/material-color-utilities'
 
 export function objectShrink<Obj extends Record<string, any> | Array<any>>(obj: Obj): Obj {
@@ -152,21 +152,24 @@ export const createPersistentValue = <T>(
   }
 
   let value
-  const serialized = window.localStorage.getItem(name)
-  if (serialized === null) {
-    if (typeof defaultValue == 'function') {
-      value = (defaultValue as any)()
+
+  if (typeof window !== 'undefined') {
+    const serialized = window.localStorage.getItem(name)
+    if (serialized === null) {
+      if (typeof defaultValue == 'function') {
+        value = (defaultValue as any)()
+      } else {
+        value = defaultValue
+      }
     } else {
-      value = defaultValue
+      value = newOptions.deserialize(serialized)
     }
-  } else {
-    value = newOptions.deserialize(serialized)
   }
 
   const valueRef = ref(value)
 
   watchEffect(() => {
-    if (window.localStorage) {
+    if (typeof window !== 'undefined') {
       window.localStorage.setItem(name, newOptions.serialize(valueRef.value))
     }
   })
