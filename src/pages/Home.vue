@@ -9,7 +9,6 @@ import ReactiveThreeColumns from '@vc/layouts/ReactiveThreeColumns.vue'
 // @ts-ignore typescript language server无法识别vitepress编译时加载的数据
 import { data } from '../data/Post.data'
 
-// @ts-ignore
 import cardStyle from '@vc/styles/layout/card.module.scss'
 
 // Vitepress Data

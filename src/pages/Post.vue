@@ -24,7 +24,6 @@ import MdiArrowBack from '~icons/mdi/arrow-back'
 import MdiClose from '~icons/mdi/close'
 import MdiMenu from '~icons/mdi/menu'
 
-// @ts-ignore
 import cardStyle from '@vc/styles/layout/card.module.scss'
 
 // Vitepress Data
