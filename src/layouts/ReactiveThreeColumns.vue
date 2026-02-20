@@ -59,7 +59,7 @@ const orientation = useOrientation()
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
 
   box-sizing: border-box;
@@ -114,6 +114,7 @@ const orientation = useOrientation()
   @extend %layout-cards-column;
 
   flex: 2 1 10em;
+  overflow: visible;
 
   @include when('portrait') {
     flex: 0 0 0;
