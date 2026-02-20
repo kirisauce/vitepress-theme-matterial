@@ -1,22 +1,22 @@
 <script setup lang='ts'>
 import { useTemplateRef, ref, onUnmounted } from 'vue'
 import { useData } from 'vitepress'
-import { useToc, extractCatalogFromDom } from '@vc/composables/toc'
-import { useGlobalElements } from '@vc/composables/global-elements'
-import { ThemeConfig } from '@vc/shared'
-import * as patches from '@vc/pages/content-patches'
+import { useToc, extractCatalogFromDom } from '../composables/toc'
+import { useGlobalElements } from '../composables/global-elements'
+import { ThemeConfig } from '../shared'
+import * as patches from './content-patches'
 
 // Components
-import PostHeader from '@vc/layouts/Post/Header.vue'
-import PostFooter from '@vc/layouts/Post/Footer.vue'
-import SvgContainer from '@vc/components/SvgContainer.vue'
-import SideBar from '@vc/layouts/SideBar.vue'
-import CircleButton from '@vc/components/CircleButton.vue'
-import Navigator from '@vc/layouts/Navigator.vue'
-import NavigatorHomeButton from '@vc/layouts/Navigator/HomeButton.vue'
-import Toc from '@vc/components/Toc.vue'
-import MdButton from '@vc/components/MdButton.vue'
-import ReactiveThreeColumns from '@vc/layouts/ReactiveThreeColumns.vue'
+import PostHeader from '../layouts/Post/Header.vue'
+import PostFooter from '../layouts/Post/Footer.vue'
+import SvgContainer from '../components/SvgContainer.vue'
+import SideBar from '../layouts/SideBar.vue'
+import CircleButton from '../components/CircleButton.vue'
+import Navigator from '../layouts/Navigator.vue'
+import NavigatorHomeButton from '../layouts/Navigator/HomeButton.vue'
+import Toc from '../components/Toc.vue'
+import MdButton from '../components/MdButton.vue'
+import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
 
 // Icons
 import MdiTableOfContents from '~icons/mdi/table-of-contents'
@@ -24,7 +24,7 @@ import MdiArrowBack from '~icons/mdi/arrow-back'
 import MdiClose from '~icons/mdi/close'
 import MdiMenu from '~icons/mdi/menu'
 
-import cardStyle from '@vc/styles/layout/card.module.scss'
+import cardStyle from '../styles/layout/card.module.scss'
 
 // Vitepress Data
 const { frontmatter } = useData<ThemeConfig>()
@@ -191,8 +191,8 @@ onUnmounted(() => {
 </template>
 
 <style lang='scss' scoped>
-@use '@vc/styles/layout/post/title';
-@use '@vc/styles/ext/vp-header-anchor';
+@use '../styles/layout/post/title';
+@use '../styles/ext/vp-header-anchor';
 
 .sep01 {
   margin-top: 25px;

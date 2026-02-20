@@ -57,9 +57,9 @@ const classes = computed(() => [
 </script>
 
 <style scoped lang='scss'>
-@use '@vc/styles/abstract/m3-anim';
-@use '@vc/styles/abstract/m3-vars';
-@forward '@vc/styles/component/button-types';
+@use '../styles/abstract/m3-anim';
+@use '../styles/abstract/m3-vars';
+@forward '../styles/component/button-types';
 
 button {
   position: relative;

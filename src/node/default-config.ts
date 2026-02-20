@@ -130,12 +130,6 @@ export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
 
         ReactivityTransform(),
       ],
-
-      resolve: {
-        alias: {
-          '@vc': path.resolve(__dirname, '..'),
-        },
-      },
     },
 
     markdown: {

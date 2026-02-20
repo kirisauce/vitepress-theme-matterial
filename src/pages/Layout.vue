@@ -73,7 +73,7 @@ const globalStyle = computed(() => {
 </script>
 
 <style lang='scss'>
-@use '@vc/styles/abstract/m3-anim';
+@use '../styles/abstract/m3-anim';
 
 .sep01 {
   margin-top: 25px;
@@ -128,9 +128,9 @@ body {
 </style>
 
 <style lang='scss' scoped>
-@use '@vc/styles/abstract/m3-anim';
-@use '@vc/styles/ext/vp-custom-block';
-@use '@vc/styles/ext/vp-code-block';
+@use '../styles/abstract/m3-anim';
+@use '../styles/ext/vp-custom-block';
+@use '../styles/ext/vp-code-block';
 
 .page-container {
   position: absolute;

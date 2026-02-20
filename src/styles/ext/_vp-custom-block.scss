@@ -14,7 +14,7 @@
  * 在包含类`custom-block`元素的style上添加 `@include vp-custom-block.apply;`
  */
 
-@use '@vc/styles/abstract/font';
+@use '../abstract/font';
 
 %outline {
   outline: solid 1.5px var(--pal-outline);

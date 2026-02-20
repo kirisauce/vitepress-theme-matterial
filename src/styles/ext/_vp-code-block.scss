@@ -17,8 +17,8 @@
  * 这两个mixin自带`:deep(...)`选择器，因此不需要在外层添加`:deep`。
  */
 
-@use '@vc/styles/abstract/m3-anim';
-@use '@vc/styles/abstract/font';
+@use '../abstract/m3-anim';
+@use '../abstract/font';
 
 // Shiki color scheme switch
 

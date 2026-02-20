@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { computed, ref, StyleValue, Teleport, Transition } from 'vue';
-import { usePalette } from '@vc/composables/colorpalette';
-import { cssHexColorWith, cssHexFromArgb } from '@vc/utils';
+import { usePalette } from '../composables/colorpalette';
+import { cssHexColorWith, cssHexFromArgb } from '../utils';
 
 defineEmits<{
   (e: 'exit'): void,
@@ -90,7 +90,7 @@ const showWrapper = ref<boolean>(show)
 </script>
 
 <style lang='scss' scoped>
-@use '@vc/styles/abstract/m3-anim';
+@use '../styles/abstract/m3-anim';
 
 .side-bar-background {
   display: block;

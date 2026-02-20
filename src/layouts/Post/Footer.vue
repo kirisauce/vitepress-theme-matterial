@@ -1,14 +1,14 @@
 <script lang='ts' setup>
-import { usePageInfo } from '@vc/composables/page-info'
-import { useThemeRouter } from '@vc/composables/theme-router';
-import SvgContainer from '@vc/components/SvgContainer.vue';
+import { usePageInfo } from '../../composables/page-info'
+import { useThemeRouter } from '../../composables/theme-router';
+import SvgContainer from '../../components/SvgContainer.vue';
 
 const pg = usePageInfo()
 const themeRouter = useThemeRouter()
 </script>
 
 <style lang='scss' scoped>
-@use '@vc/styles/abstract/m3-anim';
+@use '../../styles/abstract/m3-anim';
 
 .line1 {
   display: flex block;

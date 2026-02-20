@@ -4,7 +4,7 @@
   * 使用时，在包含锚点的元素的样式上使用mixin `apply`即可。
  */
 
-@use '@vc/styles/abstract/m3-anim';
+@use '../abstract/m3-anim';
 
 @mixin apply {
   position: relative;

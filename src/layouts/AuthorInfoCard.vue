@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useData } from 'vitepress';
-import { AuthorInfo, ExternalSite, ThemeConfig } from '@vc/shared/theme'
-import { componentFromSvgText } from '@vc/shared/svg-helper';
+import { AuthorInfo, ExternalSite, ThemeConfig } from '../shared/theme'
+import { componentFromSvgText } from '../shared/svg-helper';
 
 interface Props {
   author: AuthorInfo & { name: string } | null,
@@ -47,7 +47,7 @@ const makeSiteIterator = (externalLinks: Record<string, string>): [string, Exter
 </template>
 
 <style lang="scss" scoped>
-@use '@vc/styles/abstract/m3-anim';
+@use '../styles/abstract/m3-anim';
 
 .card-author {
   position: relative;

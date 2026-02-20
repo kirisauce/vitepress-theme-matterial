@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { useOrientation } from '@vc/composables/preferences'
+import { useOrientation } from '../composables/preferences'
 
 // 使用use函数获取状态
 const orientation = useOrientation()
@@ -25,7 +25,7 @@ const orientation = useOrientation()
 </template>
 
 <style lang='scss' scoped>
-@use '@vc/styles/abstract/m3-anim';
+@use '../styles/abstract/m3-anim';
 
 @mixin when($the-case) {
   @if $the-case == 'landscape' {

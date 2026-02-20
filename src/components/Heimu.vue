@@ -19,7 +19,7 @@ const elWrapper: Ref<HTMLElement> = useTemplateRef('wrapper')
 </template>
 
 <style lang='scss' scoped>
-@use '@vc/styles/abstract/m3-anim';
+@use '../styles/abstract/m3-anim';
 
 .heimu {
   background-color: v-bind(backgroundColor);

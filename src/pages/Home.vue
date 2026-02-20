@@ -1,15 +1,15 @@
 <script lang='ts' setup>
 import { useData } from 'vitepress'
-import Navigator from '@vc/layouts/Navigator.vue'
-import NavigatorHomeButton from '@vc/layouts/Navigator/HomeButton.vue'
-import AuthorInfoCard from '@vc/layouts/AuthorInfoCard.vue'
-import { ThemeConfig } from '@vc/shared'
-import ReactiveThreeColumns from '@vc/layouts/ReactiveThreeColumns.vue'
+import Navigator from '../layouts/Navigator.vue'
+import NavigatorHomeButton from '../layouts/Navigator/HomeButton.vue'
+import AuthorInfoCard from '../layouts/AuthorInfoCard.vue'
+import { ThemeConfig } from '../shared'
+import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
 
 // @ts-ignore typescript language server无法识别vitepress编译时加载的数据
 import { data } from '../data/Post.data'
 
-import cardStyle from '@vc/styles/layout/card.module.scss'
+import cardStyle from '../styles/layout/card.module.scss'
 
 // Vitepress Data
 const { site, theme } = useData<ThemeConfig>()

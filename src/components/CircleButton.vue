@@ -20,7 +20,7 @@ const paletteStyle = computed(() => {
 </script>
 
 <style lang='scss' scoped>
-@use '@vc/styles/abstract/m3-anim';
+@use '../styles/abstract/m3-anim';
 
 .button {
   display: flex;
