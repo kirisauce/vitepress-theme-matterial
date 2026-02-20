@@ -79,7 +79,7 @@ const secondaryTitleText = (): string | undefined => {
       <!-- 作者信息卡片 -->
       <AuthorInfoCard :author="author" />
       
-      <div class='layout-card card-toc'>
+      <div :class="['layout-card', cardStyle['card-toc']]">
         <div class='toc-text'>
           最近文章
         </div>
