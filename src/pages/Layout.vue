@@ -9,9 +9,6 @@ import { ThemeConfig } from '../shared'
 import Home from './Home.vue'
 import Post from './Post.vue'
 
-// @ts-ignore Self-hosted font
-import "@fontsource/cascadia-code"
-
 // Icons
 import { initThemeRouter } from '../composables/theme-router'
 import { initGlobalElements } from '../composables/global-elements'

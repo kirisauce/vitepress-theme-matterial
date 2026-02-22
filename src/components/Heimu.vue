@@ -9,11 +9,11 @@ const {
   color?: string,
 }>()
 
-const elWrapper: Ref<HTMLElement> = useTemplateRef('wrapper')
+const elWrapper: Ref<HTMLElement | null> = useTemplateRef('wrapper')
 </script>
 
 <template>
-  <span class='heimu' ref='wrapper' @click="elWrapper.classList.toggle('heimu-show')">
+  <span class='heimu' ref='wrapper' @click="elWrapper?.classList.toggle('heimu-show')">
     <slot></slot>
   </span>
 </template>

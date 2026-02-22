@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { computed } from 'vue';
 import { usePalette } from '../composables/colorpalette'
-import { cssHexFromArgb as hex, cssHexColorWith as hexWith } from '../utils';
+import { cssHexFromArgb as hex, cssHexColorWith as hexWith } from '../shared/utils';
 
 const paletteRef = usePalette()
 const paletteStyle = computed(() => {

@@ -1,5 +1,5 @@
 import { computed, ComputedRef, DeepReadonly, inject, InjectionKey, provide, Ref } from 'vue'
-import { createMediaQueryWrapper, createPersistentValue } from '../utils'
+import { createMediaQueryWrapper, createPersistentValue } from '../vue-utils'
 
 // ---------- Color Scheme Begin ----------
 

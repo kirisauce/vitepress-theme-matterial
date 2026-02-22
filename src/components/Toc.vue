@@ -1,7 +1,6 @@
 <script lang='ts' setup>
 import { h, onMounted, reactive, StyleValue, useTemplateRef, watch } from 'vue';
 import { TocItem, useToc } from '../composables/toc'
-import { joinStringList } from '../utils';
 
 const emit = defineEmits<{
   (e: 'click', item: TocItem): void,

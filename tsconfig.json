@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@vc/*": ["./*"]
-    },
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "paths": {},
+    "outDir": "./lib",
+    "skipLibCheck": true,
+    "noEmit": true,
     "types": [
       "@vue-macros/reactivity-transform/macros-global",
       "unplugin-icons/types/vue"
-    ]
+    ],
   }
 }

@@ -1,13 +1,13 @@
 import { useData } from "vitepress"
 import { computed, Ref } from "vue"
-import { objectShrink } from "../utils"
+import { objectShrink } from "../shared/utils"
 import { License, LicenseFamily, ThemeConfig } from "../shared"
 
 export interface PageInfo {
   authors: string[],
   lastUpdated: Date | undefined,
-  license: License,
-  licenseFamily: LicenseFamily,
+  license?: License,
+  licenseFamily?: LicenseFamily,
 }
 
 export const usePageInfo = (): Readonly<Ref<PageInfo>> => {
@@ -38,8 +38,8 @@ export const usePageInfo = (): Readonly<Ref<PageInfo>> => {
       }
     }
 
-    const license = theme.license.licenses[frontmatter.license ?? theme.license.default]
-    const licenseFamily = license?.family ? theme.license.families[license.family] : undefined
+    const license = theme.license?.licenses?.[frontmatter.license ?? theme.license.default]
+    const licenseFamily = license?.family ? theme.license?.families?.[license.family] : undefined
 
     return {
       authors,

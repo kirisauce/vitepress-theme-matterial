@@ -1,6 +1,6 @@
 import { DynamicScheme } from '@material/material-color-utilities'
 import { ComputedRef, inject, type InjectionKey } from 'vue'
-import { cssHexColorWith, cssHexFromArgb } from '../utils'
+import { cssHexColorWith, cssHexFromArgb } from '../shared/utils'
 
 export const PALETTE_EXPORTS = [
   'shadow',
@@ -166,12 +166,13 @@ export const createPaletteStyleExt = (p: DynamicScheme, isDark: boolean) => {
     'tertiaryContainer',
     'errorContainer',
   ]
+  const pal = p as any as Record<string, number>
   for (const extname of TRANSPARENT_EXTS) {
-    let ext = {}
+    let ext = {} as Record<string, string>
     const extnameUpper = extname.substring(0, 1).toUpperCase() + extname.substring(1)
-    ext[extname] = cssHexFromArgb(p[extname])
+    ext[extname] = cssHexFromArgb(pal[extname])
     ext[extname + 'Transparent'] = ''
-    ext['on' + extnameUpper] = cssHexFromArgb(p['on' + extnameUpper])
+    ext['on' + extnameUpper] = cssHexFromArgb(pal['on' + extnameUpper])
     Object.assign(palext, ext)
   }
 

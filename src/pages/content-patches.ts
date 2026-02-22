@@ -1,4 +1,4 @@
-import { writeClipboardText, AnimationPresets } from '../utils'
+import { writeClipboardText, AnimationPresets } from '../shared/utils'
 
 import MdiLinkRaw from '~icons/mdi/link?raw'
 
@@ -42,7 +42,7 @@ export const patchAnchors = (root: HTMLElement) => {
   const animProp = AnimationPresets.m3.expressiveFastSpital
 
   // Add icon to the header anchor elements
-  root.querySelectorAll('.header-anchor').forEach((elAnchor: HTMLAnchorElement) => {
+  root.querySelectorAll('.header-anchor').forEach(((elAnchor: HTMLAnchorElement) => {
     elAnchor.innerHTML = MdiLinkRaw as any as string
 
     const href = elAnchor.getAttribute('href')
@@ -52,8 +52,8 @@ export const patchAnchors = (root: HTMLElement) => {
     elAnchor.removeAttribute('href')
 
     // Transition animations
-    let anim: Animation
-    let oldWidth: number
+    let anim: Animation | undefined
+    let oldWidth: number | undefined
     const actionShow = (text: string) => {
       const curWidth = elAnchor.clientWidth
       if (anim !== undefined) {
@@ -107,7 +107,7 @@ export const patchAnchors = (root: HTMLElement) => {
     };
 
     // Copied effect
-    let prevTimeout: NodeJS.Timeout
+    let prevTimeout: NodeJS.Timeout | undefined
     let isHovered = false
     elAnchor.addEventListener('pointerenter', () => {
       isHovered = true
@@ -143,5 +143,5 @@ export const patchAnchors = (root: HTMLElement) => {
     })
 
     elAnchor.appendChild(elCopyText)
-  })
+  }) as any)
 }

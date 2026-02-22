@@ -2,18 +2,28 @@ import asyncFs from 'node:fs/promises'
 import fs from 'node:fs'
 import matter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
-import { defineLoader } from 'vitepress'
-import { objectShrink } from '../utils'
+import { defineLoader, UserConfig } from 'vitepress'
+import { objectShrink } from '../shared/utils'
+import path from 'node:path'
 
 const md = new MarkdownIt({
   html: false,
 })
 
-const BASE_DIRECTORY = fs.realpathSync('./posts')
 const LAYOUTS_NO_INDEX = [
   'index',
   'home',
 ]
+
+declare const VITEPRESS_CONFIG: UserConfig | undefined
+
+const getBaseDirectory = () => {
+  const config = VITEPRESS_CONFIG!
+  if (!config) {
+    throw Error("content loader invoked without an active vitepress process, or before vitepress config is resolved.")
+  }
+  return config.srcDir!
+}
 
 interface PostData {
   /**
@@ -131,6 +141,7 @@ const getPageLink = (prefix: string, path: string) => {
 
 const load = async (files: string[]): Promise<PostData[]> => {
   let result = new Array()
+  debugger
 
   for (const file of files) {
     const { data: frontMatter, content } = await asyncFs.readFile(file).then(buf => buf.toString()).then(str => matter(str))
@@ -143,7 +154,7 @@ const load = async (files: string[]): Promise<PostData[]> => {
     const mdData = extractMarkdownData(content) as any
 
     let merged = {
-      link: getPageLink(BASE_DIRECTORY, file),
+      link: getPageLink(getBaseDirectory(), file),
       title: '',
       excerpt: '',
       tags: [],
@@ -162,6 +173,6 @@ const load = async (files: string[]): Promise<PostData[]> => {
 }
 
 export default defineLoader({
-  watch: [BASE_DIRECTORY + "/**/*.md"],
+  watch: [path.resolve(getBaseDirectory(), "**/*.md")],
   load,
 })

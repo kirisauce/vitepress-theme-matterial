@@ -4,8 +4,9 @@ import { h } from 'vue';
 import MdButton from '../../components/MdButton.vue'
 import { usePreferences } from '../../composables/preferences'
 import { componentFromSvgText as makeSvg } from '../../shared/svg-helper';
+import { ThemeConfig } from '../../shared';
 
-const { theme } = useData()
+const { theme } = useData<ThemeConfig>()
 const { orientation } = usePreferences()
 
 const ComponentSiteIcon = () => {
@@ -29,7 +30,7 @@ const ComponentSiteIcon = () => {
     <MdButton :icon='ComponentSiteIcon' type='text'>
       <Transition name='site-text' :appear='false'>
         <div style='display:inline-block;' v-show='orientation == "landscape"'>
-          {{ theme.navigator.siteText }}
+          {{ theme.navigator?.siteText }}
         </div>
       </Transition>
     </MdButton>

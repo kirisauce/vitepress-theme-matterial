@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { computed, FunctionalComponent, useTemplateRef } from 'vue'
 import { c, usePalette } from '../composables/colorpalette'
-import { objectPropertiesAddPrefix } from '../utils'
+import { objectPropertiesAddPrefix } from '../shared/utils'
 
 const paletteRef = usePalette()
 

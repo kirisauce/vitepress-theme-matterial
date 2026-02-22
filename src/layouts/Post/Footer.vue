@@ -73,7 +73,7 @@ const themeRouter = useThemeRouter()
   <footer>
     <div class='line1'>
       <!-- License -->
-      <div v-if='pg.license' class='license-box' @click='themeRouter.tryOpen(pg.license.url)'>
+      <div v-if='pg.license' class='license-box' @click='themeRouter?.tryOpen(pg.license.url)'>
         <div class='license-name'>{{ pg.license.name }}</div>
         <span class='license-description'>{{ pg.license.footerDescription }}</span>
         <div v-if='pg.licenseFamily' class='license-box-layer-logo'>

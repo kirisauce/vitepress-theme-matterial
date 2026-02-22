@@ -1,16 +1,14 @@
 {
   "name": "vitepress-theme-matterial",
   "devDependencies": {
-    "@iconify-json/mdi": "^1.2.3",
-    "@iconify-json/mingcute": "^1.2.7",
     "@iconify/utils": "^3.1.0",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^25.0.6",
     "@vue-macros/reactivity-transform": "^3.1.2",
+    "esbuild": "^0.27.3",
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.1.0",
     "markdown-it-async": "^2.2.0",
-    "sass": "^1.97.2",
     "sass-loader": "^16.0.6",
     "unplugin-icons": "^23.0.1",
     "vitepress": "2.0.0-alpha.15",
@@ -18,23 +16,26 @@
   },
   "type": "module",
   "exports": {
-    ".": {
+    "./theme": {
       "default": "./src/index.ts"
     },
-    "./node": {
-      "default": "./src/node/index.ts"
+    "./config": {
+      "default": "./lib/config.js"
     },
     "./shared": {
       "default": "./src/shared/index.ts"
+    },
+    "./*": {
+      "default": "./src"
     }
   },
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
+    "build:lib": "node ./scripts/build.js",
     "preview": "vitepress preview"
   },
   "dependencies": {
-    "@fontsource/cascadia-code": "^5.2.3",
     "@material/material-color-utilities": "^0.3.0"
   }
 }
