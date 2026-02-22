@@ -1,10 +1,10 @@
 import asyncFs from 'node:fs/promises'
-import fs from 'node:fs'
 import matter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
 import { defineLoader, UserConfig } from 'vitepress'
 import { objectShrink } from '../shared/utils'
 import path from 'node:path'
+import { PostData } from '../shared'
 
 const md = new MarkdownIt({
   html: false,
@@ -23,46 +23,6 @@ const getBaseDirectory = () => {
     throw Error("content loader invoked without an active vitepress process, or before vitepress config is resolved.")
   }
   return config.srcDir!
-}
-
-interface PostData {
-  /**
-   * Title of the post.
-   */
-  title: string,
-
-  /**
-   * The instant when the post was created.
-   * 
-   * This time is usually got from the frontmatter field 'timeCreated'.
-   * If the field 'timeCreated' does not exists in the frontmatter, this time is known
-   * from the file system.
-   */
-  timeCreated: number,
-
-  /**
-   * The instant when the post was last modified.
-   * 
-   * This time is usually got from the frontmatter field 'timeModified'.
-   * If the field 'timeModified' does not exists in the frontmatter, this time is known
-   * from the file system.
-   */
-  timeModified: number,
-
-  /**
-   * Excerpt of this post.
-   */
-  excerpt: string,
-
-  /**
-   * User-defined tags of the post.
-   */
-  tags: string[],
-
-  /**
-   * Link to the post.
-   */
-  link: string,
 }
 
 interface MarkdownData {
@@ -158,6 +118,7 @@ const load = async (files: string[]): Promise<PostData[]> => {
       title: '',
       excerpt: '',
       tags: [],
+      image: undefined,
       timeCreated: stat.birthtime,
       timeModified: stat.mtime,
       ...mdData,

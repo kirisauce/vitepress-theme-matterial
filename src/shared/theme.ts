@@ -144,3 +144,49 @@ export interface ThemeConfig {
     },
   },
 }
+
+// ----- Other Types -----
+export interface PostData {
+  /**
+   * Title of the post.
+   */
+  title: string,
+
+  /**
+   * The instant when the post was created.
+   * 
+   * This time is usually got from the frontmatter field 'timeCreated'.
+   * If the field 'timeCreated' does not exists in the frontmatter, this time is known
+   * from the file system.
+   */
+  timeCreated: number,
+
+  /**
+   * The instant when the post was last modified.
+   * 
+   * This time is usually got from the frontmatter field 'timeModified'.
+   * If the field 'timeModified' does not exists in the frontmatter, this time is known
+   * from the file system.
+   */
+  timeModified: number,
+
+  /**
+   * Excerpt of this post.
+   */
+  excerpt: string,
+
+  /**
+   * User-defined tags of the post.
+   */
+  tags: string[],
+
+  /**
+   * Link to the post.
+   */
+  link: string,
+
+  /**
+   * Link to the header image of the post.
+   */
+  image?: string,
+}
