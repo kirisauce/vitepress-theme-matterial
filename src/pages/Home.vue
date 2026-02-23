@@ -60,7 +60,7 @@ const secondaryTitleText = (): string | undefined => {
 
     <!-- Center Cards -->
     <template #center>
-      <main :class="['layout-card', cardStyle['card-content']]">
+      <main :class="['layout-card', cardStyle['card-content'], cardStyle['card-appear']]">
         <div class="home-header">
           <h1>{{ site.title }}</h1>
           <p>{{ secondaryTitleText() }}</p>
@@ -85,9 +85,9 @@ const secondaryTitleText = (): string | undefined => {
     <!-- Right Cards -->
     <template #right>
       <!-- 作者信息卡片 -->
-      <AuthorInfoCard :author="author" />
+      <AuthorInfoCard :author="author" :class="[cardStyle['card-appear'], cardStyle['card-appear-delay-1']]" />
       
-      <div :class="['layout-card', cardStyle['card-toc']]">
+      <div :class="['layout-card', cardStyle['card-toc'], cardStyle['card-appear'], cardStyle['card-appear-delay-2']]">
         <div class='toc-text'>
           最近文章
         </div>
@@ -106,6 +106,8 @@ const secondaryTitleText = (): string | undefined => {
 </template>
 
 <style lang='scss' scoped>
+@use '../styles/layout/card.module.scss';
+
 .home-header {
   text-align: center;
   margin-bottom: 2rem;

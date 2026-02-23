@@ -44,3 +44,32 @@
     align-items: center;
   }
 }
+
+:root {
+  --card-appear-delay-1: 150ms;
+  --card-appear-delay-2: 300ms;
+}
+
+.card-appear {
+  opacity: 0;
+  animation: cardAppear m3-anim.$expressiveSlowSpital forwards;
+}
+
+.card-appear-delay-1 {
+  animation-delay: var(--card-appear-delay-1);
+}
+
+.card-appear-delay-2 {
+  animation-delay: var(--card-appear-delay-2);
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

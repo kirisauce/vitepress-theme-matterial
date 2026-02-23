@@ -158,7 +158,7 @@ onUnmounted(() => {
 
   <ReactiveThreeColumns>
     <template #center>
-      <main :class="['layout-card', cardStyle['card-content']]">
+      <main :class="['layout-card', cardStyle['card-content'], cardStyle['card-appear']]">
         <span>
           <!-- Header Information -->
           <PostHeader />
@@ -177,7 +177,7 @@ onUnmounted(() => {
     </template>
 
     <template #right>
-      <div :class="[cardStyle['card-toc']]" ref='elTocCard'>
+      <div :class="[cardStyle['card-toc'], cardStyle['card-appear'], cardStyle['card-appear-delay-1']]" ref='elTocCard'>
         <div class='toc-text'>
           <SvgContainer>
             <MdiTableOfContents />
@@ -193,6 +193,7 @@ onUnmounted(() => {
 <style lang='scss' scoped>
 @use '../styles/layout/post/title';
 @use '../styles/ext/vp-header-anchor';
+@use '../styles/layout/card.module.scss';
 
 .sep01 {
   margin-top: 25px;
