@@ -26,32 +26,7 @@ const orientation = useOrientation()
 
 <style lang='scss' scoped>
 @use '../styles/abstract/m3-anim';
-
-@mixin when($the-case) {
-  @if $the-case == 'landscape' {
-    @media (orientation: landscape) {
-      @content;
-    }
-  }
-  @else if $the-case == 'wide-landscape' {
-    @media (orientation: landscape) and (aspect-ratio >= 1.6) {
-      @content;
-    }
-  }
-  @else if $the-case == 'narrow-landscape' {
-    @media (orientation: landscape) and (aspect-ratio < 1.6) {
-      @content;
-    }
-  }
-  @else if $the-case == 'portrait' {
-    @media (orientation: portrait) {
-      @content;
-    }
-  }
-  @else {
-    @error "Unknown case: #{$the-case}";
-  }
-}
+@use '../styles/abstract/screen' as *;
 
 .page-content-wrapper {
   flex: 1 0 10em;

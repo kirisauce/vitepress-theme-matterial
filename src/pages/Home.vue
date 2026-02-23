@@ -3,6 +3,7 @@ import { useData } from 'vitepress'
 import Navigator from '../layouts/Navigator.vue'
 import NavigatorHomeButton from '../layouts/Navigator/HomeButton.vue'
 import AuthorInfoCard from '../layouts/AuthorInfoCard.vue'
+import PostLinkCard from '../layouts/PostLinkCard.vue'
 import { ThemeConfig } from '../shared'
 import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
 
@@ -15,6 +16,9 @@ import cardStyle from '../styles/layout/card.module.scss'
 const { site, theme } = useData<ThemeConfig>()
 
 const config = $computed(() => theme.value.layout?.home!)
+
+// 是否显示图片占位区域
+const showImagePlaceholder = $computed(() => config.showImagePlaceholder ?? true)
 
 // 获取作者信息
 const author = $computed(() => {
@@ -63,12 +67,15 @@ const secondaryTitleText = (): string | undefined => {
         
         <div class="posts-list-container">
           <h2>最新文章</h2>
-          <ul class="posts-list-ul">
-            <li v-for="d in data" class="posts-list-item">
-              <a :href="d.link">{{ d.title }}</a>
-              <p class="post-excerpt" v-if="d.excerpt">{{ d.excerpt }}</p>
-            </li>
-          </ul>
+          <div class="posts-cards-grid">
+          <PostLinkCard
+            v-for="d in data"
+            :key="d.link"
+            :post="d"
+            mode="full"
+            :show-image-placeholder="showImagePlaceholder"
+          />
+        </div>
         </div>
       </main>
     </template>
@@ -84,11 +91,12 @@ const secondaryTitleText = (): string | undefined => {
         </div>
 
         <div class="posts-list-widget">
-          <ul class="posts-list-ul">
-            <li v-for="d in data" class="posts-list-item">
-              <a :href="d.link">{{ d.title }}</a>
-            </li>
-          </ul>
+          <PostLinkCard
+            v-for="d in data"
+            :key="d.link"
+            :post="d"
+            mode="simple"
+          />
         </div>
       </div>
     </template>
@@ -96,6 +104,8 @@ const secondaryTitleText = (): string | undefined => {
 </template>
 
 <style lang='scss' scoped>
+@use '../styles/abstract/screen.scss';
+
 .home-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -127,57 +137,26 @@ const secondaryTitleText = (): string | undefined => {
   }
 }
 
-.posts-list-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.posts-list-item {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--pal-outlineVariant);
+.posts-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: center;
   
-  &:last-child {
-    border-bottom: none;
+  @include screen.when(narrow-landscape) {
+    grid-template-columns: repeat(2, 1fr);
   }
   
-  a {
-    display: block;
-    font-size: 1.3rem;
-    font-weight: 500;
-    color: var(--pal-primary);
-    text-decoration: none;
-    margin-bottom: 0.5rem;
-    transition: color 0.3s ease;
-    
-    &:hover {
-      color: var(--pal-primaryFixed);
-      text-decoration: underline;
-    }
-  }
-  
-  .post-excerpt {
-    color: var(--pal-onSurfaceVariant);
-    line-height: 1.6;
-    margin: 0.5rem 0 0 0;
+  @include screen.when(landscape) {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 .posts-list-widget {
   max-height: 70vh;
   overflow-y: auto;
-  
-  .posts-list-ul {
-    padding: 0.5rem;
-  }
-  
-  .posts-list-item {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--pal-outlineVariant);
-    
-    &:last-child {
-      border-bottom: none;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 </style>

@@ -129,7 +129,7 @@ export interface ThemeConfig {
     home?: {
       /**
        * 首页的副标题显示文本的来源。
-       * 
+       *
        * ## Possible Values
        *  - "none": 不显示副标题。
        *  - "description": 显示站点描述。（默认）
@@ -141,6 +141,12 @@ export interface ThemeConfig {
        * 自定义的副标题。
        */
       secondaryTitleText?: string,
+
+      /**
+       * 当文章没有封面图时，是否显示占位区域。
+       * 默认为 true。
+       */
+      showImagePlaceholder?: boolean,
     },
   },
 }

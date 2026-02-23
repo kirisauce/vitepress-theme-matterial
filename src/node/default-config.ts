@@ -115,6 +115,7 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
   layout: {
     home: {
       secondaryTitle: 'description',
+      showImagePlaceholder: true,
     },
   },
 })
