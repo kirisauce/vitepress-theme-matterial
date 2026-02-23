@@ -22,15 +22,27 @@ const props = withDefaults(defineProps<Props>(), {
 const hasImage = $computed(() => !!props.post.image)
 const hasExcerpt = $computed(() => !!props.post.excerpt)
 const hasTags = $computed(() => !!props.post.tags && props.post.tags.length > 0)
+
+// 点击卡片跳转
+const navigateToPost = () => {
+  window.location.href = props.post.link
+}
 </script>
 
 <template>
-  <article class="post-link-card" :class="{ 'mode-full': mode === 'full', 'mode-simple': mode === 'simple' }">
+  <article
+    class="post-link-card"
+    :class="{ 'mode-full': mode === 'full', 'mode-simple': mode === 'simple' }"
+    :tabindex="0"
+    :role="'link'"
+    :aria-label="`阅读文章: ${post.title}`"
+    @click="navigateToPost"
+    @keydown.enter="navigateToPost"
+    @keydown.space.prevent="navigateToPost"
+  >
     <!-- 完整模式：显示图片 -->
     <div v-if="mode === 'full' && hasImage" class="post-card-image">
-      <a :href="post.link">
-        <img :src="withBase(post.image!)" :alt="post.title" />
-      </a>
+      <img :src="withBase(post.image!)" :alt="post.title" />
     </div>
 
     <!-- 完整模式：无图片时显示占位区域 -->
@@ -42,7 +54,7 @@ const hasTags = $computed(() => !!props.post.tags && props.post.tags.length > 0)
     <div class="post-card-content">
       <!-- 标题 -->
       <h3 class="post-card-title">
-        <a :href="post.link">{{ post.title }}</a>
+        {{ post.title }}
       </h3>
 
       <!-- 完整模式：显示摘要 -->
@@ -76,13 +88,15 @@ const hasTags = $computed(() => !!props.post.tags && props.post.tags.length > 0)
 
   overflow: hidden;
 
+  cursor: pointer;
+
   transition:
     transform m3-anim.$expressiveDefaultSpital,
     box-shadow m3-anim.$expressiveDefaultEffects;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 2px var(--pal-shadow);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px var(--pal-shadow);
   }
 
   // 完整模式样式

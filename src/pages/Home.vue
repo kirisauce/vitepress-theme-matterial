@@ -4,6 +4,7 @@ import Navigator from '../layouts/Navigator.vue'
 import NavigatorHomeButton from '../layouts/Navigator/HomeButton.vue'
 import AuthorInfoCard from '../layouts/AuthorInfoCard.vue'
 import PostLinkCard from '../layouts/PostLinkCard.vue'
+import FlowContainer from '../components/FlowContainer.vue'
 import { ThemeConfig } from '../shared'
 import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
 
@@ -17,8 +18,8 @@ const { site, theme } = useData<ThemeConfig>()
 
 const config = $computed(() => theme.value.layout?.home!)
 
-// 是否显示图片占位区域
-const showImagePlaceholder = $computed(() => config.showImagePlaceholder ?? true)
+// 按时间排序的文章列表（从新到旧）
+const sortedPosts = $computed(() => [...data].sort((a, b) => b.timeCreated - a.timeCreated))
 
 // 获取作者信息
 const author = $computed(() => {
@@ -67,15 +68,16 @@ const secondaryTitleText = (): string | undefined => {
         
         <div class="posts-list-container">
           <h2>最新文章</h2>
-          <div class="posts-cards-grid">
-          <PostLinkCard
-            v-for="d in data"
-            :key="d.link"
-            :post="d"
-            mode="full"
-            :show-image-placeholder="showImagePlaceholder"
-          />
-        </div>
+          <FlowContainer :columns="2" gap="1rem" min-column-width="300px">
+            <PostLinkCard
+              v-for="d in sortedPosts"
+              :key="d.link"
+              :post="d"
+              mode="full"
+              :show-image-placeholder="theme.layout?.home?.showImagePlaceholder ?? true"
+              class="flow-item"
+            />
+          </FlowContainer>
         </div>
       </main>
     </template>
@@ -104,8 +106,6 @@ const secondaryTitleText = (): string | undefined => {
 </template>
 
 <style lang='scss' scoped>
-@use '../styles/abstract/screen.scss';
-
 .home-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -134,21 +134,6 @@ const secondaryTitleText = (): string | undefined => {
     color: var(--pal-onSurface);
     margin: 24px 0 16px;
     letter-spacing: -0.015em;
-  }
-}
-
-.posts-cards-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  align-items: center;
-  
-  @include screen.when(narrow-landscape) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  @include screen.when(landscape) {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
