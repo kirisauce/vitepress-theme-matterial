@@ -4,7 +4,7 @@ import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
 import MarkdownIt from 'markdown-it'
 import type { UserConfig } from 'vitepress'
 import { ThemeConfig } from '../shared'
-import path from 'path'
+import { buildEnd } from './build-hooks'
 
 const BUILTIN_LICENSES = {
   'cc-by-nc-4.0': {
@@ -129,10 +129,16 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
       showLicense: true,
     },
   },
+
+  build: {
+    maxItemsPerIndexPage: 100,
+  },
 })
 
 export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
   return {
+    lang: 'zh-CN',
+
     vite: {
       plugins: [
         Icons({
@@ -174,6 +180,8 @@ export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
         'cc': 'C++',
       },
     },
+
+    buildEnd,
 
     themeConfig: await getThemeConfig(),
   }

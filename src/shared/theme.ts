@@ -76,6 +76,12 @@ export interface FooterConfig {
   extraText?: string,
 }
 
+/** 主题构建钩子的配置 */
+export interface BuildConfig {
+  /** 配置一个索引页文件内最多包含几个item。默认值100 */
+  maxItemsPerIndexPage?: number,
+}
+
 export interface ThemeConfig {
   /** Default author for posts that do not have any author specified. */
   author?: string,
@@ -191,10 +197,14 @@ export interface ThemeConfig {
      */
     footer?: FooterConfig,
   },
+
+  build?: BuildConfig,
 }
 
+export type PostData = _PostData & Record<string, string>
+
 // ----- Other Types -----
-export interface PostData {
+export interface _PostData {
   /**
    * Title of the post.
    */
