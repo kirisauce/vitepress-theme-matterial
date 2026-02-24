@@ -8,7 +8,6 @@ import FlowContainer from '../components/FlowContainer.vue'
 import { ThemeConfig } from '../shared'
 import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
 
-// @ts-ignore typescript language server无法识别vitepress编译时加载的数据
 import { data } from '../data/Post.data'
 
 import cardStyle from '../styles/layout/card.module.scss'

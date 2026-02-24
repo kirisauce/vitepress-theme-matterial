@@ -133,6 +133,8 @@ const load = async (files: string[]): Promise<PostData[]> => {
   return result
 }
 
+export declare const data: PostData[]
+
 export default defineLoader({
   watch: [path.resolve(getBaseDirectory(), "**/*.md")],
   load,
