@@ -33,6 +33,7 @@
   },
   "scripts": {
     "dev": "vitepress dev",
+    "watch:lib": "node ./scripts/watch.js",
     "build": "vitepress build",
     "build:lib": "node ./scripts/build.js",
     "preview": "vitepress preview"
