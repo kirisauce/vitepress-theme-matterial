@@ -117,6 +117,17 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
       secondaryTitle: 'description',
       showImagePlaceholder: true,
     },
+
+    footer: {
+      // 默认使用全局配置的作者下的链接
+      links: 'author',
+
+      // 版权信息 - 使用当前年份
+      copyright: '[Copyright NOT CONFIGURED] © {currentYear}',
+      
+      // 默认显示许可证信息
+      showLicense: true,
+    },
   },
 })
 

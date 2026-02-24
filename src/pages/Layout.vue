@@ -8,6 +8,7 @@ import { initToc } from '../composables/toc'
 import { ThemeConfig } from '../shared'
 import Home from './Home.vue'
 import Post from './Post.vue'
+import PageFooter from '../components/PageFooter.vue'
 
 // Icons
 import { initThemeRouter } from '../composables/theme-router'
@@ -188,5 +189,8 @@ body {
     <!-- 文章页面布局 -->
     <Home v-if='frontmatter.layout === "home"' />
     <Post v-else />
+
+    <!-- 页面页脚 -->
+    <PageFooter />
   </div>
 </template>

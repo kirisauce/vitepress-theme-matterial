@@ -2,25 +2,13 @@
 import { useData } from 'vitepress';
 import { AuthorInfo, ExternalSite, ThemeConfig } from '../shared/theme'
 import { componentFromSvgText } from '../shared/svg-helper';
+import ExternalLink from './ExternalLink.vue';
 
 interface Props {
   author: AuthorInfo & { name: string } | null,
 }
 
 defineProps<Props>()
-
-const { theme } = useData<ThemeConfig>()
-
-const getExternalSite = (siteName: string): ExternalSite => {
-  return {
-    ...theme.value.externalSites?.default!,
-    ...theme.value.externalSites?.[siteName],
-  }
-}
-
-const makeSiteIterator = (externalLinks: Record<string, string>): [string, ExternalSite, string][] => {
-  return Object.entries(externalLinks).map(([name, url]) => [name, getExternalSite(name), url])
-}
 </script>
 
 <template>
@@ -37,11 +25,7 @@ const makeSiteIterator = (externalLinks: Record<string, string>): [string, Exter
     </div>
     
     <div class="author-external-links" v-if="author?.externalLinks">
-      <a v-for="[name, site, link] in makeSiteIterator(author.externalLinks)" :key="name" :href="link"
-        target='_blank' class='external-link' :title='`Link to ${site?.displayName!}`'>
-        <span v-if='site.display === "name"'>{{ site.displayName! }}</span>
-        <component v-else :is='componentFromSvgText(site.icon!)' />
-      </a>
+      <ExternalLink v-for='(link, siteName) in author.externalLinks' :site-name='siteName' :link='link' />
     </div>
   </div>
 </template>
@@ -115,35 +99,6 @@ const makeSiteIterator = (externalLinks: Record<string, string>): [string, Exter
 
     border-top: solid 1px var(--pal-outlineVariant);
     padding-top: 8px;
-
-    .external-link {
-      display: flex;
-
-      background: transparent;
-      border-radius: 4px;
-      text-decoration: none;
-      color: var(--pal-primary);
-      font-size: 0.85rem;
-      transition:
-        border m3-anim.$expressiveDefaultEffects,
-        transform m3-anim.$expressiveDefaultSpital,
-        opacity m3-anim.$expressiveDefaultEffects;
-      padding: 6px; // 增加内边距
-      opacity: 0.67;
-
-      border: solid 1px #00000000;
-      border-radius: 50%;
-
-      &>svg {
-        font-size: 1.5rem;
-      }
-
-      &:hover {
-        opacity: 1;
-        border: 1px solid var(--pal-outlineVariant);
-        transform: translateY(-1px);
-      }
-    }
   }
 }
 </style>

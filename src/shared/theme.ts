@@ -3,10 +3,10 @@ export type Icon = string
 export interface AuthorInfo {
   /** URL that points to avatar for the author. */
   avatar?: string,
-  
+
   /** Author's bio/description */
   bio?: string,
-  
+
   /** Author's external links */
   externalLinks?: Record<string, string>,
 }
@@ -38,16 +38,42 @@ export interface LicenseFamily {
   logo?: Icon,
 }
 
+export type ExternalSiteIconDisplay = "icon" | "name" | "iconAndName"
+
 /** 外部网站信息。 */
 export interface ExternalSite {
   /** 显示图标或者网站名称。 */
-  display?: "icon" | "name",
+  display?: ExternalSiteIconDisplay,
 
   /** 网站图标。 */
   icon?: Icon,
 
   /** 网站显示名称。 */
   displayName?: string,
+}
+
+/** 页脚配置。 */
+export interface FooterConfig {
+  /**
+   * 版权信息。
+   * 支持占位符：
+   *  - "{currentYear}" 自动填充当前年份
+   */
+  copyright?: string,
+
+  /** 外部链接列表（社交媒体等）。 */
+  links?: Record<string, string> | string,
+
+  /**
+   * 是否显示许可证信息。
+   * 默认为 true。
+   */
+  showLicense?: boolean,
+
+  /**
+   * 额外的页脚文本。
+   */
+  extraText?: string,
 }
 
 export interface ThemeConfig {
@@ -157,7 +183,13 @@ export interface ThemeConfig {
        *  - "modified": 显示更新时间
        */
       cardTimeSource?: 'created' | 'modified',
+
     },
+
+    /**
+     * 页脚配置。
+     */
+    footer?: FooterConfig,
   },
 }
 
