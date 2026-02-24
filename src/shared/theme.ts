@@ -147,6 +147,16 @@ export interface ThemeConfig {
        * 默认为 true。
        */
       showImagePlaceholder?: boolean,
+
+      /**
+       * 首页文章卡片显示的时间来源。
+       * 默认为 "modified"（更新时间）
+       *
+       * ## Possible Values
+       *  - "created": 显示创建时间
+       *  - "modified": 显示更新时间
+       */
+      cardTimeSource?: 'created' | 'modified',
     },
   },
 }

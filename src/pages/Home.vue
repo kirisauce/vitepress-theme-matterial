@@ -75,6 +75,7 @@ const secondaryTitleText = (): string | undefined => {
               :post="d"
               mode="full"
               :show-image-placeholder="theme.layout?.home?.showImagePlaceholder ?? true"
+              :time-source="theme.layout?.home?.cardTimeSource ?? 'modified'"
               class="flow-item"
             />
           </FlowContainer>
