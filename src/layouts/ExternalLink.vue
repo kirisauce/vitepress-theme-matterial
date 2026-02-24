@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useData } from 'vitepress';
 import { ExternalSite, ExternalSiteIconDisplay, ThemeConfig } from '../shared';
-import { componentFromSvgText } from '../shared/svg-helper';
+import { componentFromSvgText } from '../client-lib/svg-helper';
 
 const { theme } = useData<ThemeConfig>()
 

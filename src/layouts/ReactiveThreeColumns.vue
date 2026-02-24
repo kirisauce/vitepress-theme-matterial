@@ -70,7 +70,7 @@ const orientation = useOrientation()
   flex: 0 0 0;
 
   @include when('wide-landscape') {
-    flex: 1 10 10em;
+    flex: 1 10 4em;
   }
 }
 
@@ -81,14 +81,14 @@ const orientation = useOrientation()
   overflow: hidden;
 
   @include when('landscape') {
-    flex: 4 5 10em;
+    flex: 12 5 10em;
   }
 }
 
 .right-cards {
   @extend %layout-cards-column;
 
-  flex: 2 1 10em;
+  flex: 4 1 10em;
   overflow: visible;
 
   @include when('portrait') {

@@ -3,7 +3,7 @@ import { useData } from 'vitepress'
 import { h } from 'vue';
 import MdButton from '../../components/MdButton.vue'
 import { usePreferences } from '../../composables/preferences'
-import { componentFromSvgText as makeSvg } from '../../shared/svg-helper';
+import { componentFromSvgText as makeSvg } from '../../client-lib/svg-helper';
 import { ThemeConfig } from '../../shared';
 
 const { theme } = useData<ThemeConfig>()

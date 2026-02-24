@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useData } from 'vitepress';
 import { AuthorInfo, ExternalSite, ThemeConfig } from '../shared/theme'
-import { componentFromSvgText } from '../shared/svg-helper';
+import { componentFromSvgText } from '../client-lib/svg-helper';
 import ExternalLink from './ExternalLink.vue';
 
 interface Props {

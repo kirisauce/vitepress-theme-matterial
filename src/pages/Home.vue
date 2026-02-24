@@ -67,7 +67,7 @@ const secondaryTitleText = (): string | undefined => {
         
         <div class="posts-list-container">
           <h2>最新文章</h2>
-          <FlowContainer :columns="2" gap="1rem" min-column-width="300px">
+          <FlowContainer :columns="3" gap="1rem" min-column-width="300px">
             <PostLinkCard
               v-for="d in sortedPosts"
               :key="d.link"

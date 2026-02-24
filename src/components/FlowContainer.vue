@@ -11,7 +11,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  columns: 2,
+  columns: 3,
   gap: '1rem',
   minColumnWidth: '100'
 })
