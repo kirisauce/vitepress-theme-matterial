@@ -1,6 +1,12 @@
 <script lang='ts' setup>
 import { useOrientation } from '../composables/preferences'
 
+const {
+  mode = 'normal',
+} = defineProps<{
+  mode?: 'normal' | 'center-stressed',
+}>()
+
 // 使用use函数获取状态
 const orientation = useOrientation()
 </script>
@@ -18,7 +24,9 @@ const orientation = useOrientation()
     </div>
 
     <!-- Right Cards -->
-    <div class='right-cards' v-show='orientation === "landscape"'>
+    <div :class="{
+      [mode === 'center-stressed' ? 'left-cards' : 'right-cards']: true,
+    }" v-show='orientation === "landscape"'>
       <slot name="right" />
     </div>
   </div>

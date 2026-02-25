@@ -2,7 +2,7 @@ import path from 'node:path'
 import fsPromises from 'node:fs/promises'
 import { SiteConfig } from 'vitepress'
 import { ThemeConfig } from '../shared'
-import { loadPostData } from './post-data-loader'
+import { checkPostFrontMatterNoIndex, loadPostData } from './post-data-loader'
 import { ArchiveIndexPage, Directory, IndexItem } from '../shared/index-types'
 
 const FS_FLAGS: { encoding: 'utf-8' } = { encoding: 'utf-8' }
@@ -36,6 +36,9 @@ const extractIndexItems = async (outDir: string, assetsDir: string, srcDir: stri
     const relativeWebPath = (pageData.relativePath as string).replace(/\.md$/, '.html')
 
     const postData = await loadPostData(path.resolve(srcDir, pageData.relativePath))
+    if (checkPostFrontMatterNoIndex(postData)) {
+      continue
+    }
 
     items.push({
       title,

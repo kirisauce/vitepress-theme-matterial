@@ -189,8 +189,8 @@ body {
 
     <!-- 文章页面布局 -->
     <Home v-if='frontmatter.layout === "home"' />
-    <Post v-else-if='frontmatter.layout === "post"' />
     <Archive v-else-if='frontmatter.layout === "archive"' /> <!-- 新增 Archive 组件条件渲染 -->
+    <Post v-else />
 
     <!-- 页面页脚 -->
     <PageFooter />

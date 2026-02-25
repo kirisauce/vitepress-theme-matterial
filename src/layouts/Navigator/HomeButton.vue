@@ -29,7 +29,7 @@ const ComponentSiteIcon = () => {
   <a class='site-logo' href='/'>
     <MdButton :icon='ComponentSiteIcon' type='text'>
       <Transition name='site-text' :appear='false'>
-        <div style='display:inline-block;' v-show='orientation == "landscape"'>
+        <div style='display:inline-block;' v-if='orientation == "landscape" && theme.navigator?.siteText'>
           {{ theme.navigator?.siteText }}
         </div>
       </Transition>

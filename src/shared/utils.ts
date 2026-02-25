@@ -144,7 +144,7 @@ export namespace Time {
     const weeks = Math.floor(days / 7)
     const months = Math.floor(days / 30)
     const years = Math.floor(days / 365)
-    
+
     return {
       seconds,
       minutes,
@@ -184,20 +184,33 @@ export namespace Time {
    * @param timestamp Unix 时间戳（毫秒）
    * @returns 格式化后的时间字符串，如 "2026 年 1 月 1 日 (3 天前)"
    */
-  export const formatTimeWithRelative = (timestamp: number): string => {
+  export const formatTimeWithRelative = (timestamp: number, options?: { precise: boolean }): string => {
+    const {
+      precise,
+    } = {
+      precise: false,
+      ...(options ?? {})
+    }
+
     // 计算绝对时间
     const date = new Date(timestamp)
     const year = date.getFullYear()
     const month = date.getMonth() + 1
     const day = date.getDate()
-    const absoluteTime = `${year}年${month}月${day}日`
-    
+    let absoluteTime = `${year}年${month}月${day}日`
+
+    if (precise) {
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      absoluteTime += ` ${hour}时${minute}分`
+    }
+
     // 计算相对时间
     const now = Date.now()
     const diffSeconds = Math.floor((now - timestamp) / 1000)
     const duration = resolveDurationNoCarry(diffSeconds)
     const relativeTime = formatDurationSimple(duration)
-    
+
     return `${absoluteTime}(${relativeTime})`
   }
 }

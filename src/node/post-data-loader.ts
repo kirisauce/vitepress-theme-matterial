@@ -12,6 +12,7 @@ const md = new MarkdownIt({
 const LAYOUTS_NO_INDEX = [
   'index',
   'home',
+  'archive',
 ]
 
 declare const VITEPRESS_CONFIG: UserConfig | undefined
