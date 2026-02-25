@@ -12,9 +12,12 @@ import Navigator from '../layouts/Navigator.vue'
 import PageSelector from '../components/PageSelector.vue'
 import HomeButton from '../layouts/Navigator/HomeButton.vue'
 import { usePreferences } from '../composables/preferences'
+import { provideLayoutConfigLayer } from '../composables/layout-config'
 
 const idxPrefix = $computed(() => joinURL([unref(usePathes()).themeDir, Directory.ARCHIVE_INDEX]))
 const orientation = $toRef(usePreferences(), 'orientation')
+
+provideLayoutConfigLayer('archive')
 
 let currentPageNum = $ref(1)
 let currentPage: ArchiveIndexPage | null = $ref(null)

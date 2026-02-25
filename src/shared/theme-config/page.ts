@@ -1,8 +1,13 @@
+import { LayoutConfig } from "./layout";
+
+export interface WithLayoutConfigLayer {
+  layout?: LayoutConfig,
+}
 
 /**
  * 家是本配置（？
  */
-export interface HomeConfig {
+export interface HomeConfig extends WithLayoutConfigLayer {
   /**
    * 首页的副标题显示文本的来源。
    *
@@ -35,6 +40,12 @@ export interface HomeConfig {
   cardTimeSource?: 'created' | 'modified',
 }
 
+export interface PostConfig extends WithLayoutConfigLayer {}
+
+export interface ArchiveConfig extends WithLayoutConfigLayer {}
+
 export interface PageConfig {
   home?: HomeConfig,
+  post?: PostConfig,
+  archive?: ArchiveConfig,
 }

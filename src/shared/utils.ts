@@ -19,6 +19,24 @@ export function objectShrink<Obj extends Record<string, any> | Array<any>>(obj: 
   }
 }
 
+export const mergeObjectRecursive = (...objects: any[]) => {
+  let out = {} as Record<string, any>
+
+  for (const obj of objects) {
+    for (const [key, val] of Object.entries(obj)) {
+      if (Array.isArray(out[key]) && Array.isArray(val)) {
+        out[key] = (out[key] as Array<any>).concat(val as Array<any>)
+      } else if (typeof out[key] === 'object' && out[key] !== null && typeof val === 'object' && val !== null) {
+        out[key] = mergeObjectRecursive(out[key], val)
+      } else {
+        out[key] = val
+      }
+    }
+  }
+
+  return out
+}
+
 export const cssHexColorWith = (cssColor: string, mod?: { a?: number, r?: number, g?: number, b?: number }) => {
   let out = '#'
   let idx = 1

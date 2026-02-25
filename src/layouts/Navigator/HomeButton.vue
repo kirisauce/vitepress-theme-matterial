@@ -1,16 +1,16 @@
 <script setup lang='ts'>
-import { useData } from 'vitepress'
 import { h } from 'vue';
 import MdButton from '../../components/MdButton.vue'
 import { usePreferences } from '../../composables/preferences'
 import { componentFromSvgText as makeSvg } from '../../client-lib/svg-helper';
-import { ThemeConfig } from '../../shared';
+import { useLayoutConfig } from '../../composables/layout-config';
 
-const { theme } = useData<ThemeConfig>()
 const { orientation } = usePreferences()
 
+const layout = $(useLayoutConfig())
+
 const ComponentSiteIcon = () => {
-  const siteIcon = theme.value?.layout?.navigator?.siteIcon
+  const siteIcon = layout.navigator?.siteIcon
   if (!siteIcon) {
     return null
   }
@@ -29,8 +29,8 @@ const ComponentSiteIcon = () => {
   <a class='site-logo' href='/'>
     <MdButton :icon='ComponentSiteIcon' type='text'>
       <Transition name='site-text' :appear='false'>
-        <div style='display:inline-block;' v-if='orientation == "landscape" && theme?.layout?.navigator?.siteText'>
-          {{ theme.layout?.navigator?.siteText }}
+        <div style='display:inline-block;' v-if='orientation == "landscape" && layout.navigator?.siteText'>
+          {{ layout.navigator?.siteText }}
         </div>
       </Transition>
     </MdButton>

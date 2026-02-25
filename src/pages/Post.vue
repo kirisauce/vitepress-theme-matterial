@@ -25,9 +25,9 @@ import MdiClose from '~icons/mdi/close'
 import MdiMenu from '~icons/mdi/menu'
 
 import cardStyle from '../styles/layout/card.module.scss'
+import { provideLayoutConfigLayer } from '../composables/layout-config'
 
-// Vitepress Data
-const { frontmatter } = useData<ThemeConfig>()
+provideLayoutConfigLayer('post')
 
 // 使用use函数获取状态
 const { items: tocItems, activeId: activeTitleId } = useToc()

@@ -11,9 +11,12 @@ import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
 import { data } from '../data/Post.data'
 
 import cardStyle from '../styles/layout/card.module.scss'
+import { provideLayoutConfigLayer } from '../composables/layout-config'
 
 // Vitepress Data
 const { site, theme } = useData<ThemeConfig>()
+
+provideLayoutConfigLayer('home')
 
 const config = $computed(() => theme.value.page?.home!)
 
