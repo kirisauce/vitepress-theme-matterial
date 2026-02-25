@@ -53,7 +53,9 @@ const secondaryTitleText = (): string | undefined => {
 
 <template>
   <Navigator>
-    <NavigatorHomeButton />
+    <template #left>
+      <NavigatorHomeButton />
+    </template>
   </Navigator>
 
   <ReactiveThreeColumns>
@@ -67,19 +69,13 @@ const secondaryTitleText = (): string | undefined => {
           <h1>{{ site.title }}</h1>
           <p>{{ secondaryTitleText() }}</p>
         </div>
-        
+
         <div class="posts-list-container">
           <h2>最新文章</h2>
           <FlowContainer :columns="3" gap="1rem" min-column-width="300px">
-            <PostLinkCard
-              v-for="d in sortedPosts"
-              :key="d.link"
-              :post="d"
-              mode="full"
+            <PostLinkCard v-for="d in sortedPosts" :key="d.link" :post="d" mode="full"
               :show-image-placeholder="theme.page?.home?.showImagePlaceholder ?? true"
-              :time-source="theme.page?.home?.cardTimeSource ?? 'modified'"
-              class="flow-item"
-            />
+              :time-source="theme.page?.home?.cardTimeSource ?? 'modified'" class="flow-item" />
           </FlowContainer>
         </div>
 
@@ -90,19 +86,14 @@ const secondaryTitleText = (): string | undefined => {
     <template #right>
       <!-- 作者信息卡片 -->
       <AuthorInfoCard :author="author" :class="[cardStyle['card-appear'], cardStyle['card-appear-delay-1']]" />
-      
+
       <div :class="['layout-card', cardStyle['card-toc'], cardStyle['card-appear'], cardStyle['card-appear-delay-2']]">
         <div class='toc-text'>
           最近文章
         </div>
 
         <div class="posts-list-widget">
-          <PostLinkCard
-            v-for="d in data"
-            :key="d.link"
-            :post="d"
-            mode="simple"
-          />
+          <PostLinkCard v-for="d in data" :key="d.link" :post="d" mode="simple" />
         </div>
       </div>
     </template>
@@ -115,7 +106,7 @@ const secondaryTitleText = (): string | undefined => {
 .home-header {
   text-align: center;
   margin-bottom: 2rem;
-  
+
   h1 {
     font-size: 2.5rem;
     font-weight: 400;
@@ -124,7 +115,7 @@ const secondaryTitleText = (): string | undefined => {
     margin: 24px 0 16px;
     letter-spacing: -0.015em;
   }
-  
+
   p {
     font-size: 1.2rem;
     color: var(--pal-onSurfaceVariant);

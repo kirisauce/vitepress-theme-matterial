@@ -127,10 +127,15 @@ onUnmounted(() => {
 
 <template>
   <Navigator>
-    <NavigatorHomeButton />
-    <MdButton @click='openSideBar' type='tonal' shape='round'>
-      <MdiMenu />
-    </MdButton>
+    <template #left>
+      <NavigatorHomeButton />
+    </template>
+
+    <template #right>
+      <MdButton @click='openSideBar' type='tonal' shape='round' size='xsmall'>
+        <MdiMenu />
+      </MdButton>
+    </template>
   </Navigator>
 
   <!-- 侧边栏 -->

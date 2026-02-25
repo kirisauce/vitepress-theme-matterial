@@ -1,3 +1,21 @@
+<template>
+  <nav>
+    <div class='nav-container'>
+      <div class='nav-left'>
+        <slot name='left'></slot>
+      </div>
+
+      <div class='nav-center'>
+        <slot name='center'></slot>
+      </div>
+
+      <div class='nav-right'>
+        <slot name='right'></slot>
+      </div>
+    </div>
+  </nav>
+</template>
+
 <style lang='scss' scoped>
 @use '../styles/abstract/m3-anim';
 
@@ -19,7 +37,7 @@ nav {
     top: 12px;
   }
 
-  .navigator-container {
+  .nav-container {
     flex: 0 0 100%;
 
     box-sizing: border-box;
@@ -52,7 +70,7 @@ nav {
   }
 }
 
-.navigator-container {
+.nav-container {
   >.site-logo {
     color: inherit;
   }
@@ -71,11 +89,3 @@ nav {
   }
 }
 </style>
-
-<template>
-  <nav>
-    <div class='navigator-container'>
-      <slot></slot>
-    </div>
-  </nav>
-</template>

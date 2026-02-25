@@ -27,7 +27,7 @@ const ComponentSiteIcon = () => {
 
 <template>
   <a class='site-logo' href='/'>
-    <MdButton :icon='ComponentSiteIcon' type='text'>
+    <MdButton :icon='ComponentSiteIcon' type='text' size='xsmall'>
       <Transition name='site-text' :appear='false'>
         <div style='display:inline-block;' v-if='orientation == "landscape" && layout.navigator?.siteText'>
           {{ layout.navigator?.siteText }}

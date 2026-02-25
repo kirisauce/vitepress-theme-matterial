@@ -88,7 +88,9 @@ onMounted(() => {
 
 <template>
   <Navigator>
-    <HomeButton />
+    <template #left>
+      <HomeButton />
+    </template>
   </Navigator>
 
   <ReactiveThreeColumns mode='center-stressed'>
