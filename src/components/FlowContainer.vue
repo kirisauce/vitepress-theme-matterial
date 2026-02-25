@@ -54,14 +54,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div 
-    ref="containerRef" 
-    class="flow-container"
-    :style="{
-      '--columns': currentColumns,
-      '--gap': gap
-    }"
-  >
+  <div ref="containerRef" class="flow-container">
     <slot />
   </div>
 </template>
@@ -69,13 +62,10 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .flow-container {
   width: 100%;
-  column-count: var(--columns);
-  column-gap: var(--gap);
-  
-  // 防止卡片被分割到两列
-  :deep(.flow-item) {
-    break-inside: avoid;
-    margin-bottom: var(--gap);
-  }
+  display: grid;
+  grid-template-columns: repeat(v-bind("currentColumns"), minmax(v-bind("minColumnWidth"), 1fr));
+  gap: v-bind("gap");
+
+  align-items: center;
 }
 </style>
