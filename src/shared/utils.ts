@@ -204,3 +204,19 @@ export namespace Time {
 
 // ---------- Time Formatting Utilities End ----------
 
+export const joinURL = (partials: (string | URL)[]) => {
+  let result: URL = new URL('https://example.com/')
+  for (const partial of partials) {
+    result = new URL(partial, result)
+  }
+
+  return result.pathname
+}
+
+export const generateRange = (left: number, right: number): number[] => {
+  let result = []
+  for (let i = left; i < right; i++) {
+    result.push(i)
+  }
+  return result
+}

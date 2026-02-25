@@ -3,7 +3,7 @@ import fsPromises from 'node:fs/promises'
 import { SiteConfig } from 'vitepress'
 import { ThemeConfig } from '../shared'
 import { loadPostData } from './post-data-loader'
-import { IndexItem } from '../shared/index-types'
+import { ArchiveIndexPage, Directory, IndexItem } from '../shared/index-types'
 
 const FS_FLAGS: { encoding: 'utf-8' } = { encoding: 'utf-8' }
 
@@ -47,7 +47,7 @@ const extractIndexItems = async (outDir: string, assetsDir: string, srcDir: stri
   return items
 }
 
-const saveIndexItems = async (dir: string, maxItemsPerIndexPage: number, items: IndexItem[]) => {
+const writeArchiveIndex = async (dir: string, maxItemsPerIndexPage: number, items: IndexItem[]) => {
   // 创建文件夹用来存放index
   await fsPromises.mkdir(dir, { recursive: true })
 
@@ -60,7 +60,7 @@ const saveIndexItems = async (dir: string, maxItemsPerIndexPage: number, items: 
       items: itemsToWrite,
       maxItems: maxItemsPerIndexPage,
       numTotalItems: items.length,
-    }
+    } satisfies ArchiveIndexPage
 
     fsPromises.writeFile(path.resolve(dir, `${chunkNumber}.json`), JSON.stringify(output))
 
@@ -68,7 +68,7 @@ const saveIndexItems = async (dir: string, maxItemsPerIndexPage: number, items: 
     sliceBegin = maxItemsPerIndexPage * chunkNumber
   }
 
-  return chunkNumber
+  return items.length
 }
 
 export const buildEnd = async (siteConfig: SiteConfig<ThemeConfig>) => {
@@ -87,16 +87,18 @@ export const buildEnd = async (siteConfig: SiteConfig<ThemeConfig>) => {
   info('Begin')
   // console.log(siteConfig)
 
-  const themeDir = path.resolve(outDir, 'matterial')
+  const themeDir = path.resolve(outDir, Directory.THEME)
   const assetsDir = path.resolve(outDir, relAssetsDir)
-  const indexDir = path.resolve(themeDir, 'archive-indexfiles')
 
   const items = await extractIndexItems(outDir, assetsDir, srcDir, site.base, pages)
   info(`Indexed ${items.length} items`)
   // console.log(items)
 
-  const numPages = await saveIndexItems(indexDir, themeConfig?.build?.maxItemsPerIndexPage!, items)
-  info(`Saved ${numPages} index pages, max ${themeConfig?.build?.maxItemsPerIndexPage} items per page`)
+  {
+    const indexDir = path.resolve(themeDir, Directory.ARCHIVE_INDEX)
+    const numItems = await writeArchiveIndex(indexDir, themeConfig?.build?.maxItemsPerIndexPage!, items)
+    info(`Saved ${numItems} index pages, max ${themeConfig?.build?.maxItemsPerIndexPage} items per page`)
+  }
 
   info('End')
 }

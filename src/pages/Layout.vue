@@ -9,6 +9,7 @@ import { ThemeConfig } from '../shared'
 import Home from './Home.vue'
 import Post from './Post.vue'
 import PageFooter from '../components/PageFooter.vue'
+import Archive from './Archive.vue' // 新增导入 Archive 组件
 
 // Icons
 import { initThemeRouter } from '../composables/theme-router'
@@ -188,7 +189,8 @@ body {
 
     <!-- 文章页面布局 -->
     <Home v-if='frontmatter.layout === "home"' />
-    <Post v-else />
+    <Post v-else-if='frontmatter.layout === "post"' />
+    <Archive v-else-if='frontmatter.layout === "archive"' /> <!-- 新增 Archive 组件条件渲染 -->
 
     <!-- 页面页脚 -->
     <PageFooter />
