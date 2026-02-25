@@ -10,7 +10,7 @@ const { theme } = useData<ThemeConfig>()
 const { orientation } = usePreferences()
 
 const ComponentSiteIcon = () => {
-  const siteIcon = theme.value.navigator?.siteIcon
+  const siteIcon = theme.value?.layout?.navigator?.siteIcon
   if (!siteIcon) {
     return null
   }
@@ -29,8 +29,8 @@ const ComponentSiteIcon = () => {
   <a class='site-logo' href='/'>
     <MdButton :icon='ComponentSiteIcon' type='text'>
       <Transition name='site-text' :appear='false'>
-        <div style='display:inline-block;' v-if='orientation == "landscape" && theme.navigator?.siteText'>
-          {{ theme.navigator?.siteText }}
+        <div style='display:inline-block;' v-if='orientation == "landscape" && theme?.layout?.navigator?.siteText'>
+          {{ theme.layout?.navigator?.siteText }}
         </div>
       </Transition>
     </MdButton>

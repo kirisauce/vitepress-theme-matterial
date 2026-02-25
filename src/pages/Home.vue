@@ -15,7 +15,7 @@ import cardStyle from '../styles/layout/card.module.scss'
 // Vitepress Data
 const { site, theme } = useData<ThemeConfig>()
 
-const config = $computed(() => theme.value.layout?.home!)
+const config = $computed(() => theme.value.page?.home!)
 
 // 按时间排序的文章列表（从新到旧）
 const sortedPosts = $computed(() => [...data].sort((a, b) => b.timeCreated - a.timeCreated))
@@ -73,8 +73,8 @@ const secondaryTitleText = (): string | undefined => {
               :key="d.link"
               :post="d"
               mode="full"
-              :show-image-placeholder="theme.layout?.home?.showImagePlaceholder ?? true"
-              :time-source="theme.layout?.home?.cardTimeSource ?? 'modified'"
+              :show-image-placeholder="theme.page?.home?.showImagePlaceholder ?? true"
+              :time-source="theme.page?.home?.cardTimeSource ?? 'modified'"
               class="flow-item"
             />
           </FlowContainer>

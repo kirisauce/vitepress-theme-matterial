@@ -5,6 +5,7 @@ import MarkdownIt from 'markdown-it'
 import type { UserConfig } from 'vitepress'
 import { ThemeConfig } from '../shared'
 import { buildEnd } from './build-hooks'
+import { ExternalSite } from '../shared/theme-config'
 
 const BUILTIN_LICENSES = {
   'cc-by-nc-4.0': {
@@ -17,116 +18,120 @@ const BUILTIN_LICENSES = {
   // TODO: Add all licenses of Creative Commons.
 }
 
-const getThemeConfig = async (): Promise<ThemeConfig> => ({
-  navigator: {
-    siteIcon: await iconFailible('mdi:home'),
-    siteText: 'A Vitepress Site',
+const getExternalSites = async (): Promise<Record<string, ExternalSite>> => ({
+  default: {
+    display: 'icon',
+    icon: await icon('mdi:link'),
+    displayName: 'Some Site',
   },
 
+  github: {
+    display: 'icon',
+    icon: await icon('mingcute:github-line'),
+    displayName: 'GitHub',
+  },
+
+  bilibili: {
+    display: 'icon',
+    icon: await icon('mingcute:bilibili-line'),
+    displayName: 'BiliBili',
+  },
+
+  youtube: {
+    display: 'icon',
+    icon: await icon('mingcute:youtube-line'),
+    displayName: 'YouTube',
+  },
+
+  twitter: {
+    display: 'icon',
+    icon: await icon('mingcute:twitter-line'),
+    displayName: 'Twitter',
+  },
+
+  discord: {
+    display: 'icon',
+    icon: await icon('mingcute:discord-line'),
+    displayName: 'Discord',
+  },
+
+  qq: {
+    display: 'icon',
+    icon: await icon('mingcute:qq-line'),
+    displayName: 'QQ',
+  },
+
+  wechat: {
+    display: 'icon',
+    icon: await icon('mingcute:wechat-line'),
+    displayName: 'WeChat',
+  },
+
+  weibo: {
+    display: 'icon',
+    icon: await icon('mingcute:weibo-line'),
+    displayName: 'Weibo',
+  },
+
+  x: {
+    display: 'icon',
+    icon: await icon('mingcute:social-x-line'),
+    displayName: 'X',
+  },
+
+  tiktok: {
+    display: 'icon',
+    icon: await icon('mingcute:tiktok-line'),
+    displayName: 'TikTok',
+  },
+
+  douyin: {
+    display: 'icon',
+    icon: await icon('mingcute:tiktok-line'),
+    displayName: 'Douyin',
+  },
+
+  mail: {
+    display: 'icon',
+    icon: await icon('mingcute:mail-line'),
+    displayName: 'Mail',
+  },
+})
+
+const getThemeConfig = async (): Promise<ThemeConfig> => ({
   license: {
     licenses: BUILTIN_LICENSES,
     families: {
-      'creative-commons':  {
+      'creative-commons': {
         logo: await iconFailible('mdi:creative-commons'),
       },
     },
   },
 
-  externalSites: {
-    default: {
-      display: 'icon',
-      icon: await icon('mdi:link'),
-      displayName: 'Some Site',
-    },
+  externalSites: await getExternalSites(),
 
-    github: {
-      display: 'icon',
-      icon: await icon('mingcute:github-line'),
-      displayName: 'GitHub',
-    },
-
-    bilibili: {
-      display: 'icon',
-      icon: await icon('mingcute:bilibili-line'),
-      displayName: 'BiliBili',
-    },
-
-    youtube: {
-      display: 'icon',
-      icon: await icon('mingcute:youtube-line'),
-      displayName: 'YouTube',
-    },
-
-    twitter: {
-      display: 'icon',
-      icon: await icon('mingcute:twitter-line'),
-      displayName: 'Twitter',
-    },
-
-    discord: {
-      display: 'icon',
-      icon: await icon('mingcute:discord-line'),
-      displayName: 'Discord',
-    },
-
-    qq: {
-      display: 'icon',
-      icon: await icon('mingcute:qq-line'),
-      displayName: 'QQ',
-    },
-
-    wechat: {
-      display: 'icon',
-      icon: await icon('mingcute:wechat-line'),
-      displayName: 'WeChat',
-    },
-
-    weibo: {
-      display: 'icon',
-      icon: await icon('mingcute:weibo-line'),
-      displayName: 'Weibo',
-    },
-
-    x: {
-      display: 'icon',
-      icon: await icon('mingcute:social-x-line'),
-      displayName: 'X',
-    },
-
-    tiktok: {
-      display: 'icon',
-      icon: await icon('mingcute:tiktok-line'),
-      displayName: 'TikTok',
-    },
-
-    douyin: {
-      display: 'icon',
-      icon: await icon('mingcute:tiktok-line'),
-      displayName: 'Douyin',
-    },
-
-    mail: {
-      display: 'icon',
-      icon: await icon('mingcute:mail-line'),
-      displayName: 'Mail',
-    },
-  },
-
-  layout: {
+  page: {
     home: {
       secondaryTitle: 'description',
       showImagePlaceholder: true,
     },
+  },
 
+  layout: {
     footer: {
       // 默认使用全局配置的作者下的链接
       links: 'author',
 
       // 版权信息 - 使用当前年份
       copyright: '[Copyright NOT CONFIGURED] © {currentYear}',
-      
+
       // 默认显示许可证信息
       showLicense: true,
+    },
+
+    navigator: {
+      siteIcon: await iconFailible('mdi:home'),
+      siteText: 'A Vitepress Site',
     },
   },
 
