@@ -1,15 +1,29 @@
+<script setup lang="ts">
+import { useLayoutConfig } from '../composables/layout-config';
+import { useOrientation } from '../composables/preferences';
+import NavButton from './Navigator/NavButton.vue';
+
+const nav = $computed(() => useLayoutConfig().value.navigator!)
+const orientation = $(useOrientation())
+</script>
+
 <template>
   <nav>
     <div class='nav-container'>
-      <div class='nav-left'>
-        <slot name='left'></slot>
+      <div class='nav-area nav-left'>
+        <slot name='left'>
+          <NavButton :config='nav?.homeButton' />
+          <template v-if="orientation === 'landscape'">
+            <NavButton :config='nav?.archiveButton' />
+          </template>
+        </slot>
       </div>
 
-      <div class='nav-center'>
+      <div class='nav-area nav-center'>
         <slot name='center'></slot>
       </div>
 
-      <div class='nav-right'>
+      <div class='nav-area nav-right'>
         <slot name='right'></slot>
       </div>
     </div>
@@ -87,5 +101,12 @@ nav {
   @media (orientation: portrait) {
     font-size: 1.2em;
   }
+}
+
+.nav-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
 }
 </style>

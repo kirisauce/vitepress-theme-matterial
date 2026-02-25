@@ -130,8 +130,15 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
     },
 
     navigator: {
-      siteIcon: await iconFailible('mdi:home'),
-      siteText: 'A Vitepress Site',
+      homeButton: {
+        icon: await iconFailible('mdi:home'),
+        href: '/',
+      },
+      archiveButton: {
+        icon: await iconFailible('mdi:archive-outline'),
+        text: '归档',
+        href: '/archive',
+      },
     },
   },
 

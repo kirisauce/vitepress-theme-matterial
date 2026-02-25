@@ -13,7 +13,7 @@ import SvgContainer from '../components/SvgContainer.vue'
 import SideBar from '../layouts/SideBar.vue'
 import CircleButton from '../components/CircleButton.vue'
 import Navigator from '../layouts/Navigator.vue'
-import NavigatorHomeButton from '../layouts/Navigator/HomeButton.vue'
+import NavigatorHomeButton from '../layouts/Navigator/NavButton.vue'
 import Toc from '../components/Toc.vue'
 import MdButton from '../components/MdButton.vue'
 import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
@@ -127,10 +127,6 @@ onUnmounted(() => {
 
 <template>
   <Navigator>
-    <template #left>
-      <NavigatorHomeButton />
-    </template>
-
     <template #right>
       <MdButton @click='openSideBar' type='tonal' shape='round' size='xsmall'>
         <MdiMenu />

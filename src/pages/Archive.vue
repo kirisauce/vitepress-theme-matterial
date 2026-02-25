@@ -10,7 +10,7 @@ import cardStyle from '../styles/layout/card.module.scss'
 import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
 import Navigator from '../layouts/Navigator.vue'
 import PageSelector from '../components/PageSelector.vue'
-import HomeButton from '../layouts/Navigator/HomeButton.vue'
+import HomeButton from '../layouts/Navigator/NavButton.vue'
 import { usePreferences } from '../composables/preferences'
 import { provideLayoutConfigLayer } from '../composables/layout-config'
 
@@ -88,9 +88,6 @@ onMounted(() => {
 
 <template>
   <Navigator>
-    <template #left>
-      <HomeButton />
-    </template>
   </Navigator>
 
   <ReactiveThreeColumns mode='center-stressed'>

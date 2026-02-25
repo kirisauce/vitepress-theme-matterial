@@ -24,21 +24,15 @@ export interface FooterConfig {
   extraText?: string,
 }
 
-export interface NavigatorConfig {
-  /**
-   * Text to be shown as the site's name on the navigator.
-   * If this value is omitted, configured site-level name would be used instead.
-  */
-  siteText?: string,
+export interface NavButtonConfig {
+  icon?: Icon,
+  text?: string,
+  href?: string,
+}
 
-  /**
-   * Icon to be shown as the site's icon on the navigator.
-   * 
-   * Example:
-   *  - `icon("mdi:github") // 'icon' is from '/node'`
-   *  - `"/site-icon.png"`
-   */
-  siteIcon?: Icon,
+export interface NavigatorConfig {
+  homeButton?: NavButtonConfig,
+  archiveButton?: NavButtonConfig,
 }
 
 export interface LayoutConfig {

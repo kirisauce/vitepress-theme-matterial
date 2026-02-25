@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { useData } from 'vitepress'
 import Navigator from '../layouts/Navigator.vue'
-import NavigatorHomeButton from '../layouts/Navigator/HomeButton.vue'
+import NavigatorHomeButton from '../layouts/Navigator/NavButton.vue'
 import AuthorInfoCard from '../layouts/AuthorInfoCard.vue'
 import PostLinkCard from '../layouts/PostLinkCard.vue'
 import FlowContainer from '../components/FlowContainer.vue'
@@ -52,11 +52,7 @@ const secondaryTitleText = (): string | undefined => {
 </script>
 
 <template>
-  <Navigator>
-    <template #left>
-      <NavigatorHomeButton />
-    </template>
-  </Navigator>
+  <Navigator />
 
   <ReactiveThreeColumns>
     <!-- Left Cards -->
