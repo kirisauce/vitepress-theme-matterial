@@ -165,6 +165,7 @@ export const createPaletteStyleExt = (p: DynamicScheme, isDark: boolean) => {
     'secondaryContainer',
     'tertiaryContainer',
     'errorContainer',
+    'surface',
   ]
   const pal = p as any as Record<string, number>
   for (const extname of TRANSPARENT_EXTS) {

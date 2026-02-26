@@ -1,9 +1,7 @@
 <script setup lang='ts'>
 import { useTemplateRef, ref, onUnmounted } from 'vue'
-import { useData } from 'vitepress'
 import { useToc, extractCatalogFromDom } from '../composables/toc'
 import { useGlobalElements } from '../composables/global-elements'
-import { ThemeConfig } from '../shared'
 import * as patches from './content-patches'
 
 // Components
@@ -12,10 +10,7 @@ import PostFooter from '../layouts/Post/Footer.vue'
 import SvgContainer from '../components/SvgContainer.vue'
 import SideBar from '../layouts/SideBar.vue'
 import CircleButton from '../components/CircleButton.vue'
-import Navigator from '../layouts/Navigator.vue'
-import NavigatorHomeButton from '../layouts/Navigator/NavButton.vue'
 import Toc from '../components/Toc.vue'
-import MdButton from '../components/MdButton.vue'
 import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
 
 // Icons
@@ -126,14 +121,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Navigator>
-    <template #right>
-      <MdButton @click='openSideBar' type='tonal' shape='round' size='xsmall'>
-        <MdiMenu />
-      </MdButton>
-    </template>
-  </Navigator>
-
   <!-- 侧边栏 -->
   <SideBar :show='showSideBar' side='right' @after-enter='elSideBarToc?.updateIndicator()' @exit='closeSideBar'
     style='backdrop-filter: blur(15px); gap: 0.75em;'>

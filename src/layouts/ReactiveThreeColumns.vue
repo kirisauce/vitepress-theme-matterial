@@ -86,7 +86,7 @@ const orientation = useOrientation()
   @extend %layout-cards-column;
 
   flex: 1 0 100px;
-  overflow: hidden;
+  overflow: visible;
 
   @include when('landscape') {
     flex: 12 5 10em;

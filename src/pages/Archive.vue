@@ -8,9 +8,7 @@ import { onMounted, onWatcherCleanup, unref, watch } from 'vue'
 
 import cardStyle from '../styles/layout/card.module.scss'
 import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
-import Navigator from '../layouts/Navigator.vue'
 import PageSelector from '../components/PageSelector.vue'
-import HomeButton from '../layouts/Navigator/NavButton.vue'
 import { usePreferences } from '../composables/preferences'
 import { provideLayoutConfigLayer } from '../composables/layout-config'
 
@@ -87,9 +85,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <Navigator>
-  </Navigator>
-
   <ReactiveThreeColumns mode='center-stressed'>
     <template #center>
       <main :class="['layout-card', cardStyle['card-content']]">

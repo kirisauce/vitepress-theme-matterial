@@ -1,5 +1,25 @@
 import { Icon } from "./other";
 
+// 背景图行为模式
+export type HeaderImageBehavior = 'fullscreen' | 'static' | 'parallax'
+
+// 背景图配置
+export interface HeaderImageConfig {
+  /**
+   * 背景图片的URL
+   */
+  src: string;
+  
+  /**
+   * 背景图的行为模式
+   * - fullscreen: 全屏背景图，不占用布局空间
+   * - static: 在最上方完整显示的背景图，占用布局空间，可以随页面滚动而消失
+   * - parallax: 在最上方完整显示的背景图，占用布局空间，可以随页面滚动而消失，
+   *            但是自身也会随着页面整体滚动而向下移动，形成差速滚动的效果
+   */
+  behavior?: HeaderImageBehavior;
+}
+
 /** 页脚配置。 */
 export interface FooterConfig {
   /**
@@ -38,4 +58,6 @@ export interface NavigatorConfig {
 export interface LayoutConfig {
   footer?: FooterConfig,
   navigator?: NavigatorConfig,
+  headerImage?: HeaderImageConfig,
+  background?: string,
 }
