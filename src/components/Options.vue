@@ -14,17 +14,20 @@ defineEmits<{
 const {
   options,
   selected,
+  display = true,
 } = defineProps<{
   options: Option[],
 
   /** 当前选中的选项id */
   selected?: string,
+
+  display?: boolean,
 }>()
 </script>
 
 <template>
   <Transition name='opt'>
-    <div class='options'>
+    <div v-if='display' class='options'>
       <div v-for='opt in options' :class="{ option: true, selected: opt.id === selected }"
         @click='$emit("select", opt.id)'>
         <component v-if='opt.icon' :is='opt.icon'></component>{{ opt.text ?? opt.id }}
@@ -60,20 +63,30 @@ const {
   gap: 8px;
   width: max-content;
   cursor: pointer;
+  view-transition-name: none;
+
+  &.selected {
+    font-weight: bold;
+  }
 }
 
 .opt-enter-active,
 .opt-leave-active {
-  transition: opacity m3-anim.$expressiveDefaultSpital;
+  transform-origin: 50% 0;
+  transition:
+    transform m3-anim.$expressiveDefaultSpital,
+    opacity m3-anim.$expressiveDefaultSpital;
 }
 
 .opt-enter-from,
 .opt-leave-to {
   opacity: 0;
+  transform: translate(-50%, 90%) scale(0.6, 0.02);
 }
 
 .opt-enter-to,
 .opt-leave-from {
   opacity: 1;
+  transform: translate(-50%, 100%) scale(1, 1);
 }
 </style>

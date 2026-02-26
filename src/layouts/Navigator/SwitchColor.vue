@@ -8,6 +8,7 @@ import MdiKeyboardArrowDown from '~icons/mdi/keyboard-arrow-down'
 import Options from '../../components/Options.vue'
 import { usePreferences, UserColorScheme } from '../../composables/preferences'
 import { mayStartViewTransition } from '../../client-lib/view-transition'
+import { onMounted, onWatcherCleanup, watch } from 'vue'
 
 let colorScheme = $(usePreferences().colorScheme.userColorScheme)
 
@@ -31,6 +32,23 @@ const OPTIONS = [
 
 let show = $ref(false)
 
+const handle = (e: PointerEvent) => {
+  const el = e.target as HTMLElement
+  if (!el.matches('.switch-color *')) {
+    show = false
+    document.removeEventListener('pointerdown', handle)
+  }
+}
+
+onMounted(() => {
+  watch($$(show), (show) => {
+    if (show) {
+      document.addEventListener('pointerdown', handle)
+      onWatcherCleanup(() => document.removeEventListener('pointerdown', handle))
+    }
+  })
+})
+
 const change = (id: string) => {
   mayStartViewTransition(() => {
     colorScheme = id as UserColorScheme
@@ -40,11 +58,11 @@ const change = (id: string) => {
 </script>
 
 <template>
-  <div tabindex='0' class='switch-color' @click='show = !show'>
+  <div tabindex='0' class='switch-color' ref='switchColor' @click='show = !show'>
     <MdiSunMoonStars />
     <MdiKeyboardArrowDown />
     <div class='state-layer'></div>
-    <Options v-if='show' :options='OPTIONS' :selected='colorScheme' @select='change'></Options>
+    <Options :display='show' :options='OPTIONS' :selected='colorScheme' @select='change'></Options>
   </div>
 </template>
 
