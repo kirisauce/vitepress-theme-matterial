@@ -18,6 +18,12 @@ const BUILTIN_LICENSES = {
   // TODO: Add all licenses of Creative Commons.
 }
 
+export namespace Link {
+  export const
+    VITEPRESS = 'https://vitepress.dev/',
+    MATTERIAL = 'https://github.com/kirisauce/vitepress-theme-matterial'
+}
+
 const getExternalSites = async (): Promise<Record<string, ExternalSite>> => ({
   default: {
     display: 'icon',
@@ -125,8 +131,7 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
       // 版权信息 - 使用当前年份
       copyright: '[Copyright NOT CONFIGURED] © {currentYear}',
 
-      // 默认显示许可证信息
-      showLicense: true,
+      themeInfo: `<span style='font-weight:bold'>Powered by <a href='${Link.VITEPRESS}'>VitePress</a> theme <a href='${Link.MATTERIAL}'>Matterial</a></span>`,
     },
 
     navigator: {

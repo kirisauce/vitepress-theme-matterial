@@ -1,16 +1,14 @@
 <script lang='ts' setup>
 import { computed } from 'vue'
 import { useData } from 'vitepress'
-import { useThemeRouter } from '../composables/theme-router'
 import { ThemeConfig } from '../shared'
-import SvgContainer from '../components/SvgContainer.vue'
 import ExternalLink from '../layouts/ExternalLink.vue'
+import { useLayoutConfig } from '../composables/layout-config'
 
-const { site, theme } = useData<ThemeConfig>()
-const themeRouter = useThemeRouter()
+const theme = $(useData<ThemeConfig>().theme)
 
 // 获取页脚配置 - 从 layout.footer 获取
-const config = $computed(() => theme.value.layout?.footer)
+const config = $computed(() => useLayoutConfig().value.footer!)
 
 // 处理版权信息中的占位符
 const applyPlaceholders = (copyright: string): string => {
@@ -25,7 +23,7 @@ const links = computed((): Record<string, string> | undefined => {
   if (typeof tmpLinks === 'string') {
     let authorName: string = ''
     if (tmpLinks === 'author') {
-      authorName = theme.value.author ?? ''
+      authorName = theme.author ?? ''
     } else if (tmpLinks.startsWith('author:')) {
       authorName = tmpLinks.substring('author:'.length)
     }
@@ -34,7 +32,7 @@ const links = computed((): Record<string, string> | undefined => {
       return undefined
     }
 
-    const author = theme.value.authorProfiles?.[authorName]
+    const author = theme.authorProfiles?.[authorName]
     if (!author) {
       console.warn(`Author profile not found for ${authorName}`)
       return undefined
@@ -52,55 +50,33 @@ const links = computed((): Record<string, string> | undefined => {
 
 // 处理版权信息
 const copyrightText = computed(() => applyPlaceholders(config?.copyright!))
-
-// 获取许可证信息
-const license = $computed(() => {
-  // 如果配置明确设置 showLicense 为 false，则不显示
-  if (config?.showLicense === false) return null
-
-  const licenseKey = theme.value.license?.default
-  if (!licenseKey) return null
-
-  return theme.value.license?.licenses?.[licenseKey]
-})
-
-// 获取许可证家族图标
-const licenseFamily = $computed(() => {
-  if (!license?.family) return null
-  return theme.value.license?.families?.[license.family]
-})
 </script>
 
 <template>
-  <footer class='page-footer'>
+  <footer v-if='config' class='page-footer'>
     <div class='footer-content'>
-      <!-- 版权信息 -->
-      <div v-if='copyrightText' class='footer-copyright'>
-        {{ copyrightText }}
-      </div>
-
       <!-- 外部链接 -->
       <div v-if='links' class='footer-links'>
         <ExternalLink v-for='(link, siteName) in links!' :key='siteName' :site-name='siteName' :link='link' display='iconAndName' />
       </div>
 
-      <!-- 许可证信息 -->
-      <div v-if='license' class='footer-license' @click='themeRouter?.tryOpen(license.url)'>
-        <div class='footer-license-name'>{{ license.name }}</div>
-        <span class='footer-license-description'>{{ license.footerDescription }}</span>
-        <div v-if='licenseFamily' class='footer-license-layer-logo'>
-          <SvgContainer :no-margin='true' class='footer-license-logo' v-html='licenseFamily.logo' />
-        </div>
-      </div>
+      <!-- 主题信息 -->
+      <div v-if='config?.themeInfo' class='footer-extra' v-html='config.themeInfo'></div>
 
       <!-- 额外文本 -->
-      <div v-if='config?.extraText' class='footer-extra' v-html='config.extraText' />
+      <div v-if='config?.extra' class='footer-extra' v-html='config.extra' />
+
+      <!-- 版权信息 -->
+      <div v-if='copyrightText' class='footer-copyright'>
+        {{ copyrightText }}
+      </div>
     </div>
   </footer>
 </template>
 
 <style lang='scss' scoped>
 @use '../styles/abstract/m3-anim';
+@use '../styles/abstract/font';
 
 .page-footer {
   width: 100%;
@@ -108,6 +84,7 @@ const licenseFamily = $computed(() => {
   background-color: var(--pal-surfaceContainer);
   color: var(--pal-onSurfaceVariant);
   margin-top: auto;
+  font-family: font.$monospace;
 }
 
 .footer-content {
@@ -130,61 +107,6 @@ const licenseFamily = $computed(() => {
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-}
-
-.footer-license {
-  position: relative;
-  background-color: var(--palext-primaryTransparent);
-  color: var(--pal-onPrimary);
-  padding: 1rem;
-  box-shadow: var(--global-box-shadow);
-  cursor: pointer;
-  transition:
-    transform m3-anim.$expressiveSlowSpital,
-    background-color m3-anim.$expressiveSlowEffects;
-  border: 1px solid var(--pal-outline);
-  border-radius: 1rem;
-  max-width: 100%;
-  width: 100%;
-
-  &:hover {
-    transform: scale(1.03) translateY(-1%);
-    background-color: var(--pal-primary);
-  }
-
-  .footer-license-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .footer-license-description {
-    display: block;
-    font-size: 0.85rem;
-    text-align: center;
-    opacity: 0.9;
-  }
-
-  .footer-license-layer-logo {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .footer-license-logo {
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    opacity: 0.4;
-    font-size: 5em;
-    transform: translate(20%, 20%) rotate(-30deg);
-  }
 }
 
 .footer-extra {

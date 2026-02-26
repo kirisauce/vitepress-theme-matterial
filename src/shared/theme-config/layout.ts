@@ -32,16 +32,11 @@ export interface FooterConfig {
   /** 外部链接列表（社交媒体等）。 */
   links?: Record<string, string> | string,
 
-  /**
-   * 是否显示许可证信息。
-   * 默认为 true。
-   */
-  showLicense?: boolean,
+  /** 主题信息的HTML文本 */
+  themeInfo?: string,
 
-  /**
-   * 额外的页脚文本。
-   */
-  extraText?: string,
+  /** 显示在页脚的额外HTML文本 */
+  extra?: string,
 }
 
 export interface NavButtonConfig {
