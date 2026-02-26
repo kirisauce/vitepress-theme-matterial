@@ -8,7 +8,7 @@ export interface HeaderImageConfig {
   /**
    * 背景图片的URL
    */
-  src: string;
+  src?: string;
   
   /**
    * 背景图的行为模式
@@ -19,6 +19,22 @@ export interface HeaderImageConfig {
    * - half-parallax: 同parallax，但是占用50%视图高度，而不是100%视图高度
    */
   behavior?: HeaderImageBehavior;
+
+  /**
+   * 在背景图片中央显示的标题HTML文本
+   * ## 支持的占位符
+   *  - {site_name} 配置中的站点名称
+   *  - {site_desc} 配置中的站点描述
+   */
+  title?: string,
+
+  /**
+   * 在背景图片中央主标题下方显示的HTML文本
+   * ## 支持的占位符
+   *  - {site_name} 配置中的站点名称
+   *  - {site_desc} 配置中的站点描述
+   */
+  subtitle?: string,
 }
 
 /** 页脚配置。 */

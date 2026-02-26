@@ -145,6 +145,11 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
         href: '/archive',
       },
     },
+
+    headerImage: {
+      title: '{site_name}',
+      subtitle: '{site_desc}',
+    },
   },
 
   font: {

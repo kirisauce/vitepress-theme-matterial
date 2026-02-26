@@ -1,19 +1,32 @@
 <script setup lang="ts">
+import { useData } from 'vitepress'
 import { useLayoutConfig } from '../composables/layout-config'
 
+const site = $(useData().site)
 const config = $computed(() => useLayoutConfig().value.headerImage!)
-
-// 定义背景图行为模式的枚举
-export type BackgroundBehavior = 'fullscreen' | 'static' | 'parallax'
+const applyPlaceholders = (s: string | undefined) => {
+  if (s === undefined) {
+    return undefined
+  }
+  return s
+    .replaceAll('{site_name}', site.title)
+    .replaceAll('{site_desc}', site.description)
+}
 </script>
 
 <template>
   <div v-if='config' :class="['header-image-container', `behavior-${config.behavior}`]">
+    <div class='header-image-titles'>
+      <h2 style='font-size: 40px;margin: 0;'>{{ applyPlaceholders(config.title) }}</h2>
+      <p style='font-size: 20px;'>{{ applyPlaceholders(config.subtitle) }}</p>
+    </div>
     <img @drag.prevent class='header-image' :src="config.src" />
   </div>
 </template>
 
 <style lang="scss" scoped>
+@use '../styles/abstract/font';
+
 .header-image-container {
   display: flex;
   flex-direction: column;
@@ -64,5 +77,18 @@ export type BackgroundBehavior = 'fullscreen' | 'static' | 'parallax'
   object-fit: cover;
   object-position: center;
   user-select: none;
+}
+
+.header-image-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--pal-surface);
 }
 </style>
