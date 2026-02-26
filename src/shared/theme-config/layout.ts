@@ -1,7 +1,7 @@
 import { Icon } from "./other";
 
 // 背景图行为模式
-export type HeaderImageBehavior = 'fullscreen' | 'static' | 'parallax'
+export type HeaderImageBehavior = 'fullscreen' | 'static' | 'parallax' | 'half-parallax'
 
 // 背景图配置
 export interface HeaderImageConfig {
@@ -16,6 +16,7 @@ export interface HeaderImageConfig {
    * - static: 在最上方完整显示的背景图，占用布局空间，可以随页面滚动而消失
    * - parallax: 在最上方完整显示的背景图，占用布局空间，可以随页面滚动而消失，
    *            但是自身也会随着页面整体滚动而向下移动，形成差速滚动的效果
+   * - half-parallax: 同parallax，但是占用50%视图高度，而不是100%视图高度
    */
   behavior?: HeaderImageBehavior;
 }

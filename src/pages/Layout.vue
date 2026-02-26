@@ -93,7 +93,7 @@ const subcontainerBackground = () => {
   const behavior = layout.headerImage?.behavior
   if (behavior === 'static') {
     return 'var(--palext-surfaceTransparent)'
-  } else if (behavior === 'parallax') {
+  } else if (['parallax', 'half-parallax'].includes(behavior ?? '')) {
     return 'var(--pal-surface)'
   } else {
     return 'transparent'
@@ -186,6 +186,8 @@ body {
 
   width: 100%;
   height: 100%;
+  transform-style: preserve-3d;
+  perspective: 0;
 
   // @media (orientation: landscape) {
   //   padding-top: 10px;
@@ -221,6 +223,9 @@ body {
   z-index: 100;
   padding: 50px 0;
 
+  transform-style: flat;
+  transform: translateZ(0);
+
   border-top-left-radius: m3-vars.$corner-large;
   border-top-right-radius: m3-vars.$corner-large;
 
@@ -231,7 +236,7 @@ body {
 <template>
   <div :class='globalClassList' :style='globalStyle' ref='elPage'>
     <!--| Layout-Managed Components |-->
-    <BackgroundImage></BackgroundImage>
+    <BackgroundImage style='z-index:0'></BackgroundImage>
 
     <div class='page-subcontainer'>
       <Navigator></Navigator>
