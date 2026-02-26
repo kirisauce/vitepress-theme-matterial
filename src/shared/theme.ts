@@ -1,4 +1,5 @@
 import { AuthorInfo, BuildConfig, ExternalSite, LayoutConfig, LicenseConfig, PageConfig } from './theme-config'
+import { FontConfig } from './theme-config/font'
 
 export interface ThemeConfig {
   /** Default author for posts that do not have any author specified. */
@@ -29,6 +30,7 @@ export interface ThemeConfig {
    */
   externalSites?: Record<string, ExternalSite>,
 
+  font?: FontConfig,
   license?: LicenseConfig,
   page?: PageConfig,
   layout?: LayoutConfig,

@@ -140,14 +140,11 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
         href: '/archive',
       },
     },
+  },
 
-    // 背景图配置示例 - 可以根据需要修改
-    // background: {
-    //   src: '/background.jpg',
-    //   behavior: 'fullscreen', // 或 'static' 或 'parallax'
-    //   alt: '首页背景图',
-    //   height: '400px'
-    // },
+  font: {
+    default: 'inherit',
+    monospace: 'monospace',
   },
 
   build: {

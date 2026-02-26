@@ -77,6 +77,8 @@ const globalClassList = computed(() => {
 const globalStyle = computed(() => {
   return {
     '--global-box-shadow': '0 0 5px -2px var(--pal-shadow)',
+    '--global-font-default': theme.value.font?.default!,
+    '--global-font-monospace': theme.value.font?.monospace!,
     ...paletteStyle.value,
   }
 })
