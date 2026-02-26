@@ -34,7 +34,7 @@ const {
 }>()
 
 const emit = defineEmits<{
-  (e: 'click', event: MouseEvent): void,
+  (e: 'click', event: Event): void,
 }>()
 
 const handleClick = (event: MouseEvent) => {
@@ -49,12 +49,27 @@ const handleClick = (event: MouseEvent) => {
   }
 }
 
+const handleKeyDown = (event: KeyboardEvent) => {
+  if (['Enter', 'Space'].includes(event.code)) {
+    emit('click', event)
+  }
+}
+
 const classes = computed(() => [
   size,
   shape,
   type,
 ].concat(selected === undefined ? [] as any : [selected ? 'selected' : 'unselected']))
 </script>
+
+<template>
+  <button ref='button' :disabled='disabled' :class='classes' :style='localPal' @keydown='handleKeyDown'
+    @click='handleClick'>
+    <component v-if='icon' :is='icon' />
+    <slot></slot>
+    <div class='state-layer'></div>
+  </button>
+</template>
 
 <style scoped lang='scss'>
 @use '../styles/abstract/m3-anim';
@@ -212,11 +227,3 @@ button {
   border-radius: m3-vars.$corner-large;
 }
 </style>
-
-<template>
-  <button ref='button' :disabled='disabled' :class='classes' :style='localPal' @click='handleClick'>
-    <component v-if='icon' :is='icon' />
-    <slot></slot>
-    <div class='state-layer'></div>
-  </button>
-</template>

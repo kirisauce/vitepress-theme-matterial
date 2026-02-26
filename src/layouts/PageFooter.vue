@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useData } from 'vitepress'
 import { useThemeRouter } from '../composables/theme-router'
 import { ThemeConfig } from '../shared'
-import SvgContainer from './SvgContainer.vue'
+import SvgContainer from '../components/SvgContainer.vue'
 import ExternalLink from '../layouts/ExternalLink.vue'
 
 const { site, theme } = useData<ThemeConfig>()

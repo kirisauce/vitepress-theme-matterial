@@ -10,7 +10,7 @@ import { provideLayoutConfigLayer, useLayoutConfig } from '../composables/layout
 import { LayoutConfig } from '../shared/theme-config'
 import Home from './Home.vue'
 import Post from './Post.vue'
-import PageFooter from '../components/PageFooter.vue'
+import PageFooter from '../layouts/PageFooter.vue'
 import Archive from './Archive.vue'
 import Navigator from '../layouts/Navigator.vue'
 import BackgroundImage from '../layouts/HeaderImage.vue'
@@ -217,7 +217,7 @@ body {
   flex-direction: column;
   gap: 20px;
   z-index: 100;
-  padding-top: 10px;
+  padding: 50px 0;
 
   border-top-left-radius: m3-vars.$corner-large;
   border-top-right-radius: m3-vars.$corner-large;

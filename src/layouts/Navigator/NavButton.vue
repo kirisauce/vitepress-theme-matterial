@@ -3,7 +3,7 @@ import { h } from 'vue';
 import MdButton from '../../components/MdButton.vue'
 import { componentFromSvgText as makeSvg } from '../../client-lib/svg-helper'
 import { NavButtonConfig } from '../../shared/theme-config'
-import { withBase } from 'vitepress';
+import { useRouter, withBase } from 'vitepress'
 
 const { config } = defineProps<{ config?: NavButtonConfig }>()
 
@@ -20,14 +20,15 @@ const ComponentSiteIcon = () => {
     },
   })
 }
+
+const router = useRouter()
+const go = () => router.go(withBase(config?.href ?? '/'))
 </script>
 
 <template>
-  <a class='site-logo' :href="withBase(config.href ?? '/')" v-if='config'>
-    <MdButton :icon='ComponentSiteIcon' type='text' size='xsmall'>
-      <div style='display:inline-block;' v-if='config?.text'>
-        {{ config?.text }}
-      </div>
-    </MdButton>
-  </a>
+  <MdButton :icon='ComponentSiteIcon' type='text' size='xsmall' @click='go'>
+    <div style='display:inline-block;' v-if='config?.text'>
+      {{ config?.text }}
+    </div>
+  </MdButton>
 </template>
