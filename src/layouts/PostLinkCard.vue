@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { withBase } from 'vitepress'
+import { useRouter, withBase } from 'vitepress'
 import { PostData } from '../shared'
 import { Time } from '../shared/utils'
 import MdButton from '../components/MdButton.vue'
@@ -19,6 +19,8 @@ interface Props {
   /** 时间来源：'created' - 创建时间，'modified' - 更新时间 */
   timeSource?: 'created' | 'modified'
 }
+
+const router = useRouter()
 
 const props = withDefaults(defineProps<Props>(), {
   mode: 'full',
@@ -40,9 +42,7 @@ const displayTime = $computed(() => {
 })
 
 // 点击卡片跳转
-const navigateToPost = () => {
-  window.location.href = props.post.link
-}
+const navigateToPost = () => router.go(withBase(props.post.link))
 
 const articleLabel = () => `阅读文章: ${props.post.title}`
 </script>
@@ -68,15 +68,15 @@ const articleLabel = () => `阅读文章: ${props.post.title}`
         {{ post.title }}
       </h3>
 
-      <!-- 完整模式：显示时间 -->
-      <time v-if="mode === 'full'" class="svg-patch post-card-time" :datetime="new Date(props.timeSource === 'created' ? props.post.timeCreated : props.post.timeModified).toISOString()">
-        <SvgContainer><MdiAccessTime /></SvgContainer>{{ displayTime }}
-      </time>
-
       <!-- 完整模式：显示摘要 -->
       <p v-if="mode === 'full' && hasExcerpt" class="post-card-excerpt">
         {{ post.excerpt }}
       </p>
+
+      <!-- 完整模式：显示时间 -->
+      <time v-if="mode === 'full'" class="svg-patch post-card-time" :datetime="new Date(props.timeSource === 'created' ? props.post.timeCreated : props.post.timeModified).toISOString()">
+        <SvgContainer><MdiAccessTime /></SvgContainer>{{ displayTime }}
+      </time>
 
       <!-- 完整模式：显示标签 -->
       <div v-if="mode === 'full' && hasTags" class="post-card-tags">
