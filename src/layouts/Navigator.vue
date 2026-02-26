@@ -2,6 +2,7 @@
 import { useLayoutConfig } from '../composables/layout-config';
 import { useOrientation } from '../composables/preferences';
 import NavButton from './Navigator/NavButton.vue';
+import SwitchColor from './Navigator/SwitchColor.vue';
 
 const nav = $computed(() => useLayoutConfig().value.navigator!)
 const orientation = $(useOrientation())
@@ -24,7 +25,9 @@ const orientation = $(useOrientation())
       </div>
 
       <div class='nav-area nav-right'>
-        <slot name='right'></slot>
+        <slot name='right'>
+          <SwitchColor />
+        </slot>
       </div>
     </div>
   </nav>
