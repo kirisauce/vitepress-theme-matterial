@@ -18,6 +18,7 @@ import BackgroundImage from '../layouts/HeaderImage.vue'
 // Icons
 import { initThemeRouter } from '../composables/theme-router'
 import { initGlobalElements } from '../composables/global-elements'
+import { mergeObjectRecursive } from '../shared/utils'
 
 // ---------- Initialize Composable States ----------
 
@@ -59,10 +60,18 @@ provide(PALETTE_KEY, palette)
 
 let layoutLayer = $ref({} as LayoutConfig)
 provideLayoutConfigLayer($$(layoutLayer))
-watch(() => frontmatter.value.layout, (layout) => {
+watch(() => [frontmatter.value.layout, frontmatter.value.layoutConfig], ([layout, layoutConfig]) => {
+  const layers = []
+
   if (typeof layout === 'string') {
-    Object.assign(layoutLayer, (unref(theme).page as any)?.[layout]?.layout ?? {})
+    layers.push((unref(theme).page as any)?.[layout]?.layout ?? {})
   }
+
+  if (typeof layoutConfig === 'object') {
+    layers.push(layoutConfig)
+  }
+
+  layoutLayer = mergeObjectRecursive(...layers)
 }, { immediate: true })
 
 // ---------- Computed Values ----------
