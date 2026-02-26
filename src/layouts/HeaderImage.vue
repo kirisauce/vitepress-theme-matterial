@@ -90,5 +90,7 @@ const applyPlaceholders = (s: string | undefined) => {
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--pal-surface);
+
+  text-shadow: 0 0 5px var(--pal-primary);
 }
 </style>

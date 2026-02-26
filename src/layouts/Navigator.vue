@@ -35,6 +35,7 @@ const orientation = $(useOrientation())
 
 <style lang='scss' scoped>
 @use '../styles/abstract/m3-anim';
+@use '../styles/abstract/m3-vars';
 
 nav {
   position: sticky;
@@ -67,7 +68,7 @@ nav {
     align-items: center;
     justify-content: space-between;
 
-    box-shadow: 0 0 5px 0px var(--pal-shadow);
+    box-shadow: 0 0 m3-vars.$shadow-light;
     background-color: color(from var(--pal-secondaryContainer) srgb r g b / 0.8);
     color: var(--pal-onSecondaryContainer);
 

@@ -219,7 +219,7 @@ body {
   }
 
   :deep(.layout-card) {
-    box-shadow: 0 0 5px 0 var(--pal-shadow);
+    box-shadow: 0 0 m3-vars.$shadow-light;
     background-color: color(from var(--pal-surfaceContainer) srgb r g b / 0.7);
     color: var(--pal-onSurface);
   }
@@ -237,6 +237,8 @@ body {
 
   border-top-left-radius: m3-vars.$corner-large;
   border-top-right-radius: m3-vars.$corner-large;
+
+  box-shadow: 0 -4px 4px -4px var(--pal-shadow);
 
   background-color: v-bind(subcontainerBackground());
 }

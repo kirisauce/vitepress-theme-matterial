@@ -26,9 +26,17 @@ const go = () => router.go(withBase(config?.href ?? '/'))
 </script>
 
 <template>
-  <MdButton :icon='ComponentSiteIcon' type='text' size='xsmall' @click='go'>
+  <MdButton :icon='ComponentSiteIcon' type='text' size='xsmall' @click='go' class='nav-button'>
     <div style='display:inline-block;' v-if='config?.text'>
       {{ config?.text }}
     </div>
   </MdButton>
 </template>
+
+<style lang="scss" scoped>
+@use '../../styles/abstract/m3-vars';
+
+.nav-button {
+  box-shadow: 0 0 0;
+}
+</style>
