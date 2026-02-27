@@ -32,10 +32,16 @@ export function provideLayoutConfigLayer(config: any) {
 export const injectLayoutConfigLayer: () => MaybeRef<LayoutConfig> | undefined = () => inject(KEY_LAYOUT_CONFIG_LAYER)
 
 export const useLayoutConfig = (obviousLayer?: MaybeRef<LayoutConfig>): Readonly<Ref<LayoutConfig>> => {
-  const { theme } = useData<ThemeConfig>()
-
+  let theme
+  try {
+    theme = useData<ThemeConfig>().theme
+  } catch (error) {
+    theme = {} as ThemeConfig
+  }
+  
   if (obviousLayer === undefined) {
-    return computed(() => mergeObjectRecursive(unref(theme).layout, unref(injectLayoutConfigLayer()) ?? {}))
+    const layer = injectLayoutConfigLayer()
+    return computed(() => mergeObjectRecursive(unref(theme).layout, unref(layer) ?? {}))
   } else {
     return computed(() => mergeObjectRecursive(unref(theme).layout, unref(obviousLayer)))
   }

@@ -3,7 +3,8 @@ import { useData } from 'vitepress'
 import { useLayoutConfig } from '../composables/layout-config'
 
 const site = $(useData().site)
-const config = $computed(() => useLayoutConfig().value.headerImage!)
+const layoutConfig = $(useLayoutConfig())
+const config = $computed(() => layoutConfig.headerImage!)
 const applyPlaceholders = (s: string | undefined) => {
   if (s === undefined) {
     return undefined

@@ -8,7 +8,8 @@ import { useLayoutConfig } from '../composables/layout-config'
 const theme = $(useData<ThemeConfig>().theme)
 
 // 获取页脚配置 - 从 layout.footer 获取
-const config = $computed(() => useLayoutConfig().value.footer!)
+const layoutConfig = $(useLayoutConfig())
+const config = $computed(() => layoutConfig.footer!)
 
 // 处理版权信息中的占位符
 const applyPlaceholders = (copyright: string): string => {

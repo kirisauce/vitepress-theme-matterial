@@ -4,7 +4,8 @@ import { useOrientation } from '../composables/preferences';
 import NavButton from './Navigator/NavButton.vue';
 import SwitchColor from './Navigator/SwitchColor.vue';
 
-const nav = $computed(() => useLayoutConfig().value.navigator!)
+const layoutConfig = $(useLayoutConfig())
+const nav = $computed(() => layoutConfig.navigator!)
 const orientation = $(useOrientation())
 </script>
 
