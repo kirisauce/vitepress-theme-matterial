@@ -74,8 +74,11 @@ const articleLabel = () => `阅读文章: ${props.post.title}`
       </p>
 
       <!-- 完整模式：显示时间 -->
-      <time v-if="mode === 'full'" class="svg-patch post-card-time" :datetime="new Date(props.timeSource === 'created' ? props.post.timeCreated : props.post.timeModified).toISOString()">
-        <SvgContainer><MdiAccessTime /></SvgContainer>{{ displayTime }}
+      <time v-if="mode === 'full'" class="svg-patch post-card-time"
+        :datetime="new Date(props.timeSource === 'created' ? props.post.timeCreated : props.post.timeModified).toISOString()">
+        <SvgContainer>
+          <MdiAccessTime />
+        </SvgContainer>{{ displayTime }}
       </time>
 
       <!-- 完整模式：显示标签 -->
@@ -89,6 +92,7 @@ const articleLabel = () => `阅读文章: ${props.post.title}`
 
 <style lang="scss" scoped>
 @use '../styles/abstract/m3-anim';
+@use '../styles/abstract/m3-vars';
 
 .post-link-card {
   position: relative;
@@ -112,15 +116,19 @@ const articleLabel = () => `阅读文章: ${props.post.title}`
     box-shadow m3-anim.$expressiveDefaultEffects;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px var(--pal-shadow);
+    transform: translateY(-2px);
+    box-shadow: 0 0 m3-vars.$shadow-light;
   }
 
   // 完整模式样式
   &.mode-full {
+    border: 1px solid var(--pal-outlineVariant);
+
     .post-card-image {
       width: 100%;
       aspect-ratio: 16 / 9;
+    border: 1px solid var(--pal-outlineVariant);
+
       overflow: hidden;
       background-color: var(--pal-surfaceContainerHighest);
 
