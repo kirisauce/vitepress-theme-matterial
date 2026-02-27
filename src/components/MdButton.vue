@@ -93,6 +93,14 @@ button {
   >:not(.state-layer) {
     z-index: 10;
   }
+
+  &:enabled {
+    cursor: pointer;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 // ---------- Size Classes ----------

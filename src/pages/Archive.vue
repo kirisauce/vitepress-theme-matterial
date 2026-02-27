@@ -94,7 +94,7 @@ onMounted(() => {
         </div>
         <span v-if='isDev' class="dev-warning">Dev服务器不支持Archive页面，请使用Preview服务器查看本页面</span>
 
-        <FlowContainer v-if='currentPage !== null' :columns='1' gap='0' min-column-width='300'>
+        <div v-if='currentPage !== null' :columns='1' gap='0' class='posts'>
           <a v-for='post in (currentPage as ArchiveIndexPage).items' :key='post.path' :href="post.path"
             class="archive-item flow-item">
             <h3 class="archive-item-title">{{ post.title }}</h3>
@@ -102,7 +102,7 @@ onMounted(() => {
               precise: orientation == 'landscape',
             }) }}</div>
           </a>
-        </FlowContainer>
+        </div>
 
         <div v-else class="loading">正在加载第{{ currentPageNum }}页</div>
 
@@ -183,6 +183,11 @@ onMounted(() => {
   margin: 0;
 
   flex: 0 0 auto;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
 }
 
 .loading {

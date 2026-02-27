@@ -22,15 +22,18 @@ const ComponentSiteIcon = () => {
 }
 
 const router = useRouter()
-const go = () => router.go(withBase(config?.href ?? '/'))
+const href = $computed(() => withBase(config?.href ?? '/'))
+const go = () => router.go(href)
 </script>
 
 <template>
-  <MdButton :icon='ComponentSiteIcon' type='text' size='xsmall' @click='go' class='nav-button'>
-    <div style='display:inline-block;' v-if='config?.text'>
-      {{ config?.text }}
-    </div>
-  </MdButton>
+  <a :href='href' @click.prevent>
+    <MdButton tabindex='-1' :icon='ComponentSiteIcon' type='text' size='xsmall' @click='go' class='nav-button'>
+      <div style='display:inline-block;' v-if='config?.text'>
+        {{ config?.text }}
+      </div>
+    </MdButton>
+  </a>
 </template>
 
 <style lang="scss" scoped>

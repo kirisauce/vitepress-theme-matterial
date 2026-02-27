@@ -48,9 +48,9 @@ const articleLabel = () => `阅读文章: ${props.post.title}`
 </script>
 
 <template>
-  <article class="post-link-card" :class="{ 'mode-full': mode === 'full', 'mode-simple': mode === 'simple' }"
-    :tabindex="0" :role="'link'" :aria-label='articleLabel()' :title='articleLabel()' @click="navigateToPost"
-    @keydown.enter="navigateToPost" @keydown.space.prevent="navigateToPost">
+  <a class="post-link-card" :class="{ 'mode-full': mode === 'full', 'mode-simple': mode === 'simple' }" :tabindex="0"
+    :role="'link'" :aria-label='articleLabel()' :title='articleLabel()' @click.prevent="navigateToPost"
+    @keydown.enter="navigateToPost" @keydown.space.prevent="navigateToPost" :href="withBase(props.post.link)">
     <!-- 完整模式：显示图片 -->
     <div v-if="mode === 'full' && hasImage" class="post-card-image">
       <img :src="withBase(post.image!)" :alt="post.title" />
@@ -87,7 +87,7 @@ const articleLabel = () => `阅读文章: ${props.post.title}`
           tag }}</MdButton>
       </div>
     </div>
-  </article>
+  </a>
 </template>
 
 <style lang="scss" scoped>
@@ -127,7 +127,7 @@ const articleLabel = () => `阅读文章: ${props.post.title}`
     .post-card-image {
       width: 100%;
       aspect-ratio: 16 / 9;
-    border: 1px solid var(--pal-outlineVariant);
+      border: 1px solid var(--pal-outlineVariant);
 
       overflow: hidden;
       background-color: var(--pal-surfaceContainerHighest);
