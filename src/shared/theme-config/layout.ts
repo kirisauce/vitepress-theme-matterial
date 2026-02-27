@@ -1,4 +1,4 @@
-import { Icon } from "./other";
+import { ButtonConfig, Icon } from "./other";
 
 // 背景图行为模式
 export type HeaderImageBehavior = 'fullscreen' | 'static' | 'parallax' | 'half-parallax'
@@ -65,6 +65,7 @@ export interface NavButtonConfig {
 export interface NavigatorConfig {
   homeButton?: NavButtonConfig,
   archiveButton?: NavButtonConfig,
+  menuButton?: ButtonConfig,
 }
 
 export interface LayoutConfig {

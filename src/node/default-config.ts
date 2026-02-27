@@ -144,6 +144,9 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
         text: '归档',
         href: '/archive',
       },
+      menuButton: {
+        icon: await iconFailible('mdi:menu'),
+      },
     },
 
     headerImage: {

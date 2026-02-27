@@ -13,3 +13,8 @@ export interface ExternalSite {
   /** 网站显示名称。 */
   displayName?: string,
 }
+
+export interface ButtonConfig {
+  icon?: Icon,
+  text?: string,
+}

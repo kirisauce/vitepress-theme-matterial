@@ -19,18 +19,16 @@ import BackgroundImage from '../layouts/HeaderImage.vue'
 import { initThemeRouter } from '../composables/theme-router'
 import { initGlobalElements } from '../composables/global-elements'
 import { mergeObjectRecursive } from '../shared/utils'
+import { initWeakRefs, Keys } from '../composables/weakrefs'
 
 // ---------- Initialize Composable States ----------
 
-// User theme monitoring
 const colorSchemeData = initColorScheme()
-const { colorScheme } = colorSchemeData
-
-// ThemeRouter
 initThemeRouter()
-
-// Orientation monitoring
 initOrientation()
+const weakrefs = initWeakRefs()
+
+const { colorScheme } = colorSchemeData
 
 // Vitepress Data
 const {
@@ -109,6 +107,14 @@ const subcontainerBackground = () => {
   }
 }
 void subcontainerBackground
+
+const navigatorClickHandler = (name: string) => {
+  const handler = weakrefs.get(Keys.NAVIGATOR_CLICK_HANDLER) as (typeof navigatorClickHandler) | undefined
+
+  if (handler) {
+    handler(name)
+  }
+}
 </script>
 
 <style lang='scss'>
@@ -250,7 +256,7 @@ body {
     <BackgroundImage style='z-index:0'></BackgroundImage>
 
     <div class='page-subcontainer'>
-      <Navigator></Navigator>
+      <Navigator @click='navigatorClickHandler'></Navigator>
 
       <!-- 文章页面布局 -->
       <Home v-if='frontmatter.layout === "home"' />

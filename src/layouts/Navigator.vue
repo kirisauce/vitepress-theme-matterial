@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { componentFromSvgText } from '../client-lib/svg-helper';
+import MdButton from '../components/MdButton.vue';
 import { useLayoutConfig } from '../composables/layout-config';
 import { useOrientation } from '../composables/preferences';
 import NavButton from './Navigator/NavButton.vue';
@@ -7,6 +9,10 @@ import SwitchColor from './Navigator/SwitchColor.vue';
 const layoutConfig = $(useLayoutConfig())
 const nav = $computed(() => layoutConfig.navigator!)
 const orientation = $(useOrientation())
+
+defineEmits<{
+  (e: 'click', name: string): void,
+}>()
 </script>
 
 <template>
@@ -28,6 +34,9 @@ const orientation = $(useOrientation())
       <div class='nav-area nav-right'>
         <slot name='right'>
           <SwitchColor />
+          <MdButton v-if='nav.menuButton' size='xsmall' type='text' style='box-shadow:none;' @click="$emit('click', 'menu')">
+            <component v-if='nav.menuButton.icon' :is='componentFromSvgText(nav.menuButton.icon)' />
+          </MdButton>
         </slot>
       </div>
     </div>

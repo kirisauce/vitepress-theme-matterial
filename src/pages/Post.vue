@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { useTemplateRef, ref, onUnmounted } from 'vue'
+import { useTemplateRef, ref, onUnmounted, onMounted } from 'vue'
 import { useToc, extractCatalogFromDom } from '../composables/toc'
 import { useGlobalElements } from '../composables/global-elements'
 import * as patches from './content-patches'
@@ -17,12 +17,14 @@ import ReactiveThreeColumns from '../layouts/ReactiveThreeColumns.vue'
 import MdiTableOfContents from '~icons/mdi/table-of-contents'
 import MdiArrowBack from '~icons/mdi/arrow-back'
 import MdiClose from '~icons/mdi/close'
-import MdiMenu from '~icons/mdi/menu'
 
 import cardStyle from '../styles/layout/card.module.scss'
 import { provideLayoutConfigLayer } from '../composables/layout-config'
+import { Keys, useWeakRefs } from '../composables/weakrefs'
 
 provideLayoutConfigLayer('post')
+
+const weakrefs = useWeakRefs()
 
 // 使用use函数获取状态
 const { items: tocItems, activeId: activeTitleId } = useToc()
@@ -113,6 +115,14 @@ const onContentMounted = () => {
     setupScrollListener()
   }
 }
+
+onMounted(() => {
+  weakrefs.set(Keys.NAVIGATOR_CLICK_HANDLER, (name: string) => {
+    if (name === 'menu') {
+      openSideBar()
+    }
+  })
+})
 
 // 组件卸载时清理
 onUnmounted(() => {
