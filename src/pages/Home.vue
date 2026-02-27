@@ -64,7 +64,7 @@ const secondaryTitleText = (): string | undefined => {
 
         <div class="posts-list-container">
           <h2>最新文章</h2>
-          <FlowContainer :columns="3" gap="1rem" min-column-width="300px">
+          <FlowContainer min-column-width="325px">
             <PostLinkCard v-for="d in sortedPosts" :key="d.link" :post="d" mode="full"
               :show-image-placeholder="theme.page?.home?.showImagePlaceholder ?? true"
               :time-source="theme.page?.home?.cardTimeSource ?? 'modified'" class="flow-item" />

@@ -1,60 +1,20 @@
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-
-interface Props {
-  /** 列数 */
-  columns?: number,
+const {
+  gap = '12px',
+  rowGap = '12px',
+  minColumnWidth = '250px'
+} = defineProps<{
   /** 列之间的间距 */
   gap?: string,
+  /** 行间距 */
+  rowGap?: string,
   /** 最小列宽 */
   minColumnWidth?: string
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  columns: 3,
-  gap: '1rem',
-  minColumnWidth: '100'
-})
-
-// 响应式列数
-const currentColumns = ref(props.columns)
-
-// 使用 ResizeObserver 监听容器宽度变化
-const containerRef = ref<HTMLElement | null>(null)
-let resizeObserver: ResizeObserver | null = null
-
-const updateColumns = () => {
-  if (!containerRef.value) return
-  
-  const containerWidth = containerRef.value.offsetWidth
-  const minWidth = parseInt(props.minColumnWidth)
-  const gap = parseInt(props.gap)
-  
-  // 计算可以容纳的列数
-  const availableColumns = Math.floor((containerWidth + gap) / (minWidth + gap))
-  currentColumns.value = Math.max(1, Math.min(availableColumns, props.columns))
-}
-
-onMounted(() => {
-  updateColumns()
-  
-  if (containerRef.value) {
-    resizeObserver = new ResizeObserver(() => {
-      updateColumns()
-    })
-    resizeObserver.observe(containerRef.value)
-  }
-})
-
-onUnmounted(() => {
-  if (resizeObserver) {
-    resizeObserver.disconnect()
-  }
-})
+}>()
 </script>
 
 <template>
-  <div ref="containerRef" class="flow-container">
+  <div class="flow-container">
     <slot />
   </div>
 </template>
@@ -62,10 +22,15 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .flow-container {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(v-bind("currentColumns"), minmax(v-bind("minColumnWidth"), 1fr));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: v-bind("gap");
-
+  row-gap: v-bind("rowGap");
   align-items: center;
+}
+
+.flow-container>* {
+  flex: 1 0 v-bind("minColumnWidth");
 }
 </style>
