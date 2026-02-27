@@ -163,7 +163,7 @@ onUnmounted(() => {
           <hr class='sep01' />
 
           <!-- Real Post Content -->
-          <span class='post-content' ref='elContent' @vue:mounted='onContentMounted'>
+          <span class='post-content md-ext' ref='elContent' @vue:mounted='onContentMounted'>
             <Content />
           </span>
 

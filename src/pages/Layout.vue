@@ -177,6 +177,7 @@ body {
 @use '../styles/abstract/m3-vars';
 @use '../styles/ext/vp-custom-block';
 @use '../styles/ext/vp-code-block';
+@use '../styles/ext/md-common';
 
 .page-container {
   position: absolute;
@@ -208,20 +209,24 @@ body {
   //   padding-top: 10px;
   // }
 
-  // 代码块样式
-  @include vp-code-block.apply-all;
+  :deep(.md-ext) {
+    // 代码块样式
+    @include vp-code-block.apply-all;
 
-  &.color-scheme-dark :deep(pre.shiki) {
-    @include vp-code-block.shiki-color-scheme(dark);
-  }
+    &.color-scheme-dark pre.shiki {
+      @include vp-code-block.shiki-color-scheme(dark);
+    }
 
-  &.color-scheme-light :deep(pre.shiki) {
-    @include vp-code-block.shiki-color-scheme(light);
-  }
+    &.color-scheme-light pre.shiki {
+      @include vp-code-block.shiki-color-scheme(light);
+    }
 
-  // 自定义块样式
-  :deep(.custom-block) {
-    @include vp-custom-block.apply;
+    // 自定义块样式
+    .custom-block {
+      @include vp-custom-block.apply;
+    }
+
+    @include md-common.apply-all;
   }
 
   :deep(.layout-card) {

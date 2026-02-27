@@ -156,3 +156,13 @@ export const pluginPatchPreLate = async (md: MarkdownIt) => {
     return patchedHtml
   })
 }
+
+export const pluginPatchImg = async (md: MarkdownIt) => {
+  patchRenderRule(md, 'image', (renderOriginal) => (...args) => {
+    const [tokens, idx] = args
+    const token = tokens[idx]
+    const originalHtml = renderOriginal(...args)
+
+    return `${originalHtml}<div>${token.content}</div>`
+  })
+}

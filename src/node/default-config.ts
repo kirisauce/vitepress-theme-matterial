@@ -191,6 +191,7 @@ export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
         await Plugins.pluginPatchContainer(md)
         await Plugins.pluginPatchGithubAlerts(md)
         await Plugins.pluginPatchPreLate(md)
+        await Plugins.pluginPatchImg(md)
       },
 
       codeCopyButtonTitle: "复制代码",

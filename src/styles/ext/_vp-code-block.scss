@@ -142,12 +142,12 @@
 
 @mixin apply-code-block {
 
-  :deep(pre),
-  :deep(code) {
+  pre,
+  cod {
     font-family: font.$monospace;
   }
 
-  :deep(div[class*="language"]) {
+  div[class*="language"] {
     position: relative;
 
     font-family: font.$monospace;
@@ -266,7 +266,7 @@
 @mixin apply-code-group {
   // Code Group
 
-  :deep(.vp-code-group) {
+  .vp-code-group {
     margin: 1em 0 1em 0;
     display: flex block;
     flex-direction: column;
