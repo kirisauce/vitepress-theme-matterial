@@ -17,8 +17,8 @@ const applyPlaceholders = (s: string | undefined) => {
 <template>
   <div v-if='config' :class="['header-image-container', `behavior-${config.behavior}`]">
     <div class='header-image-titles'>
-      <h2 style='font-size: 40px;margin: 0;'>{{ applyPlaceholders(config.title) }}</h2>
-      <p style='font-size: 20px;'>{{ applyPlaceholders(config.subtitle) }}</p>
+      <h2 class='header-image-title'>{{ applyPlaceholders(config.title) }}</h2>
+      <p class='header-image-title'>{{ applyPlaceholders(config.subtitle) }}</p>
     </div>
     <img @drag.prevent class='header-image' :src="config.src" />
   </div>
@@ -56,7 +56,7 @@ const applyPlaceholders = (s: string | undefined) => {
   &.behavior-parallax {
     flex: 0 0 auto;
     width: 100vw;
-    transform: translateZ(-1px) scale(2.25);
+    transform: translateZ(-1px) scale(2);
     height: 100vh;
   }
 
@@ -66,7 +66,7 @@ const applyPlaceholders = (s: string | undefined) => {
     width: 100vw;
     height: 50vh;
     transform-origin: 50% 100%;
-    transform: translateZ(-1px) scale(2.25);
+    transform: translateZ(-1px) scale(2);
   }
 }
 
@@ -90,7 +90,21 @@ const applyPlaceholders = (s: string | undefined) => {
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--pal-surface);
+  margin: 10px 20px;
 
   text-shadow: 0 0 5px var(--pal-primary);
+
+  &>p {
+    font-size: medium;
+  }
+
+  &>h2 {
+    font-size: xx-large;
+  }
+}
+
+.header-image-title {
+  width: max-content;
+  margin: 0;
 }
 </style>

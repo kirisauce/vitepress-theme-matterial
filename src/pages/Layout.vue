@@ -64,7 +64,7 @@ watch(() => [frontmatter.value.layout, frontmatter.value.layoutConfig], ([layout
   const layers = []
 
   if (typeof layout === 'string') {
-    layers.push((unref(theme).page as any)?.[layout]?.layout ?? {})
+    layers.push((unref(theme).page as any)?.[layout ?? 'post']?.layout ?? {})
   }
 
   if (typeof layoutConfig === 'object') {
@@ -196,7 +196,7 @@ body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  perspective: 0;
+  perspective: 1px;
 
   // @media (orientation: landscape) {
   //   padding-top: 10px;
