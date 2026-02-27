@@ -1,5 +1,6 @@
 {
   "name": "vitepress-theme-matterial",
+  "version": "0.1",
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/mingcute": "^1.2.7",
@@ -28,7 +29,7 @@
       "default": "./src/shared/index.ts"
     },
     "./*": {
-      "default": "./src"
+      "default": "./*"
     }
   },
   "scripts": {
