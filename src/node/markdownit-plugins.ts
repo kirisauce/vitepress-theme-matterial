@@ -167,8 +167,9 @@ export const pluginPatchImg = async (md: MarkdownIt) => {
     const [tokens, idx] = args
     const token = tokens[idx]
     const originalHtml = renderOriginal!(...args)
+    const titleHtml = token.attrGet('title') ? `<span style='display:block'>${token.attrGet('title')}</span>` : ''
 
-    return `${originalHtml}<div>${token.content}</div>`
+    return `${originalHtml}${titleHtml}`
   })
 }
 

@@ -1,9 +1,20 @@
+@use '../abstract/m3-vars';
+
 @mixin apply-all {
+  // 图片
+
   img {
     width: 90%;
 
-    &+div {
+    &+span {
       font-size: 16px;
+      padding: 4px 12px;
+      // border: 1px solid var(--pal-outlineVariant);
+      border-radius: 12px;
+      box-shadow: 0 0 m3-vars.$shadow-light;
+      background-color: var(--pal-tertiaryContainer);
+      color: var(--pal-onTertiaryContainer);
+      font-weight: bold;
     }
   }
 
@@ -14,6 +25,8 @@
     gap: 8px;
     margin: 24px 16px;
   }
+
+  // 引用
 
   blockquote {
     position: relative;
@@ -57,6 +70,59 @@
 
     p {
       margin: 10px 0;
+    }
+  }
+
+  // 分隔线
+
+  hr {
+    border-color: var(--pal-secondary);
+    opacity: 0.5;
+  }
+
+  // 链接
+
+  a {
+    color: var(--pal-primary);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @include apply-list;
+}
+
+@mixin apply-list {
+
+  // 无序列表样式
+  ul {
+    padding-left: 2em;
+    margin: 0.5em 0;
+
+    li {
+      color: var(--pal-onSurfaceVariant);
+      line-height: 1.6;
+
+      &::marker {
+        color: var(--pal-primary);
+      }
+    }
+  }
+
+  // 有序列表样式
+  ol {
+    padding-left: 2em;
+    margin: 0.5em 0;
+
+    li {
+      color: var(--pal-onSurfaceVariant);
+      line-height: 1.6;
+
+      &::marker {
+        color: var(--pal-primary);
+        font-weight: 500;
+      }
     }
   }
 }
