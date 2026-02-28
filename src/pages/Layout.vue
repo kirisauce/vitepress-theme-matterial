@@ -92,7 +92,7 @@ const globalStyle = computed(() => {
 
 const layout = $(useLayoutConfig(layoutLayer))
 
-const subcontainerBackground = () => {
+const subcontainerBackground = $computed(() => {
   if (layout.background) {
     return layout.background
   }
@@ -105,7 +105,7 @@ const subcontainerBackground = () => {
   } else {
     return 'transparent'
   }
-}
+})
 void subcontainerBackground
 
 const navigatorClickHandler = (name: string) => {
@@ -243,33 +243,32 @@ body {
   z-index: 100;
   padding: 50px 0;
 
-  transform-style: flat;
-  transform: translateZ(0);
-
   border-top-left-radius: m3-vars.$corner-large;
   border-top-right-radius: m3-vars.$corner-large;
 
   box-shadow: 0 -4px 4px -4px var(--pal-shadow);
 
-  background-color: v-bind(subcontainerBackground());
+  background-color: v-bind(subcontainerBackground);
 }
 </style>
 
 <template>
-  <div :class='globalClassList' :style='globalStyle' ref='elPage'>
-    <!--| Layout-Managed Components |-->
-    <BackgroundImage style='z-index:0'></BackgroundImage>
+  <div class='super-page-container' :style='globalStyle'>
+    <div :class='globalClassList' ref='elPage'>
+      <!--| Layout-Managed Components |-->
+      <BackgroundImage style='z-index:0'></BackgroundImage>
 
-    <div class='page-subcontainer'>
-      <Navigator @click='navigatorClickHandler'></Navigator>
+      <div class='page-subcontainer'>
+        <Navigator @click='navigatorClickHandler'></Navigator>
 
-      <!-- 文章页面布局 -->
-      <Home v-if='frontmatter.layout === "home"' />
-      <Archive v-else-if='frontmatter.layout === "archive"' /> <!-- 新增 Archive 组件条件渲染 -->
-      <Post v-else />
+        <!-- 文章页面布局 -->
+        <Home v-if='frontmatter.layout === "home"' />
+        <Archive v-else-if='frontmatter.layout === "archive"' /> <!-- 新增 Archive 组件条件渲染 -->
+        <Post v-else />
+      </div>
+
+      <!-- 页面页脚 -->
+      <PageFooter style='z-index: 101' />
     </div>
-
-    <!-- 页面页脚 -->
-    <PageFooter style='z-index: 101' />
   </div>
 </template>

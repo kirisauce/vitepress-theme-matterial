@@ -162,19 +162,21 @@ $anim: m3-anim.$standardSlowSpital;
 </style>
 
 <template>
-  <span style='position: absolute'>
-    <Transition name='background'>
-      <div class='side-bar-background' @click='$emit("exit")' v-show='show && captureClick'
-        :style='[backgroundStyle, `--background-opacity: ${captureClick ? 0.45 : 0.15}`]'>
-      </div>
-    </Transition>
-    <Transition name='side-bar' :appear='appear' :css='anim' :enter-active-class='classes.transition'
-      :leave-active-class='classes.transition' :leave-from-class='classes.showState' :enter-to-class='classes.showState'
-      :leave-to-class='classes.hideState' :enter-from-class='classes.hideState' @before-enter='showWrapper = true'
-      @after-leave='showWrapper = false' @after-enter='$emit("afterEnter")'>
-      <div class='side-bar' :style='barStyle' v-show='show'>
-        <slot></slot>
-      </div>
-    </Transition>
-  </span>
+  <Teleport to='.super-page-container'>
+    <span style='position: absolute'>
+      <Transition name='background'>
+        <div class='side-bar-background' @click='$emit("exit")' v-show='show && captureClick'
+          :style='[backgroundStyle, `--background-opacity: ${captureClick ? 0.45 : 0.15}`]'>
+        </div>
+      </Transition>
+      <Transition name='side-bar' :appear='appear' :css='anim' :enter-active-class='classes.transition'
+        :leave-active-class='classes.transition' :leave-from-class='classes.showState'
+        :enter-to-class='classes.showState' :leave-to-class='classes.hideState' :enter-from-class='classes.hideState'
+        @before-enter='showWrapper = true' @after-leave='showWrapper = false' @after-enter='$emit("afterEnter")'>
+        <div class='side-bar' :style='barStyle' v-show='show'>
+          <slot></slot>
+        </div>
+      </Transition>
+    </span>
+  </Teleport>
 </template>
