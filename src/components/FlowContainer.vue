@@ -31,7 +31,7 @@ const {
 }
 
 .flow-container>* {
-  max-width: 50%;
+  // max-width: 50%;
   flex: 1 0 v-bind("minColumnWidth");
 }
 </style>

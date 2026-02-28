@@ -12,6 +12,7 @@
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.1.0",
     "markdown-it-async": "^2.2.0",
+    "markdown-it-footnote": "^4.0.0",
     "sass-loader": "^16.0.6",
     "unplugin-icons": "^23.0.1",
     "vitepress": "2.0.0-alpha.15",

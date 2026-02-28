@@ -6,6 +6,8 @@ import type { UserConfig } from 'vitepress'
 import { ThemeConfig } from '../shared'
 import { buildEnd } from './build-hooks'
 import { ExternalSite } from '../shared/theme-config'
+// @ts-ignore 无类型定义
+import pluginFootnote from 'markdown-it-footnote'
 
 const BUILTIN_LICENSES = {
   'cc-by-nc-4.0': {
@@ -199,6 +201,8 @@ export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
         await Plugins.pluginPatchPreLate(md)
         await Plugins.pluginPatchImg(md)
         await Plugins.pluginPatchBlockquote(md)
+
+        pluginFootnote(md)
       },
 
       codeCopyButtonTitle: "复制代码",

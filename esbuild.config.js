@@ -7,6 +7,7 @@ export default {
   external: [
     'vitepress',
     'markdown-it',
+    'markdown-it-footnote',
     '@vue-macros/reactivity-transform',
     'unplugin-icons/vite',
     'gray-matter',
