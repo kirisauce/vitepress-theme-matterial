@@ -116,6 +116,12 @@ const getThemeConfig = async (): Promise<ThemeConfig> => ({
 
   externalSites: await getExternalSites(),
 
+  markdown: {
+    blockquote: {
+      icon: await iconFailible('mdi:format-quote-open-outline'),
+    },
+  },
+
   page: {
     home: {
       secondaryTitle: 'description',
@@ -192,6 +198,7 @@ export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
         await Plugins.pluginPatchGithubAlerts(md)
         await Plugins.pluginPatchPreLate(md)
         await Plugins.pluginPatchImg(md)
+        await Plugins.pluginPatchBlockquote(md)
       },
 
       codeCopyButtonTitle: "复制代码",

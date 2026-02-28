@@ -14,4 +14,49 @@
     gap: 8px;
     margin: 24px 16px;
   }
+
+  blockquote {
+    position: relative;
+    margin-block: 0;
+    margin-inline: 0;
+    margin: 16px 20px;
+    padding: 16px 16px 4px 16px;
+    opacity: 0.75;
+    color: var(--pal-onSecondaryContainer);
+    background-color: var(--pal-secondaryContainer);
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      background-color: var(--pal-secondary);
+      width: 5px;
+      height: 100%;
+      left: 0;
+      top: 0;
+      border-radius: 5px;
+    }
+
+    .quote-icon {
+      position: absolute;
+      font-size: 28px;
+      z-index: 0;
+      left: 6px;
+      top: 0;
+      opacity: 0.4;
+    }
+
+    &:not(.quote-icon) {
+      z-index: 1;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+  }
 }

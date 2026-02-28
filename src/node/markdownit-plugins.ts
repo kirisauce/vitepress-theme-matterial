@@ -1,14 +1,19 @@
 import { icon } from './icon-helper'
 import MarkdownIt from 'markdown-it'
 import { RenderRule } from 'markdown-it/lib/renderer.mjs'
+import { UserConfig } from 'vitepress'
+import { ThemeConfig } from '../shared'
+
+declare const VITEPRESS_CONFIG: { userConfig: UserConfig<ThemeConfig> }
+const getConfig = () => VITEPRESS_CONFIG.userConfig?.themeConfig?.markdown
 
 type PatchInfo = Record<string, {
   // klass: string,
   icon: string,
 }>
 
-const patchRenderRule = (md: MarkdownIt, ruleName: string, makePatcher: (renderOriginal: RenderRule) => RenderRule) => {
-  const renderOriginal = md.renderer.rules[ruleName] ?? (() => `[render error: rule '${ruleName}' not found]`)
+const patchRenderRule = (md: MarkdownIt, ruleName: string, makePatcher: (renderOriginal: RenderRule | undefined) => RenderRule) => {
+  const renderOriginal = md.renderer.rules[ruleName]
   md.renderer.rules[ruleName] = makePatcher(renderOriginal)
 }
 
@@ -51,7 +56,7 @@ export const pluginPatchContainer = async (md: MarkdownIt) => {
       token.info = ` ${containerName} <span class="svg-container">${patchinfo.icon}</span> ${originalTitle}`
 
       // And get the render result
-      const result = renderOriginal(...args)
+      const result = renderOriginal!(...args)
 
       // Restore unmodified token
       Object.assign(token, tokenBackup)
@@ -94,7 +99,7 @@ export const pluginPatchGithubAlerts = async (md: MarkdownIt) => {
     const token = tokens[idx]
     const [_, patchinfo] = Object.entries(patchmap).find(entry => entry[0] === token.meta.type) ?? []
     if (!patchinfo) {
-      return renderOriginal(...args)
+      return renderOriginal!(...args)
     }
 
     const tokenBackup = Object.assign({}, token)
@@ -102,7 +107,7 @@ export const pluginPatchGithubAlerts = async (md: MarkdownIt) => {
     // token.meta.type = `${patchinfo.klass} ${token.meta.type}`
     token.meta.title = `<span class='svg-container'>${patchinfo.icon}</span>${token.meta.title}`
 
-    const result = renderOriginal(...args)
+    const result = renderOriginal!(...args)
 
     tokens[idx] = tokenBackup
 
@@ -115,7 +120,7 @@ export const pluginPatchPreEarly = (md: MarkdownIt) => {
     const [tokens, idx] = args
     const token = tokens[idx]
     const totalLines = token.content.match(/\n/g)?.length ?? 0
-    const originalHtml = renderOriginal(...args)
+    const originalHtml = renderOriginal!(...args)
     let lineNumberHtml = ''
 
     for (let line = 1; line <= totalLines; line++) {
@@ -139,7 +144,7 @@ export const pluginPatchPreEarly = (md: MarkdownIt) => {
 export const pluginPatchPreLate = async (md: MarkdownIt) => {
   const copyIcon = await icon('mdi:content-copy')
   patchRenderRule(md, 'fence', (renderOriginal) => (...args) => {
-    const originalHtml = renderOriginal(...args)
+    const originalHtml = renderOriginal!(...args)
     const matchResult = /<button title="[^"]+"[^>]*>/.exec(originalHtml)
     if (!matchResult) {
       throw Error(`pluginPatchPreLate failed: button tag not found in the following part:\n${originalHtml}`)
@@ -161,8 +166,20 @@ export const pluginPatchImg = async (md: MarkdownIt) => {
   patchRenderRule(md, 'image', (renderOriginal) => (...args) => {
     const [tokens, idx] = args
     const token = tokens[idx]
-    const originalHtml = renderOriginal(...args)
+    const originalHtml = renderOriginal!(...args)
 
     return `${originalHtml}<div>${token.content}</div>`
+  })
+}
+
+export const pluginPatchBlockquote = async (md: MarkdownIt) => {
+  patchRenderRule(md, 'blockquote_open', (renderOriginal) => (...args) => {
+    const originalHtml = renderOriginal?.(...args) ?? '<blockquote>'
+    const config = getConfig()?.blockquote
+    console.log(config)
+    if (!config?.icon) {
+      return originalHtml
+    }
+    return `${originalHtml}<span class='svg-container quote-icon'>${config.icon}</span>`
   })
 }
