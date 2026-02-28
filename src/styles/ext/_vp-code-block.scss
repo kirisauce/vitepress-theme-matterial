@@ -42,7 +42,7 @@
 @mixin stylize-pre {
   // Code block font and background color
   color: var(--shiki-color);
-  background-color: color-mix(in oklab, var(--shiki-color-bg) 85%, var(--pal-primary) 15%);
+  background-color: color-mix(in oklab, var(--shiki-color-bg) 50%, var(--pal-primaryContainer) 50%);
 
   // Other styles
   box-sizing: content-box;
@@ -143,7 +143,7 @@
 @mixin apply-code-block {
 
   pre,
-  cod {
+  code {
     font-family: font.$monospace;
   }
 

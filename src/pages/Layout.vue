@@ -209,17 +209,17 @@ body {
   //   padding-top: 10px;
   // }
 
+  &.color-scheme-dark :deep(pre.shiki) {
+    @include vp-code-block.shiki-color-scheme(dark);
+  }
+
+  &.color-scheme-light :deep(pre.shiki) {
+    @include vp-code-block.shiki-color-scheme(light);
+  }
+
   :deep(.md-ext) {
     // 代码块样式
     @include vp-code-block.apply-all;
-
-    &.color-scheme-dark pre.shiki {
-      @include vp-code-block.shiki-color-scheme(dark);
-    }
-
-    &.color-scheme-light pre.shiki {
-      @include vp-code-block.shiki-color-scheme(light);
-    }
 
     // 自定义块样式
     .custom-block {
