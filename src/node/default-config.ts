@@ -225,6 +225,7 @@ export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
 
     buildEnd,
 
+    lastUpdated: true,
     themeConfig: await getThemeConfig(),
   }
 }
