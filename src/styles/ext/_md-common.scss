@@ -90,6 +90,15 @@
     }
   }
 
+  code {
+    background-color: var(--pal-tertiaryContainer);
+    color: var(--pal-onTertiaryContainer);
+    padding: 0 4px;
+    margin: 0 4px;
+    border-radius: 4px;
+    line-break: anywhere;
+  }
+
   @include apply-list;
   @include apply-footnote;
 }

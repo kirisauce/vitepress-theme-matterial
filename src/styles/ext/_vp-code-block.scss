@@ -40,14 +40,11 @@ $bar-height: 36px;
   color: var(--shiki-color);
   background-color: var(--shiki-color-bg);
 
-  box-sizing: content-box;
   padding: 0 8px;
   overflow-x: auto;
   margin: $bar-height 0 0 0;
   border-radius: 0 0 12px 12px;
   border-top: 1px solid var(--pal-outlineVariant);
-
-  flex: 1 0;
 
   &.has-focused-lines {
     .line {
@@ -108,8 +105,7 @@ $bar-height: 36px;
     line-height: 1.5;
     display: flex;
     flex-direction: column;
-    justify-content: stretch;
-    align-items: stretch;
+    width: 0;
 
     * {
       color: var(--shiki-color);
@@ -128,7 +124,7 @@ $bar-height: 36px;
     flex: 0 0 1.5em;
     border-radius: 4px;
 
-    > * {
+    >* {
       background-color: transparent;
     }
   }
