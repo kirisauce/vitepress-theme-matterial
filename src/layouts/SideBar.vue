@@ -162,7 +162,7 @@ $anim: m3-anim.$standardSlowSpital;
 </style>
 
 <template>
-  <Teleport to='.super-page-container'>
+  <Teleport defer to='.super-page-container'>
     <span style='position: absolute'>
       <Transition name='background'>
         <div class='side-bar-background' @click='$emit("exit")' v-show='show && captureClick'

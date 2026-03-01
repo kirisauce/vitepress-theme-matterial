@@ -191,20 +191,20 @@ export const getDefaultConfig = async (): Promise<UserConfig<ThemeConfig>> => {
     markdown: {
       async preConfig(mdAsync) {
         const md = mdAsync as MarkdownIt
-        Plugins.pluginPatchPreEarly(md)
       },
 
       async config(mdAsync) {
         const md = mdAsync as MarkdownIt
         await Plugins.pluginPatchContainer(md)
         await Plugins.pluginPatchGithubAlerts(md)
-        await Plugins.pluginPatchPreLate(md)
+        await Plugins.pluginPatchCodeBlock(md)
         await Plugins.pluginPatchImg(md)
         await Plugins.pluginPatchBlockquote(md)
 
         pluginFootnote(md)
       },
 
+      lineNumbers: true,
       codeCopyButtonTitle: "复制代码",
       languageLabel: {
         '': 'Code',

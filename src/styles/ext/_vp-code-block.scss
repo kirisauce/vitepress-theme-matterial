@@ -10,21 +10,18 @@
  * 使用`@include shiki-color-scheme('light' | 'dark')`后并不会立即设置字体颜色和背景颜色，
  * 而是会设置css变量`--shiki-color`和`--shiki-color-bg`，以及`--shiki-text-decoration`，
  * 需要在代码块样式中使用这些变量来显示代码高亮的效果。
- *
- * 代码块本身的样式需要在包含`<div class="language-xxx">...</div>`的元素上使用`@include apply-code-block`。
- * 代码块组的样式需要在包含`<div class="vp-code-group">...</div>`的元素上使用`@include apply-code-group`。
- * 也可以直接使用`@include apply-all`来同时应用两者。
- * 这两个mixin自带`:deep(...)`选择器，因此不需要在外层添加`:deep`。
  */
 
 @use '../abstract/m3-anim';
 @use '../abstract/font';
 
+$bar-height: 36px;
+
 // Shiki color scheme switch
 
 @mixin shiki-color-scheme($scheme) {
-  @if not ($scheme =="light" or $scheme =="dark") {
-    @error "Invalid Shiki color scheme: #{$scheme}";
+  @if not ($scheme =='light' or $scheme =='dark') {
+    @error 'Invalid Shiki color scheme: #{$scheme}';
   }
 
   --shiki-color: var(--shiki-#{$scheme});
@@ -40,15 +37,15 @@
 // Code block styles
 
 @mixin stylize-pre {
-  // Code block font and background color
   color: var(--shiki-color);
-  background-color: color-mix(in oklab, var(--shiki-color-bg) 50%, var(--pal-primaryContainer) 50%);
+  background-color: var(--shiki-color-bg);
 
-  // Other styles
   box-sizing: content-box;
-  padding: 0.5em 0 0.5em 0;
-  margin: 0;
+  padding: 0 8px;
   overflow-x: auto;
+  margin: $bar-height 0 0 0;
+  border-radius: 0 0 12px 12px;
+  border-top: 1px solid var(--pal-outlineVariant);
 
   flex: 1 0;
 
@@ -74,7 +71,7 @@
 
   &.has-diff {
     .line::before {
-      content: "";
+      content: '';
       display: inline-block;
       width: 2ch;
     }
@@ -84,7 +81,7 @@
     }
 
     .line.diff.remove::before {
-      content: "--";
+      content: '--';
     }
 
     .line.diff.add {
@@ -92,7 +89,7 @@
     }
 
     .line.diff.add::before {
-      content: "++";
+      content: '++';
     }
   }
 
@@ -102,14 +99,13 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: color(from var(--pal-tertiary) srgb r g b / 0.5);
+    background: color-mix(in srgb, var(--pal-tertiary) 50%, transparent);
     border-radius: 0.25em;
-    // opacity: 0.1;
-    // mix-blend-mode: lighten;
   }
 
   >code {
     font-size: 14px;
+    line-height: 1.5;
     display: flex;
     flex-direction: column;
     justify-content: stretch;
@@ -117,26 +113,30 @@
 
     * {
       color: var(--shiki-color);
-      background-color: color-mix(in oklab, var(--shiki-color-bg), var(--pal-primary) 0.5);
+      background-color: var(--shiki-color-bg);
       text-decoration: var(--shiki-text-decoration);
     }
   }
 
   .line {
     display: block;
-    padding-left: 0.25em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    margin-left: -0.5em;
+    margin-right: -0.5em;
     box-sizing: border-box;
-    flex: 0 0 1lh;
+    flex: 0 0 1.5em;
+    border-radius: 4px;
+
+    > * {
+      background-color: transparent;
+    }
   }
 
   .line.highlighted {
-    background-color: color-mix(in hsl,
-        color-mix(in oklch,
-          var(--shiki-color-bg) 65%,
-          var(--pal-primary) 15%,
-        ) 85%,
-        #ffffff 15%,
-      );
+    background-color: color-mix(in srgb,
+        var(--pal-primary) 20%,
+        transparent);
   }
 }
 
@@ -147,118 +147,145 @@
     font-family: font.$monospace;
   }
 
-  div[class*="language"] {
+  div[class*='language'] {
     position: relative;
 
     font-family: font.$monospace;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     background-color: transparent;
-    overflow: visible;
+    overflow: hidden;
 
-    padding-top: calc(3.6em + 3px);
-    margin: 1em 0 1em 0;
+    margin: 1.5em 0 1.5em 0;
+    border-radius: 16px;
 
-    >.pre-wrapper {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      gap: 3px;
-      border-bottom-left-radius: 1em;
-      border-bottom-right-radius: 1em;
-      overflow: hidden;
+    // 容器背景 - 使用主题色
+    background-color: var(--pal-surfaceContainerHigh);
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.12),
+      0 1px 2px rgba(0, 0, 0, 0.24);
+    border: 1px solid var(--pal-outlineVariant);
 
-      >.line-number-list {
-        flex: 0 0 1ch;
-        box-sizing: border-box;
-        padding: 0.5em 1.5ch 0.5em 1.5ch;
-        align-items: flex-end;
-        font-size: 14px;
-
-        display: flex;
-        flex-direction: column;
-        background-color: var(--palext-primaryTransparent);
-
-        >div {
-          flex: 0 0 1px;
-          height: min-content;
-        }
-      }
-
-      >pre {
-        @include stylize-pre;
-      }
-    }
-
+    // 语言标签
     >.lang {
       position: absolute;
-      top: 1.8em;
-      left: 2em;
+      top: calc($bar-height / 2);
+      left: 16px;
       transform: translateY(-50%);
 
-      color: var(--pal-onSecondaryContainer);
+      color: var(--pal-onSurfaceVariant);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
 
       z-index: 10;
+      padding: 4px 12px;
+      background-color: var(--pal-surfaceContainer);
+      border-radius: 16px;
+      border: 1px solid var(--pal-outline);
     }
 
+    // 复制按钮
     >.copy {
       font-family: font.$monospace;
 
       position: absolute;
-      top: 1.8em;
-      right: 25px;
+      top: calc($bar-height / 2);
+      right: 16px;
       transform: translateY(-50%);
 
       box-sizing: content-box;
-      padding: 0.4lh 1.75ch 0.4lh 1.75ch;
-      border: none;
-      border-radius: 2em;
-      color: var(--pal-onPrimary);
+      padding: 6px 16px;
+      border: 1px solid var(--pal-outlineVariant);
+      border-radius: 20px;
+      color: var(--pal-onSecondaryContainer);
 
-      background-color: var(--pal-primary);
-      box-shadow: 2px 2px 8px 0 var(--pal-shadow);
+      background-color: var(--pal-secondaryContiner);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
       z-index: 10;
 
-      transition: background-color m3-anim.$expressiveDefaultEffects, box-shadow m3-anim.$expressiveDefaultEffects;
+      transition:
+        background-color m3-anim.$expressiveDefaultEffects,
+        box-shadow m3-anim.$expressiveDefaultEffects;
 
-      outline: solid 1.5px var(--pal-outline);
+      outline: none;
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+      align-items: center;
 
       &::after {
-        content: "Copy";
+        content: 'Copy';
+        font-size: 0.75rem;
+        font-weight: 500;
       }
 
       &.copied::after {
-        content: "Copied";
+        content: 'Copied!';
       }
 
       &:hover {
-        background-color: var(--pal-primaryFixed);
+        background-color: var(--pal-primaryContainer);
+        color: var(--pal-onPrimaryContainer);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       &:active {
-        background-color: var(--pal-primaryDim);
-        box-shadow: 2px 2px 10px -1px var(--pal-shadow);
-      }
-
-      svg {
-        position: relative;
-        display: inline-block;
-        bottom: -0.125em;
-        margin-right: 0.5em;
+        background-color: var(--pal-primaryFixed);
+        color: var(--pal-onPrimaryFixed);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
       }
     }
 
-    >.bkgr-decoration {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3.6em;
-      border-top-left-radius: 1em;
-      border-top-right-radius: 1em;
+    // 代码区域
+    >pre {
+      @include stylize-pre;
+    }
 
-      background-color: var(--palext-secondaryContainerTransparent);
-      color: var(--palext-onSecondaryContainer);
+    // 行号包装器
+    .line-numbers-wrapper {
+      position: absolute;
+      top: $bar-height;
+      left: 0;
+      min-width: 3em;
+      text-align: right;
+
+      background-color: color-mix(in oklab,
+          var(--pal-surfaceContainer) 80%,
+          var(--pal-primary) 10%);
+      border: 1px solid var(--pal-outlineVariant);
+      border-radius: 12px 0 0 0;
+
+      font-family: font.$monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--pal-onSurfaceVariant);
+      opacity: 0.6;
+
+      pointer-events: none;
+
+      display: flex;
+      flex-direction: column;
+
+      br {
+        display: none;
+      }
+
+      .line-number {
+        display: block;
+        line-height: 1.5;
+        padding-right: 0.75em;
+        box-sizing: border-box;
+      }
+    }
+
+    // 有行号时的代码容器
+    &.line-numbers-mode {
+      >pre {
+        margin-left: 3em;
+        border-top-left-radius: 0;
+      }
     }
   }
 }
@@ -271,52 +298,48 @@
     display: flex block;
     flex-direction: column;
     font-family: font.$monospace;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    background-color: var(--pal-surfaceContainer);
+    border: 1px solid var(--pal-outlineVariant);
+    border-radius: 16px;
 
     >.tabs {
-      flex: 0 0 4em;
-      // border-top-left-radius: 2em;
-      // border-top-right-radius: 2em;
-      background-color: var(--palext-secondaryContainerTransparent);
-      color: var(--palext-onSecondaryContainer);
+      flex: 0 0 auto;
+      color: var(--pal-onSurface);
       z-index: 10;
 
-      display: flex block;
+      display: flex;
       flex-direction: row;
       align-items: center;
       box-sizing: border-box;
-      padding: 0 8em 0 2em;
-      overflow: auto;
-      gap: 0.5em;
+      padding: 0 1em;
+      gap: 0;
 
       position: relative;
-      bottom: -3.6em;
+      border-radius: 16px 16px 0 0;
 
       >label {
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 0.8em 2em 0.8em 2em;
-        border-radius: 0.5em;
+        padding: 12px 20px;
+        border-radius: 8px 8px 0 0;
 
-        background-color: var(--palext-secondaryContainerTransparent);
-        color: var(--palext-onSecondaryContainer);
+        background-color: transparent;
+        color: var(--pal-onSurfaceVariant);
 
         transition:
-          border-radius m3-anim.$expressiveDefaultSpital,
+          border m3-anim.$expressiveSlowEffects,
           background-color m3-anim.$expressiveSlowEffects,
           color m3-anim.$expressiveSlowEffects;
 
         cursor: pointer;
+        margin-bottom: -1px;
+        border-bottom: 2px solid transparent;
 
-        &:first-of-type {
-          border-top-left-radius: 2em;
-          border-bottom-left-radius: 2em;
-        }
-
-        &:last-of-type {
-          border-top-right-radius: 2em;
-          border-bottom-right-radius: 2em;
+        &:hover {
+          background-color: var(--pal-surfaceContainerHigh);
+          color: var(--pal-onSurface);
         }
       }
 
@@ -324,9 +347,9 @@
         display: none;
 
         &:checked+label {
-          background-color: var(--pal-secondary);
-          color: var(--pal-onSecondary);
-          border-radius: 2em;
+          background-color: var(--pal-surfaceContainerHigh);
+          color: var(--pal-primary);
+          border-bottom-color: var(--pal-primary);
 
           cursor: default;
         }
@@ -335,23 +358,11 @@
 
     >.blocks>div {
       border: 0;
-      margin-top: 0;
+      margin: 0;
+      border-radius: 8px 0 16px 16px;
 
       &:not(.active) {
         display: none;
-      }
-
-      >.lang {
-        top: -2.2em;
-      }
-
-      >.copy {
-        top: -0.4em;
-      }
-
-      >.bkgr-decoration {
-        top: -4em;
-        border-bottom: 2px dashed #88888860;
       }
     }
   }

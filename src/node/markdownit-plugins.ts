@@ -115,48 +115,19 @@ export const pluginPatchGithubAlerts = async (md: MarkdownIt) => {
   })
 }
 
-export const pluginPatchPreEarly = (md: MarkdownIt) => {
-  patchRenderRule(md, 'fence', (renderOriginal) => (...args) => {
-    const [tokens, idx] = args
-    const token = tokens[idx]
-    const totalLines = token.content.match(/\n/g)?.length ?? 0
-    const originalHtml = renderOriginal!(...args)
-    let lineNumberHtml = ''
-
-    for (let line = 1; line <= totalLines; line++) {
-      lineNumberHtml += `<div>${line}</div>`
-    }
-    // console.log('----------')
-    // console.log(tokens)
-
-    return `
-      <div class="pre-wrapper">
-        <div class="line-number-list vp-copy-ignore">
-          ${lineNumberHtml}
-        </div>
-        ${originalHtml}
-      </div>
-      <div class="bkgr-decoration"></div>
-    `
-  })
-}
-
-export const pluginPatchPreLate = async (md: MarkdownIt) => {
+export const pluginPatchCodeBlock = async (md: MarkdownIt) => {
   const copyIcon = await icon('mdi:content-copy')
   patchRenderRule(md, 'fence', (renderOriginal) => (...args) => {
     const originalHtml = renderOriginal!(...args)
     const matchResult = /<button title="[^"]+"[^>]*>/.exec(originalHtml)
     if (!matchResult) {
-      throw Error(`pluginPatchPreLate failed: button tag not found in the following part:\n${originalHtml}`)
+      throw Error(`pluginPatchCodeBlock failed: button tag not found in the following part:\n${originalHtml}`)
     }
 
     const indexInsert = matchResult.index + matchResult[0].length
     const part1 = originalHtml.substring(0, indexInsert)
     const part2 = originalHtml.substring(indexInsert)
     const patchedHtml = `${part1}${copyIcon}${part2}`
-
-    // console.log('----------')
-    // console.log(patchedHtml)
 
     return patchedHtml
   })
