@@ -16,6 +16,7 @@ const pageInfo = usePageInfo()
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 0.5em;
 }
@@ -32,6 +33,7 @@ const pageInfo = usePageInfo()
   font-weight: bold;
   background-color: var(--pal-secondaryContainer);
   color: var(--pal-onSecondaryContainer);
+  width: max-content;
 }
 </style>
 
